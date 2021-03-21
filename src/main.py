@@ -18,7 +18,7 @@ class Algorithm(Enum):
 
 
 # Constants
-FILE_PATH = "../benchmarks/misty.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/kuma.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
@@ -278,6 +278,9 @@ def algorithm_multistep(routing_canvas, n):
         # This net cannot be routed
         # Move on to next net
 
+        if active_net.num not in failed_nets:
+            failed_nets.append(active_net.num)  # Add this net to the list of failed nets
+
         print("Failed to route net " + str(active_net.num) + " with colour " + NET_COLOURS[active_net.num])
         all_nets_routed = False
         wavefront = None  # New wavefront will be created for next net
@@ -305,7 +308,9 @@ def algorithm_multistep(routing_canvas, n):
             active_net.failed_attempts += 1
 
         else:
-            failed_nets.append(active_net.num)  # Add this net to the list of failed nets
+            # failed_nets.append(active_net.num)  # Add this net to the list of failed nets
+
+            # print(failed_nets)
             
         # if current_net_order_idx + 1 < len(net_order):
         #     # Proceed to the next net
@@ -757,6 +762,8 @@ def a_star_step(routing_canvas):
         # Clear/increment active variables
         wavefront = None
         if active_net.sinksRemaining < 1:
+            if net_order[current_net_order_idx] in failed_nets:
+                failed_nets.remove(net_order[current_net_order_idx])
             # if current_net_order_idx + 1 < len(net_order):
                 # Move to the next net
                 # current_net_order_idx += 1
@@ -765,7 +772,7 @@ def a_star_step(routing_canvas):
             # Get first net in order that is unrouted (or was ripped up)
             for next_net in range(len(net_order)):
                 net = net_dict[next_net]
-                if net.sinksRemaining > 0 and net.failed_attempts < len(net_order):
+                if net.sinksRemaining > 0: # and net.failed_attempts < len(net_order):
                     current_net_order_idx = next_net
                     break
 

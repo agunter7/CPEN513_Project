@@ -18,7 +18,7 @@ class Algorithm(Enum):
 
 
 # Constants
-FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/misty.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
@@ -226,12 +226,13 @@ def algorithm_multistep(routing_canvas, n):
 
     # Check if the current routing attempt is complete
     if done_routing_attempt:
-        if final_route_initiated:
+        # if final_route_initiated:
+        if len(failed_nets) > 0:
             # No more routing attempts are to be performed
             print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
             done_circuit = True
             return
-        if all_nets_routed:
+        if all_nets_routed or len(failed_nets) == 0:
             # Successful route
             print("Circuit routed successfully.")
             done_circuit = True
@@ -260,12 +261,16 @@ def algorithm_multistep(routing_canvas, n):
     # Set wavefront if none is set
     if wavefront is None:
         target_sink, best_start_cell = find_best_routing_pair()
-        if active_net.initRouteComplete:
+        # if active_net.initRouteComplete:
             # Start wavefront propagation from "best" cell in net
-            wavefront = [best_start_cell.get_coords()]
-        else:
-            # Start from source cell by default
-            wavefront = [active_net.source.get_coords()]
+            # wavefront = [best_start_cell.get_coords()]
+        # else:
+        # Start from source cell by default
+        wavefront = [active_net.source.get_coords()]
+
+
+        for cell in active_net.wireCells:
+            wavefront.append((cell.x, cell.y))
 
     # Check if the wavefront still contains cells
     if len(wavefront) == 0:
@@ -339,8 +344,6 @@ def rip_up_one(routing_canvas, net_id):
     :param net_id: The net to be ripped up
     :return: void
     """
-    print("Ripping up: " + str(net_id))
-
     net = net_dict[net_id]
 
     for cell in net.wireCells:
@@ -430,7 +433,6 @@ def rip_up(routing_canvas):
 
         # Setup net priority queue for next routing iteration
         net_pq.put((net_dict[net_id].priority, net_dict[net_id].num))
-    print("done :)")
 
 # Original function
 def rip_up_v1(routing_canvas):

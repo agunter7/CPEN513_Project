@@ -300,7 +300,105 @@ def algorithm_multistep(routing_canvas, n):
         return
 
 
+def rip_up_one(routing_canvas, net_id):
+    """
+    Rip-up the current circuit so that it can be rerouted.
+    :param routing_canvas: Tkinter canvas
+    :param net_id: The net to be ripped up
+    :return: void
+    """
+
+    net = net_dict[net_id]
+
+    for cell in net.wireCells:
+        routing_canvas.itemconfigure(cell.id, fill='white')
+        cell.netGroup = -1
+        cell.isRouted = False
+        cell.isWire = False
+        cell.isCandidate = False
+        cell.hasPropagated = False
+        cell.dist_from_source = 0
+        cell.routingValue = 0
+        cell.next_cell = []
+        cell.prev_cell = None
+
+    # Reset source and sink cells
+    source = net.source
+    source.isRouted = False
+    source.next_cell = []
+    source.prev_cell = None
+    for sink in net.sinks:
+        sink.isRouted = False
+        sink.hasPropagated = False
+        sink.dist_from_source = 0
+        sink.routingValue = 0
+        sink.next_cell = []
+        sink.prev_cell = None
+
+    # Reset net
+    net.wireCells = []
+    net.sinksRemaining = len(net.sinks)
+    net.initRouteComplete = False
+
 def rip_up(routing_canvas):
+    """
+    Rip-up all circuits (reset canvas)
+    :param routing_canvas: Tkinter canvas
+    :param net_id: The net to be ripped up
+    :return: void
+    """
+
+    # Global variables
+    global num_segments_routed
+    global wavefront
+    global active_net
+    global text_id_list
+    global done_routing_attempt
+    global target_sink
+    global net_order
+    global current_net_order_idx
+    global all_nets_routed
+    global failed_nets
+    global routing_array
+    global best_num_segments_routed
+    global best_priority_set
+    global circuit_is_hard
+
+    # Current circuit failed to route and is therefore deemed "hard"
+    circuit_is_hard = True
+
+    # Check if the circuit being ripped up is the best routing attempt thus far
+    if num_segments_routed > best_num_segments_routed:
+        best_num_segments_routed = num_segments_routed
+        # Save the net priorities that lead to this route
+        del best_priority_set[:]
+        for (net_num, priority) in starting_priority_set:
+            best_priority_set.append((net_num, priority))
+
+    # Restore the necessary global state variables to default values
+    num_segments_routed = 0
+    wavefront = None
+    active_net = None
+    done_routing_attempt = False
+    target_sink = None
+    net_order = []
+    current_net_order_idx = 0
+    all_nets_routed = True  # Assumed true and proven false
+    failed_nets = []
+
+    # Remove all text cells
+    for text_id in text_id_list:
+        routing_canvas.delete(text_id)
+
+    for net_id in range(len(net_dict)):
+        rip_up_one(routing_canvas, net_id)
+
+        # Setup net priority queue for next routing iteration
+        net_pq.put((net_dict[net_id].priority, net_dict[net_id].num))
+    print("done :)")
+
+# Original function
+def rip_up_v1(routing_canvas):
     """
     Rip-up the current circuit so that it can be rerouted.
     :param routing_canvas: Tkinter canvas
@@ -345,6 +443,7 @@ def rip_up(routing_canvas):
     # Remove all wire cells
     for text_id in text_id_list:
         routing_canvas.delete(text_id)
+
     for column in routing_array:
         for cell in column:
             if cell.isWire:

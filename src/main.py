@@ -9,7 +9,7 @@ import os
 from tkinter import *
 from enum import Enum
 from queue import PriorityQueue
-
+import random
 
 class Algorithm(Enum):
     NONE = -1
@@ -18,7 +18,7 @@ class Algorithm(Enum):
 
 
 # Constants
-FILE_PATH = "../benchmarks/test.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
@@ -89,6 +89,7 @@ class Net:
         self.num = num  # The net number for this net (effectively the net's identifier)
         self.sinksRemaining = len(self.sinks)  # Number of sinks left to be routed in this net
         self.initRouteComplete = False  # Has the net's source been routed to at least one sink?
+        self.failed_attempts = 0 # number of times we've tried to route this net unsuccessfully
 
         if self.num == -1:
             print("ERROR: assign a net number to the newly-created net!")
@@ -271,24 +272,55 @@ def algorithm_multistep(routing_canvas, n):
         # No more available cells for wavefront propagation in this net
         # This net cannot be routed
         # Move on to next net
+
         print("Failed to route net " + str(active_net.num) + " with colour " + NET_COLOURS[active_net.num])
         all_nets_routed = False
-        if active_net.priority > MIN_NET_PRIORITY:
-            # This net should be given higher priority in the next routing attempt
-            active_net.priority -= 1
-            net_priorities_changed = True
-        failed_nets.append(active_net.num)  # Add this net to the list of failed nets
-        cleanup_candidates(routing_canvas)
         wavefront = None  # New wavefront will be created for next net
-        if current_net_order_idx + 1 < len(net_order):
-            # Proceed to the next net
-            current_net_order_idx += 1
-            active_net = net_dict[net_order[current_net_order_idx]]
+
+        cleanup_candidates(routing_canvas)
+
+        # Rip up a random already routed net
+        routed_nets = []
+        for next_net in range(len(net_dict)):
+            net = net_dict[next_net]
+            if net.sinksRemaining == 0:
+                routed_nets.append(next_net)
+
+        # if active_net.priority > MIN_NET_PRIORITY:
+        #     # This net should be given higher priority in the next routing attempt
+        #         active_net.priority -= 1
+                
+        #         net_priorities_changed = True
+
+        if len(routed_nets) > 0 and active_net.failed_attempts < len(net_order):
+            net_id = random.choice(routed_nets)
+
+            rip_up_one(routing_canvas, net_id)
+
+            active_net.failed_attempts += 1
+
         else:
-            # All nets are routed
-            print("Routing attempt complete")
-            print("Failed nets: " + str(failed_nets))
-            done_routing_attempt = True
+            failed_nets.append(active_net.num)  # Add this net to the list of failed nets
+            
+        # if current_net_order_idx + 1 < len(net_order):
+        #     # Proceed to the next net
+        #     current_net_order_idx += 1
+        #     active_net = net_dict[net_order[current_net_order_idx]]
+            current_net_order_idx = -1
+        # Get first net in order that is unrouted (or was ripped up)
+            for next_net in range(len(net_order)):
+                net = net_dict[next_net]
+                if net.sinksRemaining > 0 and net.failed_attempts < len(net_order):
+                    current_net_order_idx = next_net
+                    break
+
+            if current_net_order_idx >= 0:
+                active_net = net_dict[net_order[current_net_order_idx]]
+            else:
+                # All nets are routed
+                print("Routing attempt complete")
+                print("Failed nets: " + str(failed_nets))
+                done_routing_attempt = True
         return
 
     # Pick algorithm to execute
@@ -307,6 +339,7 @@ def rip_up_one(routing_canvas, net_id):
     :param net_id: The net to be ripped up
     :return: void
     """
+    print("Ripping up: " + str(net_id))
 
     net = net_dict[net_id]
 
@@ -392,6 +425,8 @@ def rip_up(routing_canvas):
 
     for net_id in range(len(net_dict)):
         rip_up_one(routing_canvas, net_id)
+
+        net_dict[net_id].failed_attempts = 0 # reset failed attempts
 
         # Setup net priority queue for next routing iteration
         net_pq.put((net_dict[net_id].priority, net_dict[net_id].num))
@@ -720,9 +755,19 @@ def a_star_step(routing_canvas):
         # Clear/increment active variables
         wavefront = None
         if active_net.sinksRemaining < 1:
-            if current_net_order_idx + 1 < len(net_order):
+            # if current_net_order_idx + 1 < len(net_order):
                 # Move to the next net
-                current_net_order_idx += 1
+                # current_net_order_idx += 1
+                # active_net = net_dict[net_order[current_net_order_idx]]
+            current_net_order_idx = -1
+            # Get first net in order that is unrouted (or was ripped up)
+            for next_net in range(len(net_order)):
+                net = net_dict[next_net]
+                if net.sinksRemaining > 0 and net.failed_attempts < len(net_order):
+                    current_net_order_idx = next_net
+                    break
+
+            if current_net_order_idx >= 0:
                 active_net = net_dict[net_order[current_net_order_idx]]
             else:
                 # All nets are routed
@@ -947,6 +992,7 @@ def create_routing_array(routing_file):
                 # Add sink cell to a net
                 new_net.sinks.append(sink_cell)
                 new_net.sinksRemaining += 1
+
         # Add the new net to the net dictionary
         net_dict[new_net.num] = new_net
         # Place net numbers in priority queue (priority determines routing order)

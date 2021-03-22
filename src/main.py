@@ -19,7 +19,7 @@ class Algorithm(Enum):
 
 
 # Constants
-FILE_PATH = "../benchmarks/kuma.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/oswald.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
@@ -331,6 +331,8 @@ def rip_up_one(routing_canvas, net_id):
     :param net_id: The net to be ripped up
     :return: void
     """
+    global num_segments_routed
+
     net = net_dict[net_id]
 
     for cell in net.wireCells:
@@ -362,6 +364,8 @@ def rip_up_one(routing_canvas, net_id):
     net.wireCells = []
     net.sinksRemaining = len(net.sinks)
     net.initRouteComplete = False
+
+    num_segments_routed += -1
 
 
 def rip_up(routing_canvas):

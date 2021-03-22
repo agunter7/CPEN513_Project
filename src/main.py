@@ -19,7 +19,7 @@ class Algorithm(Enum):
 
 
 # Constants
-FILE_PATH = "../benchmarks/oswald.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
@@ -45,7 +45,6 @@ num_segments_routed = 0  # Number of segments routed in the current routing atte
 all_nets_routed = True  # Have all nets been routed? Assume true, prove false if a net fails to route
 done_routing_attempt = False  # Has the current attempt at routing the circuit completed?
 done_circuit = False  # Has the circuit been routed? (Or determined unroutable?)
-net_priorities_changed = False  # Did the priority of any net change since the last rip-up?
 final_route_initiated = False  # Is the current routing attempt definitely the last one?
 circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
 
@@ -202,7 +201,6 @@ def algorithm_multistep(routing_canvas, n):
     global current_net_order_idx
     global all_nets_routed
     global failed_nets
-    global net_priorities_changed
     global done_circuit
     global final_route_initiated
 
@@ -239,25 +237,9 @@ def algorithm_multistep(routing_canvas, n):
             done_circuit = True
             return
         else:
-            # Only rip-up and reroute if it is possible that a new net order could allow for a fully routed circuit
-            # Determine this by whether or not net priorities changed on this routing attempt
-            # Unchanged priorities imply that no new net order permutations will be attempted
-            if net_priorities_changed:
-                # Rip-up and reroute
-                print("Rip-up")
-                rip_up(routing_canvas)
-                net_priorities_changed = False
-            else:
-                # Perform a final route with the best-performing net priorities
-                print("Final rip-up")
-                # Overwrite current net priorities with the best known values
-                for (net_num, best_priority) in best_priority_set:
-                    net = net_dict[net_num]
-                    net.priority = best_priority
-                rip_up(routing_canvas)
-                final_route_initiated = True
-
-            return
+            # Should never happen
+            print("ERROR: Invalid case occurred.")
+            exit()
 
     # Set wavefront if none is set
     if wavefront is None:
@@ -292,14 +274,11 @@ def algorithm_multistep(routing_canvas, n):
 
         if len(routed_nets) > 0 and active_net.failed_attempts < len(net_order):
             net_id = random.choice(routed_nets)
-
             rip_up_one(routing_canvas, net_id)
-
             active_net.failed_attempts += 1
-
         else:
             current_net_order_idx = -1
-        # Get first net in order that is unrouted (or was ripped up)
+            # Get first net in order that is unrouted (or was ripped up)
             for next_net in range(len(net_order)):
                 net = net_dict[next_net]
                 if net.sinksRemaining > 0 and net.failed_attempts < len(net_order):
@@ -353,7 +332,9 @@ def rip_up_one(routing_canvas, net_id):
     source.next_cell = []
     source.prev_cell = None
     for sink in net.sinks:
-        sink.isRouted = False
+        if sink.isRouted:
+            num_segments_routed += -1
+            sink.isRouted = False
         sink.hasPropagated = False
         sink.dist_from_source = 0
         sink.routingValue = 0
@@ -364,66 +345,6 @@ def rip_up_one(routing_canvas, net_id):
     net.wireCells = []
     net.sinksRemaining = len(net.sinks)
     net.initRouteComplete = False
-
-    num_segments_routed += -1
-
-
-def rip_up(routing_canvas):
-    """
-    Rip-up all circuits (reset canvas)
-    :param routing_canvas: Tkinter canvas
-    :return: void
-    """
-
-    # Global variables
-    global num_segments_routed
-    global wavefront
-    global active_net
-    global text_id_list
-    global done_routing_attempt
-    global target_sink
-    global net_order
-    global current_net_order_idx
-    global all_nets_routed
-    global failed_nets
-    global routing_array
-    global best_num_segments_routed
-    global best_priority_set
-    global circuit_is_hard
-
-    # Current circuit failed to route and is therefore deemed "hard"
-    circuit_is_hard = True
-
-    # Check if the circuit being ripped up is the best routing attempt thus far
-    if num_segments_routed > best_num_segments_routed:
-        best_num_segments_routed = num_segments_routed
-        # Save the net priorities that lead to this route
-        del best_priority_set[:]
-        for (net_num, priority) in starting_priority_set:
-            best_priority_set.append((net_num, priority))
-
-    # Restore the necessary global state variables to default values
-    num_segments_routed = 0
-    wavefront = None
-    active_net = None
-    done_routing_attempt = False
-    target_sink = None
-    net_order = []
-    current_net_order_idx = 0
-    all_nets_routed = True  # Assumed true and proven false
-    failed_nets = []
-
-    # Remove all text cells
-    for text_id in text_id_list:
-        routing_canvas.delete(text_id)
-
-    for net_id in range(len(net_dict)):
-        rip_up_one(routing_canvas, net_id)
-
-        net_dict[net_id].failed_attempts = 0  # reset failed attempts
-
-        # Setup net priority queue for next routing iteration
-        net_pq.put((net_dict[net_id].priority, net_dict[net_id].num))
 
 
 def find_best_routing_pair():

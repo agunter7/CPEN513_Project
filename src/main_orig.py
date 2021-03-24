@@ -25,6 +25,7 @@ MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
 
 # Global variables
+active_algorithm = Algorithm.NONE  # Dijkstra or A*
 net_dict = {}  # Dictionary of nets, keys are the net numbers
 net_pq = PriorityQueue()  # PriorityQueue for nets to route
 active_net = None  # Reference to Net that is currently being routed
@@ -60,13 +61,11 @@ class Cell:
         self.isObstruction = obstruction
         self.isSource = source
         self.isSink = sink
-        self.netGroups = [net_group]  # Int indicating which net the Cell belongs to
+        self.netGroup = net_group  # Int indicating which net the Cell belongs to
         self.id = -1  # Tkinter ID for a corresponding rectangle
-        self.isRouted = False   # Has this cell been routed in the current attempt?
-        self.isWire = False     # Is this cell part of a trace?
-        self.isCandidate = False    # Is the cell a candidate for the current route?
-        self.isCongested = False    # Is the cell congested?
-        self.netCount = 0           # the number of nets routed through this cell
+        self.isRouted = False  # Has this cell been routed in the current attempt?
+        self.isWire = False
+        self.isCandidate = False  # Is the cell a candidate for the current route?
         self.hasPropagated = False  # Has this cell already been used in a wavefront propagation?
         self.dist_from_source = 0  # Routing distance from corresponding source Cell
         self.routingValue = 0  # Value used in wavefront for Dijkstra/A*
@@ -87,7 +86,6 @@ class Net:
         self.source = source  # Source Cell
         self.sinks = sinks  # List of sink Cells
         self.wireCells = []  # List of wire Cells
-        self.congestedCells = [] # number of congested cells in trace
         self.num = num  # The net number for this net (effectively the net's identifier)
         self.sinksRemaining = len(self.sinks)  # Number of sinks left to be routed in this net
         self.initRouteComplete = False  # Has the net's source been routed to at least one sink?
@@ -133,10 +131,8 @@ def main():
             bottom_right_y = top_left_y + cell_length
             if (routing_array[x][y]).isObstruction:
                 rectangle_colour = "blue"
-            elif (routing_array[x][y]).isCongested:
-                rectangle_colour = "light blue"
             else:
-                net_idx = (routing_array[x][y]).netGroups[-1]
+                net_idx = (routing_array[x][y]).netGroup
                 rectangle_colour = NET_COLOURS[net_idx]
             rectangle_coords = (top_left_x, top_left_y, bottom_right_x, bottom_right_y)
             (routing_array[x][y]).id = routing_canvas.create_rectangle(rectangle_coords, fill=rectangle_colour)
@@ -154,11 +150,18 @@ def key_handler(routing_canvas, event):
     :param event: Key event
     :return: void
     """
+    global active_algorithm
 
     e_char = event.char
-
-    if e_char == '0':
-        print("running to completion")
+    if e_char == 'a':
+        if active_algorithm == Algorithm.NONE:
+            active_algorithm = Algorithm.A_STAR
+            print("Selected A*")
+    elif e_char == 'd':
+        if active_algorithm == Algorithm.NONE:
+            active_algorithm = Algorithm.DIJKSTRA
+            print("Selected Dijkstra")
+    elif e_char == '0':
         algorithm_to_completion(routing_canvas)
     elif str.isdigit(e_char):
         algorithm_multistep(routing_canvas, int(e_char))
@@ -173,6 +176,10 @@ def algorithm_to_completion(routing_canvas):
     :return: void
     """
     global done_circuit
+    global active_algorithm
+
+    if active_algorithm is not Algorithm.A_STAR and active_algorithm is not Algorithm.DIJKSTRA:
+        return
 
     while not done_circuit:
         algorithm_multistep(routing_canvas, 1)
@@ -185,6 +192,7 @@ def algorithm_multistep(routing_canvas, n):
     :param n: Number of iterations
     :return: void
     """
+    global active_algorithm
     global active_net
     global done_routing_attempt
     global net_dict
@@ -196,7 +204,7 @@ def algorithm_multistep(routing_canvas, n):
     global done_circuit
     global final_route_initiated
 
-    if done_circuit:
+    if done_circuit or (active_algorithm is not Algorithm.A_STAR and active_algorithm is not Algorithm.DIJKSTRA):
         return
 
     if active_net is None and wavefront is None:
@@ -286,21 +294,13 @@ def algorithm_multistep(routing_canvas, n):
                 done_routing_attempt = True
         return
 
-    # Run astar
-    a_star_multistep(routing_canvas, n)
-
-
-def adjust_congestion(routing_canvas):
-    """
-    Correct congestion lists in each net.
-    :param routing_canvas: Tkinter canvas
-    :return: void
-    """
-    for n in net_dict:
-        print(n)
-        for c in n.congestedCells:
-            if c.isCongested:
-                n.congestedCells.remove(c)
+    # Pick algorithm to execute
+    if active_algorithm == Algorithm.DIJKSTRA:
+        dijkstra_multistep(routing_canvas, n)
+    elif active_algorithm == Algorithm.A_STAR:
+        a_star_multistep(routing_canvas, n)
+    else:
+        return
 
 
 def rip_up_one(routing_canvas, net_id):
@@ -316,21 +316,15 @@ def rip_up_one(routing_canvas, net_id):
 
     for cell in net.wireCells:
         routing_canvas.itemconfigure(cell.id, fill='white')
-        cell.netGroups.remove(net_id)
+        cell.netGroup = -1
         cell.isRouted = False
-        cell.netCount -= 1
-        if cell.netCount == 0:
-            cell.isWire = False
-        elif cell.netCount == 1:
-            cell.isCongested = False
+        cell.isWire = False
         cell.isCandidate = False
         cell.hasPropagated = False
         cell.dist_from_source = 0
         cell.routingValue = 0
         cell.next_cell = []
         cell.prev_cell = None
-
-    adjust_congestion(routing_canvas)
 
     # Reset source and sink cells
     source = net.source
@@ -448,10 +442,21 @@ def get_cell_freedom(cell: Cell) -> int:
     for (x, y) in search_coords:
         if 0 <= x < array_width and 0 <= y < array_height:
             neighbour = routing_array[x][y]
-            if not (neighbour.isObstruction or neighbour.isSource or neighbour.isSink or neighbour.isCandidate):
-                    # or neighbour.isWire or neighbour.isRouted):
+            if not (neighbour.isObstruction or neighbour.isSource or neighbour.isSink or neighbour.isRouted
+                    or neighbour.isWire or neighbour.isCandidate):
                 freedom += 1
     return freedom
+
+
+def dijkstra_multistep(routing_canvas, n):
+    """
+    Perform n iterations of Dijkstra's algorithm
+    :param routing_canvas: Tkinter canvas
+    :param n: number of iterations
+    :return: void
+    """
+    for _ in range(n):
+        dijkstra_step(routing_canvas)
 
 
 def a_star_multistep(routing_canvas, n):
@@ -487,9 +492,7 @@ def a_star_step(routing_canvas):
     # Perform a wavefront propagation
     sink_is_found = False
     sink_cell = None
-    # print("*************")
     for cell_coords in active_wavefront:
-        # print("Expanding " + str(cell_coords[0]) +  "," + str(cell_coords[1]))
         if not sink_is_found:
             # Get an active cell from the active wavefront
             cell_x = cell_coords[0]
@@ -500,13 +503,10 @@ def a_star_step(routing_canvas):
                              (cell_x + 1, cell_y), (cell_x - 1, cell_y)]
             for (cand_x, cand_y) in search_coords:
                 if 0 <= cand_x < array_width and 0 <= cand_y < array_height:
-                    # print("Checking " + str(cand_x) +  "," + str(cand_y)),
-
                     cand_cell = routing_array[cand_x][cand_y]  # Candidate cell for routing
                     # Check if a sink has been found
-                    # print(str(cand_cell.isSink) + ", " + str(cand_cell.netGroup is active_net.source.netGroup) + ", " + str(cand_cell.isRouted))
-                    if cand_cell.isSink and active_net.source.netGroups[0] in cand_cell.netGroups and \
-                           cand_cell.isRouted is False:
+                    if cand_cell.isSink and cand_cell.netGroup is active_net.source.netGroup and \
+                            cand_cell.isRouted is False:
                         # This is a sink for the source cell
                         sink_is_found = True
                         sink_cell = cand_cell
@@ -515,9 +515,8 @@ def a_star_step(routing_canvas):
                         sink_cell.prev_cell = active_cell
                         active_cell.next_cell.append(sink_cell)
                         break
-                    cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and not cand_cell.isSource and \
-                        not cand_cell.isSink # and not cand_cell.isWire 
-                    # print("viable: " + str(cell_is_viable))
+                    cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate \
+                        and not cand_cell.isWire and not cand_cell.isSource and not cand_cell.isSink
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront
                         cand_cell.isCandidate = True
@@ -529,23 +528,16 @@ def a_star_step(routing_canvas):
                         text_id = add_text(routing_canvas, cand_cell)
                         text_id_list.append(text_id)  # For later text deletion
 
-    print(wavefront)
-
     # Build wavefront for next step
     min_route_value = float("inf")
     for column in routing_array:
         for cell in column:
             if cell.isCandidate:
-                # print("Checking " + str(cell.x) +  "," + str(cell.y)),
                 if not cell.hasPropagated:
-                    # print("Not prop")
                     wavefront.append((cell.x, cell.y))
                     cell.hasPropagated = True
                     if cell.routingValue < min_route_value:
                         min_route_value = cell.routingValue
-
-    # print("done :)")
-
     # Remove cells from wavefront with large routing values
     wavefront_deletion_indices = []
     for idx, cell_coords in enumerate(wavefront):
@@ -559,32 +551,24 @@ def a_star_step(routing_canvas):
     for index in wavefront_deletion_indices:
         del wavefront[index]
 
-    print(wavefront)
-
     if sink_is_found:
         # Connect sink to source (or other cell in net)
         print("Connecting sink at " + str(sink_cell.x) + ", " + str(sink_cell.y))
         net_is_routed = False
-        net_colour = NET_COLOURS[sink_cell.netGroups[-1]]  # Needed to colour wires
+        net_colour = NET_COLOURS[sink_cell.netGroup]  # Needed to colour wires
         backtrace_cell = sink_cell
         while not net_is_routed:
             # Backtrace
-            if ((active_net.initRouteComplete and backtrace_cell in active_net.wireCells) or backtrace_cell.isSource) \
-                    and active_net.num in backtrace_cell.netGroups:
+            if ((backtrace_cell.isRouted and active_net.initRouteComplete) or backtrace_cell.isSource) \
+                    and backtrace_cell.netGroup == active_net.num:
                 # Done
                 net_is_routed = True
             elif backtrace_cell.isCandidate:
                 backtrace_cell.isCandidate = False
-                if backtrace_cell.isWire:
-                    backtrace_cell.isCongested = True
-                    backtrace_cell.netCount += 1 # increase net count through this cell
-                    active_net.congestedCells.append(backtrace_cell)
-                    routing_canvas.itemconfigure(backtrace_cell.id, fill="light blue")
-                else:
-                    backtrace_cell.isWire = True
-                    backtrace_cell.netGroups.append(active_net.num)
-                    # backtrace_cell.isRouted = True
-                    routing_canvas.itemconfigure(backtrace_cell.id, fill=net_colour)
+                backtrace_cell.isWire = True
+                backtrace_cell.netGroup = active_net.num
+                backtrace_cell.isRouted = True
+                routing_canvas.itemconfigure(backtrace_cell.id, fill=net_colour)
                 active_net.wireCells.append(backtrace_cell)
             elif backtrace_cell.isSink:
                 backtrace_cell.isRouted = True
@@ -624,6 +608,121 @@ def a_star_step(routing_canvas):
             active_net.initRouteComplete = True
 
 
+def dijkstra_step(routing_canvas):
+    """
+    Perform one iteration of Dijkstra's algorithm.
+    :param routing_canvas: Tkinter canvas
+    :return: void
+    """
+    global active_net
+    global wavefront
+    global text_id_list
+    global done_routing_attempt
+    global current_net_order_idx
+    global num_segments_routed
+
+    if not isinstance(wavefront, list):
+        return
+
+    active_wavefront = wavefront.copy()  # Avoid overwrite and loss of data
+    wavefront.clear()  # Will have a new wavefront after Dijkstra step
+
+    # Perform a wavefront propagation
+    sink_is_found = False
+    sink_cell = None
+    for cell_coords in active_wavefront:
+        if not sink_is_found:
+            # Get an active cell from the active wavefront
+            cell_x = cell_coords[0]
+            cell_y = cell_coords[1]
+            active_cell = routing_array[cell_x][cell_y]
+            # Try to propagate one unit in each cardinal direction from the active cell
+            search_coords = [(cell_x, cell_y + 1), (cell_x, cell_y - 1),
+                             (cell_x + 1, cell_y), (cell_x - 1, cell_y)]
+            for (cand_x, cand_y) in search_coords:
+                if 0 <= cand_x < array_width and 0 <= cand_y < array_height:
+                    cand_cell = routing_array[cand_x][cand_y]  # Candidate cell for routing
+                    # Check if a sink has been found
+                    if cand_cell.isSink and cand_cell.netGroup is active_net.source.netGroup and \
+                            cand_cell.isRouted is False:
+                        # This is a sink for the source cell
+                        sink_is_found = True
+                        sink_cell = cand_cell
+                        active_net.sinksRemaining -= 1
+                        sink_cell.routingValue = active_cell.routingValue + 1  # Makes backtrace easier if sink has this
+                        break
+                    cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate \
+                        and not cand_cell.isWire and not cand_cell.isSource and not cand_cell.isSink
+                    if cell_is_viable:
+                        # Note cell as a candidate for the routing path and add it to the wavefront
+                        cand_cell.isCandidate = True
+                        cand_cell.routingValue = active_cell.routingValue + 1
+                        wavefront.append((cand_x, cand_y))
+                        # Add routing value to rectangle
+                        text_id = add_text(routing_canvas, cand_cell)
+                        text_id_list.append(text_id)  # For later text deletion
+
+    if sink_is_found:
+        # Connect sink to source
+        print("Connecting sink at " + str(sink_cell.x) + ", " + str(sink_cell.y))
+        net_is_routed = False
+        net_colour = NET_COLOURS[sink_cell.netGroup]  # Needed to colour wires
+        search_cell = sink_cell
+        routing_path = [sink_cell]
+        while not net_is_routed:
+            # Backtrace through shortest path from Dijkstra wavefront propagation
+            search_x = search_cell.x
+            search_y = search_cell.y
+            search_coords = [(search_x, search_y+1), (search_x, search_y-1),
+                             (search_x+1, search_y), (search_x-1, search_y)]
+            for (route_x, route_y) in search_coords:
+                if 0 <= route_x < array_width and 0 <= route_y < array_height:
+                    backtrace_cell = routing_array[route_x][route_y]
+                    if ((backtrace_cell.isRouted and active_net.initRouteComplete) or backtrace_cell.isSource) \
+                            and backtrace_cell.netGroup == active_net.num:
+                        # Done
+                        net_is_routed = True
+                        break
+                    if backtrace_cell.isCandidate and backtrace_cell.routingValue == search_cell.routingValue-1:
+                        # Cell is a valid wire location
+                        backtrace_cell.isCandidate = False
+                        backtrace_cell.isWire = True
+                        backtrace_cell.netGroup = active_net.num
+                        routing_path.append(backtrace_cell)
+                        routing_canvas.itemconfigure(backtrace_cell.id, fill=net_colour)
+                        active_net.wireCells.append(backtrace_cell)
+                        # Continue backtrace from this cell
+                        search_cell = backtrace_cell
+                        break
+
+        # Increment counter for number of routed segments in current circuit routing attempt
+        num_segments_routed += 1
+
+        # Mark routed cells as such
+        for cell in routing_path:
+            cell.isRouted = True
+
+        # Clear non-wire cells
+        cleanup_candidates(routing_canvas)
+
+        # Clear/increment active variables
+        wavefront = None
+        if active_net.sinksRemaining < 1:
+            if current_net_order_idx + 1 < len(net_order):
+                # Move to the next net
+                current_net_order_idx += 1
+                active_net = net_dict[net_order[current_net_order_idx]]
+            else:
+                # All nets are routed
+                print("Routing attempt complete")
+                print("Failed nets: " + str(failed_nets))
+                done_routing_attempt = True
+        else:
+            # Route the next sink
+            active_net.initRouteComplete = True
+            pass
+
+
 def add_text(routing_canvas: Canvas, cell: Cell) -> int:
     """
     Add text for the routing value of a cell to the canvas.
@@ -658,23 +757,11 @@ def cleanup_candidates(routing_canvas):
     # Change routing candidate cells back to default colour
     for column in routing_array:
         for cell in column:
-            if cell.hasPropagated:
-                cell.hasPropagated = False
             if cell.isCandidate:
-                if cell.x == 10 and cell.y == 7:
-                    print(cell)
                 cell.isCandidate = False
                 cell.routingValue = 0
                 cell.hasPropagated = False
-                if not cell.isWire:
-                    routing_canvas.itemconfigure(cell.id, fill='white')
-                elif cell.isCongested:
-                    routing_canvas.itemconfigure(cell.id, fill='light blue')
-                else:
-                    net_idx = cell.netGroups[-1]
-                    rectangle_colour = NET_COLOURS[net_idx]
-                    routing_canvas.itemconfigure(cell.id, fill=rectangle_colour)
-
+                routing_canvas.itemconfigure(cell.id, fill='white')
     # Remove text from all cells (including cells that formed a route)
     for text_id in text_id_list:
         routing_canvas.delete(text_id)
@@ -720,7 +807,7 @@ def create_routing_array(routing_file):
         source_y = int(net_tokens[2])
         source_cell = routing_grid[source_x][source_y]
         source_cell.isSource = True
-        source_cell.netGroups = [net_num]
+        source_cell.netGroup = net_num
         new_net = Net(source=source_cell, num=net_num)
         # Add sinks
         for idx in range(3, 3+2*(num_pins-1)):
@@ -730,7 +817,7 @@ def create_routing_array(routing_file):
                 cell_y = int(net_tokens[idx + 1])
                 sink_cell = routing_grid[cell_x][cell_y]
                 sink_cell.isSink = True
-                sink_cell.netGroups = [net_num]
+                sink_cell.netGroup = net_num
                 # Add sink cell to a net
                 new_net.sinks.append(sink_cell)
                 new_net.sinksRemaining += 1

@@ -12,12 +12,6 @@ from queue import PriorityQueue
 import random
 
 
-class Algorithm(Enum):
-    NONE = -1
-    DIJKSTRA = 0
-    A_STAR = 1
-
-
 # Constants
 FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
@@ -158,7 +152,7 @@ def key_handler(routing_canvas, event):
     e_char = event.char
 
     if e_char == '0':
-        print("running to completion")
+        # print("running to completion")
         algorithm_to_completion(routing_canvas)
     elif str.isdigit(e_char):
         algorithm_multistep(routing_canvas, int(e_char))
@@ -176,6 +170,37 @@ def algorithm_to_completion(routing_canvas):
 
     while not done_circuit:
         algorithm_multistep(routing_canvas, 1)
+
+
+def get_congested_nets(routing_canvas):
+    congestion = {}
+    for net_id, net in net_dict.items():
+        if len(net.congestedCells) > 0:
+            # print("/////////////////////")
+            # for cell in net.congestedCells:
+            #     print("(" + str(cell.x) + ", " + str(cell.y) + ")")
+            # print("/////////////////////")
+            congestion[net_id] = len(net.congestedCells)
+
+    return congestion
+
+def rip_up_congested(routing_canvas):
+    c_nets = get_congested_nets(routing_canvas)
+
+    print(len(c_nets))
+
+    while len(c_nets) > 0:
+        rip_net = max(c_nets, key=c_nets.get)
+
+        print(c_nets)
+
+        rip_up_one(routing_canvas, rip_net)
+
+        c_nets = get_congested_nets(routing_canvas)
+
+        print(len(c_nets))
+
+    return
 
 
 def algorithm_multistep(routing_canvas, n):
@@ -217,13 +242,14 @@ def algorithm_multistep(routing_canvas, n):
 
     # Check if the current routing attempt is complete
     if done_routing_attempt:
+        rip_up_congested(routing_canvas)
         # if final_route_initiated:
         if len(failed_nets) > 0:
             # No more routing attempts are to be performed
             print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
             done_circuit = True
             return
-        if all_nets_routed or len(failed_nets) == 0:
+        if all_nets_routed and len(failed_nets) == 0:
             # Successful route
             print("Circuit routed successfully.")
             done_circuit = True
@@ -257,6 +283,8 @@ def algorithm_multistep(routing_canvas, n):
 
         cleanup_candidates(routing_canvas)
 
+        # Dont need this anymore, since other routes aren't obstacles
+        '''
         # Rip up a random already routed net
         routed_nets = []
         for next_net in range(len(net_dict)):
@@ -269,21 +297,23 @@ def algorithm_multistep(routing_canvas, n):
             rip_up_one(routing_canvas, net_id)
             active_net.failed_attempts += 1
         else:
-            current_net_order_idx = -1
-            # Get first net in order that is unrouted (or was ripped up)
-            for next_net in range(len(net_order)):
-                net = net_dict[next_net]
-                if net.sinksRemaining > 0 and net.failed_attempts < len(net_order):
-                    current_net_order_idx = next_net
-                    break
+        '''
+        next_net_order_idx = -1
+        # Get first net in order that is unrouted (or was ripped up)
+        for next_net in range(len(net_order)):
+            net = net_dict[next_net]
+            if net.sinksRemaining > 0 and net.failed_attempts < len(net_order):
+                next_net_order_idx = next_net
+                break
 
-            if current_net_order_idx >= 0:
-                active_net = net_dict[net_order[current_net_order_idx]]
-            else:
-                # All nets are routed
-                print("Routing attempt complete")
-                print("Failed nets: " + str(failed_nets))
-                done_routing_attempt = True
+        if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
+            current_net_order_idx = next_net_order_idx
+            active_net = net_dict[net_order[current_net_order_idx]]
+        else:
+            # All nets are routed
+            print("Routing attempt complete")
+            print("Failed nets: " + str(failed_nets))
+            done_routing_attempt = True
         return
 
     # Run astar
@@ -296,11 +326,21 @@ def adjust_congestion(routing_canvas):
     :param routing_canvas: Tkinter canvas
     :return: void
     """
-    for n in net_dict:
-        print(n)
-        for c in n.congestedCells:
-            if c.isCongested:
-                n.congestedCells.remove(c)
+    for net_id, net in net_dict.items():
+        remove_cells = []
+        # for cell in net.congestedCells:
+        #     print("(" + str(cell.x) + ", " + str(cell.y) + ")")
+        # print("-------------")
+        for c in net.congestedCells:
+            if not c.isCongested:
+                remove_cells.append(c)
+
+        for r in remove_cells:
+            net.congestedCells.remove(r)
+        # for cell in net.congestedCells:
+        #     print("(" + str(cell.x) + ", " + str(cell.y) + ")")
+        # print("*************")
+    # print("done adjusting")
 
 
 def rip_up_one(routing_canvas, net_id):
@@ -315,20 +355,26 @@ def rip_up_one(routing_canvas, net_id):
     net = net_dict[net_id]
 
     for cell in net.wireCells:
-        routing_canvas.itemconfigure(cell.id, fill='white')
+        fill = 'white'
         cell.netGroups.remove(net_id)
         cell.isRouted = False
         cell.netCount -= 1
         if cell.netCount == 0:
             cell.isWire = False
+            fill = 'white'
         elif cell.netCount == 1:
             cell.isCongested = False
+            fill = NET_COLOURS[cell.netGroups[-1]]
+        else:
+            fill = 'light blue'
         cell.isCandidate = False
         cell.hasPropagated = False
         cell.dist_from_source = 0
         cell.routingValue = 0
         cell.next_cell = []
         cell.prev_cell = None
+
+        routing_canvas.itemconfigure(cell.id, fill=fill)
 
     adjust_congestion(routing_canvas)
 
@@ -351,6 +397,7 @@ def rip_up_one(routing_canvas, net_id):
     net.wireCells = []
     net.sinksRemaining = len(net.sinks)
     net.initRouteComplete = False
+    net.congestedCells = []
 
 
 def find_best_routing_pair():
@@ -529,7 +576,7 @@ def a_star_step(routing_canvas):
                         text_id = add_text(routing_canvas, cand_cell)
                         text_id_list.append(text_id)  # For later text deletion
 
-    print(wavefront)
+    # print(wavefront)
 
     # Build wavefront for next step
     min_route_value = float("inf")
@@ -559,7 +606,7 @@ def a_star_step(routing_canvas):
     for index in wavefront_deletion_indices:
         del wavefront[index]
 
-    print(wavefront)
+    # print(wavefront)
 
     if sink_is_found:
         # Connect sink to source (or other cell in net)
@@ -575,16 +622,20 @@ def a_star_step(routing_canvas):
                 net_is_routed = True
             elif backtrace_cell.isCandidate:
                 backtrace_cell.isCandidate = False
-                if backtrace_cell.isWire:
+                if backtrace_cell.isWire and active_net.num not in backtrace_cell.netGroups:
                     backtrace_cell.isCongested = True
-                    backtrace_cell.netCount += 1 # increase net count through this cell
                     active_net.congestedCells.append(backtrace_cell)
+                    for net_id in backtrace_cell.netGroups:
+                        if net_id != -1 and net_id != active_net.num and backtrace_cell not in net_dict[net_id].congestedCells:
+                            net_dict[net_id].congestedCells.append(backtrace_cell)
                     routing_canvas.itemconfigure(backtrace_cell.id, fill="light blue")
                 else:
                     backtrace_cell.isWire = True
-                    backtrace_cell.netGroups.append(active_net.num)
                     # backtrace_cell.isRouted = True
                     routing_canvas.itemconfigure(backtrace_cell.id, fill=net_colour)
+                
+                backtrace_cell.netCount += 1 # increase net count through this cell
+                backtrace_cell.netGroups.append(active_net.num)
                 active_net.wireCells.append(backtrace_cell)
             elif backtrace_cell.isSink:
                 backtrace_cell.isRouted = True
@@ -604,15 +655,19 @@ def a_star_step(routing_canvas):
         if active_net.sinksRemaining < 1:
             if net_order[current_net_order_idx] in failed_nets:
                 failed_nets.remove(net_order[current_net_order_idx])
-            current_net_order_idx = -1
+
+            print(len(active_net.congestedCells))
+
+            next_net_order_idx = -1
             # Get first net in order that is unrouted (or was ripped up)
             for next_net in range(len(net_order)):
                 net = net_dict[next_net]
                 if net.sinksRemaining > 0:
-                    current_net_order_idx = next_net
+                    next_net_order_idx = next_net
                     break
 
-            if current_net_order_idx >= 0:
+            if next_net_order_idx >= 0 and current_net_order_idx != next_net_order_idx:
+                current_net_order_idx = next_net_order_idx
                 active_net = net_dict[net_order[current_net_order_idx]]
             else:
                 # All nets are routed

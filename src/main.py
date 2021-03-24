@@ -13,7 +13,7 @@ import random
 
 
 # Constants
-FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
@@ -66,6 +66,8 @@ class Cell:
         self.routingValue = 0  # Value used in wavefront for Dijkstra/A*
         self.next_cell = []  # Can have multiple "next" cells, because wavefront propagates in 4 directions
         self.prev_cell = None  # Reference to previous cell in route, for backtrace
+        self.congest_hist = 0   # number of times cell has been congested
+        self.isOwned = False
 
     def get_coords(self): return self.x, self.y
 
@@ -85,7 +87,7 @@ class Net:
         self.num = num  # The net number for this net (effectively the net's identifier)
         self.sinksRemaining = len(self.sinks)  # Number of sinks left to be routed in this net
         self.initRouteComplete = False  # Has the net's source been routed to at least one sink?
-        self.failed_attempts = 0  # number of times we've tried to route this net unsuccessfully
+        # self.failed_attempts = 0  # number of times we've tried to route this net unsuccessfully
 
         if self.num == -1:
             print("ERROR: assign a net number to the newly-created net!")
@@ -173,32 +175,36 @@ def algorithm_to_completion(routing_canvas):
 
 
 def get_congested_nets(routing_canvas):
+    '''
+    get the currently congested nets
+    :param routing_canvas: Tkinter canvas
+    :return: void
+    '''
     congestion = {}
     for net_id, net in net_dict.items():
         if len(net.congestedCells) > 0:
-            # print("/////////////////////")
-            # for cell in net.congestedCells:
-            #     print("(" + str(cell.x) + ", " + str(cell.y) + ")")
-            # print("/////////////////////")
             congestion[net_id] = len(net.congestedCells)
 
     return congestion
 
 def rip_up_congested(routing_canvas):
+    '''
+    rip up nets until we reach 0 congestion
+    :param routing_canvas: Tkinter canvas
+    :return: void
+    '''
+    global all_nets_routed
+
     c_nets = get_congested_nets(routing_canvas)
 
-    print(len(c_nets))
+    all_nets_routed = (len(c_nets) == 0)
 
     while len(c_nets) > 0:
         rip_net = max(c_nets, key=c_nets.get)
 
-        print(c_nets)
-
         rip_up_one(routing_canvas, rip_net)
 
         c_nets = get_congested_nets(routing_canvas)
-
-        print(len(c_nets))
 
     return
 
@@ -242,28 +248,47 @@ def algorithm_multistep(routing_canvas, n):
 
     # Check if the current routing attempt is complete
     if done_routing_attempt:
+        set_history(routing_canvas)
+
         rip_up_congested(routing_canvas)
-        # if final_route_initiated:
-        if len(failed_nets) > 0:
-            # No more routing attempts are to be performed
-            print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
-            done_circuit = True
-            return
-        if all_nets_routed and len(failed_nets) == 0:
-            # Successful route
-            print("Circuit routed successfully.")
-            done_circuit = True
-            return
+
+        if all_nets_routed:
+            if len(failed_nets) > 0:
+                # No more routing attempts are to be performed
+                print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
+                done_circuit = True
+                return
+            else:
+                # Successful route
+                print("Circuit routed successfully.")
+                done_circuit = True
+                return
         else:
+            done_routing_attempt = False
+            # Pick new net!
+            next_net_order_idx = -1
+            # Get first net in order that is unrouted (or was ripped up)
+            for next_net in range(len(net_order)):
+                net = net_dict[next_net]
+                if net.sinksRemaining > 0: # and net.failed_attempts < len(net_order):
+                    next_net_order_idx = next_net
+                    break
+
+            if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
+                current_net_order_idx = next_net_order_idx
+                active_net = net_dict[net_order[current_net_order_idx]]
+        # else:
             # Should never happen
-            print("ERROR: Invalid case occurred.")
-            exit()
+            # print("ERROR: Invalid case occurred.")
+            # exit()
 
     # Set wavefront if none is set
     if wavefront is None:
         target_sink, best_start_cell = find_best_routing_pair()
         # Start from source cell by default
         wavefront = [active_net.source.get_coords()]
+
+        # wavefront = [(best_start_cell.x, best_start_cell.y)]
 
         for cell in active_net.wireCells:
             wavefront.append((cell.x, cell.y))
@@ -283,26 +308,11 @@ def algorithm_multistep(routing_canvas, n):
 
         cleanup_candidates(routing_canvas)
 
-        # Dont need this anymore, since other routes aren't obstacles
-        '''
-        # Rip up a random already routed net
-        routed_nets = []
-        for next_net in range(len(net_dict)):
-            net = net_dict[next_net]
-            if net.sinksRemaining == 0:
-                routed_nets.append(next_net)
-
-        if len(routed_nets) > 0 and active_net.failed_attempts < len(net_order):
-            net_id = random.choice(routed_nets)
-            rip_up_one(routing_canvas, net_id)
-            active_net.failed_attempts += 1
-        else:
-        '''
         next_net_order_idx = -1
         # Get first net in order that is unrouted (or was ripped up)
         for next_net in range(len(net_order)):
             net = net_dict[next_net]
-            if net.sinksRemaining > 0 and net.failed_attempts < len(net_order):
+            if net.sinksRemaining > 0: # and net.failed_attempts < len(net_order):
                 next_net_order_idx = next_net
                 break
 
@@ -328,19 +338,27 @@ def adjust_congestion(routing_canvas):
     """
     for net_id, net in net_dict.items():
         remove_cells = []
-        # for cell in net.congestedCells:
-        #     print("(" + str(cell.x) + ", " + str(cell.y) + ")")
-        # print("-------------")
+
         for c in net.congestedCells:
             if not c.isCongested:
                 remove_cells.append(c)
 
         for r in remove_cells:
             net.congestedCells.remove(r)
-        # for cell in net.congestedCells:
-        #     print("(" + str(cell.x) + ", " + str(cell.y) + ")")
-        # print("*************")
-    # print("done adjusting")
+
+
+def set_history(routing_canvas):
+    '''
+    add 10* current congestion to history (for weighting)
+    :param routing_canvas: Tkinter canvas
+    :return: void
+    '''
+
+    for row in routing_array:
+        for cell in row:
+            if cell.isCongested:
+                # add number of nets through this cell this round
+                cell.congest_hist += 10*(cell.netCount - 1)
 
 
 def rip_up_one(routing_canvas, net_id):
@@ -354,16 +372,22 @@ def rip_up_one(routing_canvas, net_id):
 
     net = net_dict[net_id]
 
+    if net_id in failed_nets:
+        failed_nets.remove(net_id)
+
     for cell in net.wireCells:
         fill = 'white'
         cell.netGroups.remove(net_id)
         cell.isRouted = False
         cell.netCount -= 1
         if cell.netCount == 0:
+            if cell.isOwned:
+                cell.isOwned = False
             cell.isWire = False
             fill = 'white'
         elif cell.netCount == 1:
             cell.isCongested = False
+            cell.isOwned = True
             fill = NET_COLOURS[cell.netGroups[-1]]
         else:
             fill = 'light blue'
@@ -445,7 +469,7 @@ def find_best_routing_pair():
                     wire_cell_freedom = get_cell_freedom(wire_cell)
                     if wire_cell_freedom >= greatest_freedom:
                         greatest_freedom = wire_cell_freedom
-                        dist = manhattan(unrouted_sink, wire_cell)
+                        dist = manhattan(unrouted_sink, wire_cell) + wire_cell.congest_hist
                         if dist < shortest_dist:
                             shortest_dist = dist
                             best_start_cell = wire_cell
@@ -468,7 +492,7 @@ def find_best_routing_pair():
                         best_sink = unrouted_sink
                 # Check wire cells
                 for wire_cell in active_net.wireCells:
-                    dist = manhattan(unrouted_sink, wire_cell)
+                    dist = manhattan(unrouted_sink, wire_cell) + wire_cell.congest_hist
                     if dist < shortest_dist:
                         shortest_dist = dist
                         best_start_cell = wire_cell
@@ -563,13 +587,15 @@ def a_star_step(routing_canvas):
                         active_cell.next_cell.append(sink_cell)
                         break
                     cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and not cand_cell.isSource and \
-                        not cand_cell.isSink # and not cand_cell.isWire 
+                        not cand_cell.isSink and not cand_cell.isOwned # and not cand_cell.isWire 
                     # print("viable: " + str(cell_is_viable))
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront
                         cand_cell.isCandidate = True
                         cand_cell.dist_from_source = active_cell.dist_from_source+1
-                        cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink)
+                        cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + cand_cell.congest_hist
+                        if cand_cell.isOwned:
+                            cand_cell.routingValue += 50
                         cand_cell.prev_cell = active_cell
                         active_cell.next_cell.append(cand_cell)
                         # Add routing value to rectangle
@@ -656,8 +682,6 @@ def a_star_step(routing_canvas):
             if net_order[current_net_order_idx] in failed_nets:
                 failed_nets.remove(net_order[current_net_order_idx])
 
-            print(len(active_net.congestedCells))
-
             next_net_order_idx = -1
             # Get first net in order that is unrouted (or was ripped up)
             for next_net in range(len(net_order)):
@@ -716,8 +740,6 @@ def cleanup_candidates(routing_canvas):
             if cell.hasPropagated:
                 cell.hasPropagated = False
             if cell.isCandidate:
-                if cell.x == 10 and cell.y == 7:
-                    print(cell)
                 cell.isCandidate = False
                 cell.routingValue = 0
                 cell.hasPropagated = False

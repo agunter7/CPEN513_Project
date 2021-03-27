@@ -8,19 +8,17 @@ Uses Tkinter for GUI.
 import os
 from tkinter import *
 from enum import Enum
-from queue import PriorityQueue
+from queue import SimpleQueue
 import random
 
 
 # Constants
-FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/oswald.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
-MAX_NET_PRIORITY = 2
-MIN_NET_PRIORITY = 0
 
 # Global variables
 net_dict = {}  # Dictionary of nets, keys are the net numbers
-net_pq = PriorityQueue()  # PriorityQueue for nets to route
+net_pq = SimpleQueue()  # FIFO for nets to route
 active_net = None  # Reference to Net that is currently being routed
 target_sink = None  # Reference to a Cell (sink) that is currently the target for routing
 wavefront = None  # List of cells composing of the propagating wavefront
@@ -28,8 +26,6 @@ routing_array = []  # 2D list of cells
 text_id_list = []  # A list of Tkinter IDs to on-screen text
 net_order = []  # Holds to order for the current routing attempt
 failed_nets = []  # List of nets that failed to fully route in the current attempt
-best_priority_set = []  # Tracks the net priorities from the net ordering that yields the best (failed) circuit outcome
-starting_priority_set = []  # The net priorities at the start of the current routing attempt
 array_width = 0  # Width of routing array
 array_height = 0  # Height of routing array
 current_net_order_idx = 0  # Index for the current net in net_order to route
@@ -79,7 +75,6 @@ class Net:
     def __init__(self, source: Cell = None, sinks: Cell = None, num=-1):
         if sinks is None:
             sinks = []
-        self.priority = MAX_NET_PRIORITY  # priority for net ordering
         self.source = source  # Source Cell
         self.sinks = sinks  # List of sink Cells
         self.wireCells = []  # List of wire Cells
@@ -233,19 +228,12 @@ def algorithm_multistep(routing_canvas, n):
     if done_circuit:
         return
 
-    if active_net is None and wavefront is None:
-        # This is the start of a routing attempt
-        # Record the current net priorities
-        del starting_priority_set[:]
-        for net in net_dict.values():
-            starting_priority_set.append((net.num, net.priority))
-
     # Set a net to route if none already set
     if active_net is None:
         if len(net_order) == 0:
-            # Determine the order to route nets in from priority queue
+            # Determine the order to route nets in from queue
             while not net_pq.empty():
-                priority, next_net_num = net_pq.get()
+                next_net_num = net_pq.get()
                 net_order.append(next_net_num)
         active_net = net_dict[net_order[current_net_order_idx]]
 
@@ -813,9 +801,9 @@ def create_routing_array(routing_file):
 
         # Add the new net to the net dictionary
         net_dict[new_net.num] = new_net
-        # Place net numbers in priority queue (priority determines routing order)
-        # Use net nums instead of nets themselves because net nums can be tie-broken when priority is equal
-        net_pq.put((new_net.priority, new_net.num))
+        # Place net numbers in FIFO (determines routing order)
+        # Use net nums instead of nets themselves as an artifact of when this queue was a PQ needing tie-breaking
+        net_pq.put(new_net.num)
 
     return routing_grid
 

@@ -1,15 +1,12 @@
 """
 Solution to UBC CPEN 513 Assignment 1.
-Implements Dijkstra's algorithm and A* for multi-pin nets.
-Utilizes a simple rip-up and re-route scheme.
+Implements A* for multi-pin nets with Pathfinder rip-up and reroute.
 Uses Tkinter for GUI.
 """
 
 import os
 from tkinter import *
-from enum import Enum
 from queue import SimpleQueue
-import random
 
 
 # Constants
@@ -59,7 +56,7 @@ class Cell:
         self.netCount = 0           # the number of nets routed through this cell
         self.hasPropagated = False  # Has this cell already been used in a wavefront propagation?
         self.dist_from_source = 0  # Routing distance from corresponding source Cell
-        self.routingValue = 0  # Value used in wavefront for Dijkstra/A*
+        self.routingValue = 0  # Value used in wavefront for A*
         self.next_cell = []  # Can have multiple "next" cells, because wavefront propagates in 4 directions
         self.prev_cell = None  # Reference to previous cell in route, for backtrace
         self.congest_hist = 0   # number of times cell has been congested
@@ -78,7 +75,7 @@ class Net:
         self.source = source  # Source Cell
         self.sinks = sinks  # List of sink Cells
         self.wireCells = []  # List of wire Cells
-        self.congestedCells = [] # number of congested cells in trace
+        self.congestedCells = []  # number of congested cells in trace
         self.num = num  # The net number for this net (effectively the net's identifier)
         self.sinksRemaining = len(self.sinks)  # Number of sinks left to be routed in this net
         self.initRouteComplete = False  # Has the net's source been routed to at least one sink?
@@ -152,7 +149,7 @@ def key_handler(routing_canvas, event):
         # print("running to completion")
         algorithm_to_completion(routing_canvas)
     elif str.isdigit(e_char):
-        algorithm_multistep(routing_canvas, int(e_char))
+        a_star_multistep(routing_canvas, int(e_char))
     else:
         pass
 
@@ -166,15 +163,14 @@ def algorithm_to_completion(routing_canvas):
     global done_circuit
 
     while not done_circuit:
-        algorithm_multistep(routing_canvas, 1)
+        a_star_multistep(routing_canvas, 1)
 
 
-def get_congested_nets(routing_canvas):
-    '''
+def get_congested_nets():
+    """
     get the currently congested nets and the number of cells in each
-    :param routing_canvas: Tkinter canvas
     :return: void
-    '''
+    """
     congestion = {}
     for net_id, net in net_dict.items():
         if len(net.congestedCells) > 0:
@@ -182,15 +178,16 @@ def get_congested_nets(routing_canvas):
 
     return congestion
 
+
 def rip_up_congested(routing_canvas):
-    '''
+    """
     rip up nets until we reach 0 congestion
     :param routing_canvas: Tkinter canvas
     :return: void
-    '''
+    """
     global all_nets_routed
 
-    c_nets = get_congested_nets(routing_canvas)
+    c_nets = get_congested_nets()
 
     # if no congested nets, we are done
     all_nets_routed = (len(c_nets) == 0)
@@ -202,12 +199,12 @@ def rip_up_congested(routing_canvas):
         rip_up_one(routing_canvas, rip_net)
 
         # get new congestion levels
-        c_nets = get_congested_nets(routing_canvas)
+        c_nets = get_congested_nets()
 
     return
 
 
-def algorithm_multistep(routing_canvas, n):
+def a_star_multistep(routing_canvas, n):
     """
     Generically perform multiple iterations of the currently selected algorithm
     :param routing_canvas: Tkinter canvas
@@ -240,7 +237,7 @@ def algorithm_multistep(routing_canvas, n):
     # Check if the current routing attempt is complete
     if done_routing_attempt:
         # increase history values for congested cells
-        set_history(routing_canvas)
+        set_history()
 
         # rip up routes until we have 0 congestion
         rip_up_congested(routing_canvas)
@@ -274,7 +271,6 @@ def algorithm_multistep(routing_canvas, n):
             if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
                 current_net_order_idx = next_net_order_idx
                 active_net = net_dict[net_order[current_net_order_idx]]
-                
 
     # Set wavefront if none is set
     if wavefront is None:
@@ -319,14 +315,14 @@ def algorithm_multistep(routing_canvas, n):
             done_routing_attempt = True
         return
 
-    # Run astar
-    a_star_multistep(routing_canvas, n)
+    # Run A*
+    for _ in range(n):
+        a_star_step(routing_canvas)
 
 
-def adjust_congestion(routing_canvas):
+def adjust_congestion():
     """
     Correct congestion lists in each net.
-    :param routing_canvas: Tkinter canvas
     :return: void
     """
     for net_id, net in net_dict.items():
@@ -337,17 +333,16 @@ def adjust_congestion(routing_canvas):
             if not c.isCongested:
                 remove_cells.append(c)
 
-        # remove uncongested cells
+        # remove decongested cells
         for r in remove_cells:
             net.congestedCells.remove(r)
 
 
-def set_history(routing_canvas):
-    '''
+def set_history():
+    """
     add current congestion to history (for weighting)
-    :param routing_canvas: Tkinter canvas
     :return: void
-    '''
+    """
 
     for row in routing_array:
         for cell in row:
@@ -372,7 +367,6 @@ def rip_up_one(routing_canvas, net_id):
         failed_nets.remove(net_id)
 
     for cell in net.wireCells:
-        fill = 'white'
         cell.netGroups.remove(net_id)
         cell.isRouted = False
         cell.netCount -= 1
@@ -383,7 +377,7 @@ def rip_up_one(routing_canvas, net_id):
             cell.isWire = False
             fill = 'white'
         elif cell.netCount == 1:
-            # if netCount is 1, cell is now uncongested and owned by remaining net
+            # if netCount is 1, cell is now decongested and owned by remaining net
             cell.isCongested = False
             cell.isOwned = True
             fill = NET_COLOURS[cell.netGroups[-1]]
@@ -399,7 +393,7 @@ def rip_up_one(routing_canvas, net_id):
 
         routing_canvas.itemconfigure(cell.id, fill=fill)
 
-    adjust_congestion(routing_canvas)
+    adjust_congestion()
 
     # Reset source and sink cells
     source = net.source
@@ -519,20 +513,8 @@ def get_cell_freedom(cell: Cell) -> int:
         if 0 <= x < array_width and 0 <= y < array_height:
             neighbour = routing_array[x][y]
             if not (neighbour.isObstruction or neighbour.isSource or neighbour.isSink or neighbour.isCandidate):
-                    # or neighbour.isWire or neighbour.isRouted):
                 freedom += 1
     return freedom
-
-
-def a_star_multistep(routing_canvas, n):
-    """
-    Perform n iterations of A*
-    :param routing_canvas: Tkinter canvas
-    :param n: number of iterations
-    :return: void
-    """
-    for _ in range(n):
-        a_star_step(routing_canvas)
 
 
 def a_star_step(routing_canvas):
@@ -572,7 +554,7 @@ def a_star_step(routing_canvas):
                     cand_cell = routing_array[cand_x][cand_y]  # Candidate cell for routing
                     # Check if a sink has been found
                     if cand_cell.isSink and active_net.source.netGroups[0] in cand_cell.netGroups and \
-                           cand_cell.isRouted is False:
+                            cand_cell.isRouted is False:
                         # This is a sink for the source cell
                         sink_is_found = True
                         sink_cell = cand_cell
@@ -582,14 +564,15 @@ def a_star_step(routing_canvas):
                         active_cell.next_cell.append(sink_cell)
                         break
 
-                    cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and not cand_cell.isSource and \
-                        not cand_cell.isSink and not cand_cell.isOwned # and not cand_cell.isWire 
+                    cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and \
+                        not cand_cell.isSource and not cand_cell.isSink and not cand_cell.isOwned
 
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront
                         cand_cell.isCandidate = True
                         cand_cell.dist_from_source = active_cell.dist_from_source+1
-                        cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + cand_cell.congest_hist
+                        cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + \
+                            cand_cell.congest_hist
                         if cand_cell.isOwned:
                             cand_cell.routingValue += 50
                         cand_cell.prev_cell = active_cell
@@ -640,18 +623,19 @@ def a_star_step(routing_canvas):
                     backtrace_cell.isCongested = True
                     active_net.congestedCells.append(backtrace_cell)
                     for net_id in backtrace_cell.netGroups:
-                        if net_id != -1 and net_id != active_net.num and backtrace_cell not in net_dict[net_id].congestedCells:
+                        if net_id != -1 and net_id != active_net.num and \
+                                backtrace_cell not in net_dict[net_id].congestedCells:
                             net_dict[net_id].congestedCells.append(backtrace_cell)
                     routing_canvas.itemconfigure(backtrace_cell.id, fill="light blue")
                 else:
                     backtrace_cell.isWire = True
                     routing_canvas.itemconfigure(backtrace_cell.id, fill=net_colour)
                 
-                backtrace_cell.netCount += 1 # increase net count through this cell
+                backtrace_cell.netCount += 1  # increase net count through this cell
                 backtrace_cell.netGroups.append(active_net.num)
                 active_net.wireCells.append(backtrace_cell)
             elif backtrace_cell.isSink:
-                backtrace_cell.isRouted = True # we only care if sinks are routed, as they can't be used by other routes
+                backtrace_cell.isRouted = True  # we only care if sinks are routed, they can't be used by other routes
                 pass
             else:
                 print("ERROR: Bad backtrace occurred!")
@@ -677,7 +661,7 @@ def a_star_step(routing_canvas):
                     next_net_order_idx = next_net
                     break
 
-            if next_net_order_idx >= 0 and current_net_order_idx != next_net_order_idx:
+            if 0 <= next_net_order_idx != current_net_order_idx:
                 current_net_order_idx = next_net_order_idx
                 active_net = net_dict[net_order[current_net_order_idx]]
             else:
@@ -775,7 +759,7 @@ def create_routing_array(routing_file):
         (routing_grid[obstruction_x][obstruction_y]).isObstruction = True
 
     # Add sources and sinks (Note that the routing array already has blank Cells)
-    num_nets = routing_file.readline()  # Discard, data not needed
+    routing_file.readline()  # Discard (number of nets), data not needed
     for net_num, line in enumerate(routing_file):
         net_tokens = line.split(' ')
         num_pins = int(net_tokens[0])

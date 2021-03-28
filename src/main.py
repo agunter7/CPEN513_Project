@@ -10,8 +10,8 @@ from queue import SimpleQueue
 
 
 # Constants
-FILE_PATH = "../benchmarks/oswald.infile"  # Path to the file with info about the circuit to route
-NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
+FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
+NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "white", "yellow"]
 
 # Global variables
 net_dict = {}  # Dictionary of nets, keys are the net numbers
@@ -194,9 +194,9 @@ def rip_up_congested(routing_canvas):
 
     while len(c_nets) > 0:
         # get the most congested net and rip it up
-        rip_net = max(c_nets, key=c_nets.get)
+        rip_net_id = max(c_nets, key=c_nets.get)
 
-        rip_up_one(routing_canvas, rip_net)
+        rip_up_one(routing_canvas, rip_net_id)
 
         # get new congestion levels
         c_nets = get_congested_nets()
@@ -354,7 +354,7 @@ def set_history():
 
 def rip_up_one(routing_canvas, net_id):
     """
-    Rip-up the current circuit so that it can be rerouted.
+    Rip-up a specific net.
     :param routing_canvas: Tkinter canvas
     :param net_id: The net to be ripped up
     :return: void

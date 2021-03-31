@@ -13,7 +13,7 @@ import random
 
 
 # Constants
-FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks_no_obst/kuma.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
@@ -39,8 +39,6 @@ all_nets_routed = True  # Have all nets been routed? Assume true, prove false if
 done_routing_attempt = False  # Has the current attempt at routing the circuit completed?
 done_circuit = False  # Has the circuit been routed? (Or determined unroutable?)
 final_route_initiated = False  # Is the current routing attempt definitely the last one?
-circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
-
 
 class Cell:
     """
@@ -66,7 +64,8 @@ class Cell:
         self.routingValue = 0  # Value used in wavefront for Dijkstra/A*
         self.next_cell = []  # Can have multiple "next" cells, because wavefront propagates in 4 directions
         self.prev_cell = None  # Reference to previous cell in route, for backtrace
-        self.congest_hist = 0   # number of times cell has been congested
+        self.congest = 1        # congestion in previous round (initialize to 1)
+        self.congest_hist = 0   # product of previous congestion numbers
         self.isOwned = False
 
     def get_coords(self): return self.x, self.y
@@ -197,17 +196,27 @@ def rip_up_congested(routing_canvas):
 
     c_nets = get_congested_nets(routing_canvas)
 
-    # if no congested nets, we are done
-    all_nets_routed = (len(c_nets) == 0)
+    num_nets = len(c_nets)
 
-    while len(c_nets) > 0:
+    # if no congested nets, we are done
+    all_nets_routed = (num_nets == 0)
+
+    while num_nets > 0:
         # get the most congested net and rip it up
-        rip_net = max(c_nets, key=c_nets.get)
+        # in case of tie, pick randomly
+        # THIS IS WHERE THE RL AGENT WILL GO
+        max_val = max(c_nets.values())
+        max_nets = [k for k, v in c_nets.items() if v == max_val]
+
+        # rip up a random max-valued net
+        rip_net = random.choice(max_nets)
 
         rip_up_one(routing_canvas, rip_net)
 
         # get new congestion levels
         c_nets = get_congested_nets(routing_canvas)
+
+        num_nets = len(c_nets)
 
     return
 
@@ -363,10 +372,19 @@ def set_history(routing_canvas):
 
     for row in routing_array:
         for cell in row:
-            if cell.isCongested:
-                # add number of nets through this cell this round
-                # we add 10* the number because otherwise it takes too long to recognize a congested route
-                cell.congest_hist += 10*(cell.netCount - 1)
+            if cell.isCongested or cell.congest > 1:
+                # increase history of congestion
+                cell.congest_hist += cell.congest
+                # else:
+                    # cell.congest_hist = cell.congest
+
+                # set congestion for this cell this round
+                cell.congest = max(1, cell.netCount)
+            else:
+                cell.congest = 1
+
+            if cell.congest == 0:
+                print("ERROR: Cell penalty should never be 0")
 
 
 def rip_up_one(routing_canvas, net_id):
@@ -443,7 +461,6 @@ def find_best_routing_pair():
     :return: tuple of (target_sink, best_start_cell)
     """
     global active_net
-    global circuit_is_hard
 
     if not isinstance(active_net, Net):
         return
@@ -455,59 +472,29 @@ def find_best_routing_pair():
     # Separate sinks into routed and unrouted
     unrouted_sinks = [unrouted_sink for unrouted_sink in active_net.sinks if not unrouted_sink.isRouted]
     routed_sinks = [routed_sink for routed_sink in active_net.sinks if routed_sink.isRouted]
-    if circuit_is_hard:
-        # Consider manhattan distance and cell freedom
-        for unrouted_sink in unrouted_sinks:
-            if not unrouted_sink.isRouted:
-                # Check source cell and routed sinks first
-                greatest_freedom = get_cell_freedom(active_net.source)  # This is the greatest freedom by default
-                dist = manhattan(unrouted_sink, active_net.source)
+    
+    # Consider only manhattan distance
+    for unrouted_sink in unrouted_sinks:
+        if not unrouted_sink.isRouted:
+            # Check source cell and routed sinks first
+            dist = manhattan(unrouted_sink, active_net.source)
+            if dist < shortest_dist:
+                shortest_dist = dist
+                best_start_cell = active_net.source
+                best_sink = unrouted_sink
+            for routed_sink in routed_sinks:
+                dist = manhattan(unrouted_sink, routed_sink)
                 if dist < shortest_dist:
                     shortest_dist = dist
-                    best_start_cell = active_net.source
+                    best_start_cell = routed_sink
                     best_sink = unrouted_sink
-                for routed_sink in routed_sinks:
-                    routed_sink_freedom = get_cell_freedom(routed_sink)
-                    if routed_sink_freedom >= greatest_freedom:
-                        greatest_freedom = routed_sink_freedom
-                        dist = manhattan(unrouted_sink, routed_sink)
-                        if dist < shortest_dist:
-                            shortest_dist = dist
-                            best_start_cell = routed_sink
-                            best_sink = unrouted_sink
-                # Check wire cells
-                for wire_cell in active_net.wireCells:
-                    wire_cell_freedom = get_cell_freedom(wire_cell)
-                    if wire_cell_freedom >= greatest_freedom:
-                        greatest_freedom = wire_cell_freedom
-                        dist = manhattan(unrouted_sink, wire_cell) + wire_cell.congest_hist
-                        if dist < shortest_dist:
-                            shortest_dist = dist
-                            best_start_cell = wire_cell
-                            best_sink = unrouted_sink
-    else:
-        # Consider only manhattan distance
-        for unrouted_sink in unrouted_sinks:
-            if not unrouted_sink.isRouted:
-                # Check source cell and routed sinks first
-                dist = manhattan(unrouted_sink, active_net.source)
+            # Check wire cells
+            for wire_cell in active_net.wireCells:
+                dist = (manhattan(unrouted_sink, wire_cell) + wire_cell.congest_hist)*wire_cell.congest
                 if dist < shortest_dist:
                     shortest_dist = dist
-                    best_start_cell = active_net.source
+                    best_start_cell = wire_cell
                     best_sink = unrouted_sink
-                for routed_sink in routed_sinks:
-                    dist = manhattan(unrouted_sink, routed_sink)
-                    if dist < shortest_dist:
-                        shortest_dist = dist
-                        best_start_cell = routed_sink
-                        best_sink = unrouted_sink
-                # Check wire cells
-                for wire_cell in active_net.wireCells:
-                    dist = manhattan(unrouted_sink, wire_cell) + wire_cell.congest_hist
-                    if dist < shortest_dist:
-                        shortest_dist = dist
-                        best_start_cell = wire_cell
-                        best_sink = unrouted_sink
 
     return best_sink, best_start_cell
 
@@ -595,15 +582,17 @@ def a_star_step(routing_canvas):
                         break
 
                     cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and not cand_cell.isSource and \
-                        not cand_cell.isSink and not cand_cell.isOwned # and not cand_cell.isWire 
+                        not cand_cell.isSink #and not cand_cell.isOwned # and not cand_cell.isWire 
 
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront
                         cand_cell.isCandidate = True
                         cand_cell.dist_from_source = active_cell.dist_from_source+1
-                        cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + cand_cell.congest_hist
-                        if cand_cell.isOwned:
-                            cand_cell.routingValue += 50
+                        # cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + cand_cell.congest + cand_cell.congest_hist
+                        # PathFinder does c = (b + h)*p where c is cost, b is base cost, h is history, and p is current usage
+                        cand_cell.routingValue = (cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + cand_cell.congest_hist)*cand_cell.congest
+                       # if cand_cell.isOwned:
+                        #     cand_cell.routingValue += 50
                         cand_cell.prev_cell = active_cell
                         active_cell.next_cell.append(cand_cell)
                         # Add routing value to rectangle
@@ -810,6 +799,15 @@ def create_routing_array(routing_file):
                 # Add sink cell to a net
                 new_net.sinks.append(sink_cell)
                 new_net.sinksRemaining += 1
+
+        # for i in range(len(new_net.sinks)):
+        #     mindex = i
+        #     for j in range(i, len(new_net.sinks)):
+        #         if manhattan(new_net.sinks[j], new_net.source) > manhattan(new_net.sinks[mindex], new_net.source):
+        #             mindex = j
+        #     if i != mindex:
+        #         new_net.sinks[i], new_net.sinks[mindex] = new_net.sinks[mindex], new_net.sinks[i]
+
 
         # Add the new net to the net dictionary
         net_dict[new_net.num] = new_net

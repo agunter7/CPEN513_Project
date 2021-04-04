@@ -6,15 +6,23 @@ Uses Tkinter for GUI.
 
 import gym
 from gym import spaces
+from stable_baselines3 import DQN
+from stable_baselines3.common.env_checker import check_env
 import os
 from tkinter import *
 from queue import SimpleQueue
+import numpy as np
+import random
 
 # Constants
 FILE_PATH = "../benchmarks/oswald.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 
-# Global variables
+# General variables
+root = None  # Tkinter root
+routing_canvas = None  # Tkinter canvas GUI
+
+# Maze Routing variables
 net_dict = {}  # Dictionary of nets, keys are the net numbers
 net_pq = SimpleQueue()  # FIFO for nets to route
 active_net = None  # Reference to Net that is currently being routed
@@ -35,6 +43,9 @@ done_circuit = False  # Has the circuit been routed? (Or determined unroutable?)
 final_route_initiated = False  # Is the current routing attempt definitely the last one?
 circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
 
+# Reinforcement Learning variables
+rl_model = None  # The RL Agent
+
 
 class RouterEnv(gym.Env):
     """
@@ -42,24 +53,73 @@ class RouterEnv(gym.Env):
     """
     def __init__(self):
         super(RouterEnv, self).__init__()
-        self.action_space = None
-        self.observation_space = None
+        self.action_space = spaces.Discrete(2)
+        self.observation_space = spaces.Box(low=0, high=255,
+                                            shape=(1, 1), dtype=np.uint8)
 
     def step(self, action):
-        observation = None
-        reward = None
-        done = None
-        info = None
+        print("step")
+        rl_action_step()
+        observation = np.array([[0]])
+        reward = 0
+        done = False
+        info = {}
         return observation, reward, done, info
 
     def reset(self):
-        observation = None
+        global net_dict
+        global net_pq
+        global active_net
+        global target_sink
+        global wavefront
+        global net_order
+        global failed_nets
+        global current_net_order_idx
+        global best_num_segments_routed
+        global num_segments_routed
+        global all_nets_routed
+        global done_routing_attempt
+        global done_circuit
+        global final_route_initiated
+        global circuit_is_hard
+
+        print("reset")
+
+        # Rip-up any and all nets in current environment
+        for rip_up_net in net_dict.values():
+            rip_up_id = rip_up_net.num
+            rip_up_one(rip_up_id)
+
+        # Reset necessary global variables
+        while not net_pq.empty():
+            net_pq.get()
+        for net_id in net_dict.keys():
+            net_pq.put(net_id)
+        active_net = None
+        target_sink = None
+        wavefront = None
+        net_order = []
+        failed_nets = []
+        current_net_order_idx = 0
+        best_num_segments_routed = 0
+        num_segments_routed = 0
+        all_nets_routed = True
+        done_routing_attempt = False
+        done_circuit = False
+        final_route_initiated = False
+        circuit_is_hard = False
+
+        observation = np.array([[0]])
         return observation
 
     def render(self, mode='human'):
-        pass
+        global root
+        print("render")
+        if root is not None:
+            root.update_idletasks()  # Update the Tkinter GUI
 
     def close(self):
+        print("close")
         pass
 
 
@@ -109,7 +169,6 @@ class Net:
         self.num = num  # The net number for this net (effectively the net's identifier)
         self.sinksRemaining = len(self.sinks)  # Number of sinks left to be routed in this net
         self.initRouteComplete = False  # Has the net's source been routed to at least one sink?
-        # self.failed_attempts = 0  # number of times we've tried to route this net unsuccessfully
 
         if self.num == -1:
             print("ERROR: assign a net number to the newly-created net!")
@@ -120,10 +179,16 @@ def main():
     Top-level main function
     :return: void
     """
+    global routing_canvas
     global routing_array
     global array_width
     global array_height
     global FILE_PATH
+    global rl_model
+    global root
+
+    # Set RNG seed
+    random.seed(0)
 
     # Read input file
     script_path = os.path.dirname(__file__)
@@ -134,9 +199,6 @@ def main():
     routing_array = create_routing_array(routing_file)
     array_width = len(routing_array)
     array_height = len(routing_array[0])
-
-    # AI Gym Environment
-    env = RouterEnv()
 
     # Create routing canvas in Tkinter
     root = Tk()
@@ -164,39 +226,198 @@ def main():
 
     # Event bindings and Tkinter start
     routing_canvas.focus_set()
-    routing_canvas.bind("<Key>", lambda event: key_handler(routing_canvas, event))
+    routing_canvas.bind("<Key>", lambda event: key_handler(event))
     root.mainloop()
 
 
-def key_handler(routing_canvas, event):
+def key_handler(event):
     """
     Accepts a key event and makes an appropriate decision.
-    :param routing_canvas: Tkinter canvas
     :param event: Key event
     :return: void
     """
+    global routing_canvas
+    global rl_model
 
     e_char = event.char
 
     if e_char == '0':
         # print("running to completion")
-        algorithm_to_completion(routing_canvas)
+        algorithm_to_completion()
     elif str.isdigit(e_char):
-        a_star_multistep(routing_canvas, int(e_char))
+        a_star_multistep(int(e_char))
+    elif e_char == 'l':
+        # AI Gym Environment
+        env = RouterEnv()
+        #check_env(env)
+
+        # RL Agent
+        rl_model = DQN('MlpPolicy', env, verbose=1)
+        print("Beginning RL training")
+        rl_model.learn(total_timesteps=10)
     else:
         pass
 
 
-def algorithm_to_completion(routing_canvas):
+def rl_action_step():
     """
-    Execute the currently selected algorithm until completion.
-    :param routing_canvas: Tkinter canvas
+    Execute the program up to the point of the next Reinforcement Learning agent action.
+    """
+    global done_routing_attempt
+    global all_nets_routed
+    global all_nets_routed
+    global done_circuit
+    global current_net_order_idx
+    global active_net
+
+    print("RL action step")
+
+    while not done_routing_attempt:
+        # Continue routing
+        print("RL route step")
+        rl_routing_step()
+
+    print("RL route attempt done")
+
+    # Check for congestion
+    c_nets = get_congested_nets()
+    all_nets_routed = (len(c_nets) == 0)
+
+    while len(c_nets) > 0:
+        # get the most congested net and rip it up
+        rip_net_id = max(c_nets, key=c_nets.get)
+
+        rip_up_one(rip_net_id)
+
+        # get new congestion levels
+        c_nets = get_congested_nets()
+
+        # if no congestion, we can be done
+        if all_nets_routed:
+            if len(failed_nets) > 0:
+                # At least one route was blocked
+                print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
+                done_circuit = True
+                return
+            else:
+                # Successful route
+                print("Circuit routed successfully.")
+                done_circuit = True
+                return
+        else:
+            # Try again with new congestion settings!
+            done_routing_attempt = False
+
+            # Pick new net!
+            next_net_order_idx = -1
+            # Get first net in order that is unrouted (or was ripped up)
+            for next_net in range(len(net_order)):
+                net = net_dict[next_net]
+                if net.sinksRemaining > 0:
+                    next_net_order_idx = next_net
+                    break
+
+            # If next index is valid
+            if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
+                current_net_order_idx = next_net_order_idx
+                active_net = net_dict[net_order[current_net_order_idx]]
+
+
+def rl_routing_step():
+    """
+    Perform one iteration of A* without doing any rip-ups
     :return: void
     """
+    global root
+    global routing_canvas
+    global active_net
+    global done_routing_attempt
+    global net_dict
+    global wavefront
+    global target_sink
+    global current_net_order_idx
+    global all_nets_routed
+    global failed_nets
+    global done_circuit
+    global final_route_initiated
+
+    if done_circuit:
+        return
+
+    # Check if the current routing attempt is complete
+    if done_routing_attempt:
+        return
+
+    # Set a net to route if none already set
+    if active_net is None:
+        if len(net_order) == 0:
+            # Determine the order to route nets in from queue
+            while not net_pq.empty():
+                next_net_num = net_pq.get()
+                net_order.append(next_net_num)
+        active_net = net_dict[net_order[current_net_order_idx]]
+
+    # Set wavefront if none is set
+    if wavefront is None:
+        target_sink, best_start_cell = find_best_routing_pair()
+        # Start from source cell by default
+        wavefront = [active_net.source.get_coords()]
+
+        # Add routed cells for this net
+        for cell in active_net.wireCells:
+            wavefront.append((cell.x, cell.y))
+
+    root.update_idletasks()
+    print(len(wavefront))
+
+    # Check if the wavefront still contains cells
+    if len(wavefront) == 0:
+        # No more available cells for wavefront propagation in this net
+        # This net cannot be routed
+        # Move on to next net
+
+        print("empty wavefront")
+
+        if active_net.num not in failed_nets:
+            failed_nets.append(active_net.num)  # Add this net to the list of failed nets
+
+        print("Failed to route net " + str(active_net.num) + " with colour " + NET_COLOURS[active_net.num])
+        all_nets_routed = False
+        wavefront = None  # New wavefront will be created for next net
+
+        cleanup_candidates()
+
+        next_net_order_idx = -1
+        # Get first net in order that is unrouted (or was ripped up)
+        for next_net in range(len(net_order)):
+            net = net_dict[next_net]
+            if net.sinksRemaining > 0:
+                next_net_order_idx = next_net
+                break
+
+        if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
+            current_net_order_idx = next_net_order_idx
+            active_net = net_dict[net_order[current_net_order_idx]]
+        else:
+            # All nets are routed
+            print("Routing attempt complete")
+            print("Failed nets: " + str(failed_nets))
+            done_routing_attempt = True
+        return
+
+    # Run A*
+    a_star_step()
+
+def algorithm_to_completion():
+    """
+    Execute the currently selected algorithm until completion.
+    :return: void
+    """
+    global routing_canvas
     global done_circuit
 
     while not done_circuit:
-        a_star_multistep(routing_canvas, 1)
+        a_star_multistep(1)
 
 
 def get_congested_nets():
@@ -212,26 +433,36 @@ def get_congested_nets():
     return congestion
 
 
-def rip_up_congested(routing_canvas):
+def rip_up_congested():
     """
     rip up nets until we reach 0 congestion
-    :param routing_canvas: Tkinter canvas
     :return: void
     """
     global all_nets_routed
 
-    # Query the RL agent here
+    c_nets = get_congested_nets()
+
+    # if no congested nets, we are done
+    all_nets_routed = (len(c_nets) == 0)
+
+    while len(c_nets) > 0:
+        # get the most congested net and rip it up
+        rip_net_id = max(c_nets, key=c_nets.get)
+        rip_up_one(rip_net_id)
+
+        # get new congestion levels
+        c_nets = get_congested_nets()
 
     return
 
 
-def a_star_multistep(routing_canvas, n):
+def a_star_multistep(n):
     """
     Perform multiple iterations of A*
-    :param routing_canvas: Tkinter canvas
     :param n: Number of iterations
     :return: void
     """
+    global routing_canvas
     global active_net
     global done_routing_attempt
     global net_dict
@@ -259,7 +490,7 @@ def a_star_multistep(routing_canvas, n):
     if done_routing_attempt:
 
         # rip up routes until we have 0 congestion
-        rip_up_congested(routing_canvas)
+        rip_up_congested()
 
         # if no congestion, we can be done
         if all_nets_routed:
@@ -314,7 +545,7 @@ def a_star_multistep(routing_canvas, n):
         all_nets_routed = False
         wavefront = None  # New wavefront will be created for next net
 
-        cleanup_candidates(routing_canvas)
+        cleanup_candidates()
 
         next_net_order_idx = -1
         # Get first net in order that is unrouted (or was ripped up)
@@ -336,7 +567,7 @@ def a_star_multistep(routing_canvas, n):
 
     # Run A*
     for _ in range(n):
-        a_star_step(routing_canvas)
+        a_star_step()
 
 
 def adjust_congestion():
@@ -357,13 +588,13 @@ def adjust_congestion():
             net.congestedCells.remove(r)
 
 
-def rip_up_one(routing_canvas, net_id):
+def rip_up_one(net_id):
     """
     Rip-up a specific net.
-    :param routing_canvas: Tkinter canvas
     :param net_id: The net to be ripped up
     :return: void
     """
+    global routing_canvas
     global num_segments_routed
 
     net = net_dict[net_id]
@@ -522,12 +753,12 @@ def get_cell_freedom(cell: Cell) -> int:
     return freedom
 
 
-def a_star_step(routing_canvas):
+def a_star_step():
     """
     Perform a single iteration of A*
-    :param routing_canvas: Tkinter canvas
     :return: void
     """
+    global routing_canvas
     global active_net
     global wavefront
     global target_sink
@@ -535,7 +766,10 @@ def a_star_step(routing_canvas):
     global current_net_order_idx
     global num_segments_routed
 
+    print("a_star_step")
+
     if not isinstance(target_sink, Cell) or not isinstance(active_net, Net) or not isinstance(wavefront, list):
+        print("bollocks")
         return
 
     active_wavefront = wavefront.copy()  # Avoid overwrite and loss of data
@@ -544,6 +778,8 @@ def a_star_step(routing_canvas):
     # Perform a wavefront propagation
     sink_is_found = False
     sink_cell = None
+
+    print(active_wavefront)
 
     for cell_coords in active_wavefront:
         if not sink_is_found:
@@ -583,7 +819,7 @@ def a_star_step(routing_canvas):
                         cand_cell.prev_cell = active_cell
                         active_cell.next_cell.append(cand_cell)
                         # Add routing value to rectangle
-                        text_id = add_text(routing_canvas, cand_cell)
+                        text_id = add_text(cand_cell)
                         text_id_list.append(text_id)  # For later text deletion
 
     # Build wavefront for next step
@@ -650,7 +886,7 @@ def a_star_step(routing_canvas):
         num_segments_routed += 1
 
         # Clear non-wire cells
-        cleanup_candidates(routing_canvas)
+        cleanup_candidates()
 
         # Clear/increment active variables
         wavefront = None
@@ -679,14 +915,15 @@ def a_star_step(routing_canvas):
             active_net.initRouteComplete = True
 
 
-def add_text(routing_canvas: Canvas, cell: Cell) -> int:
+def add_text(cell: Cell) -> int:
     """
     Add text for the routing value of a cell to the canvas.
     To be used when adding a cell to the wavefront.
-    :param routing_canvas: Tkinter canvas
     :param cell: Cell
     :return: int - Tkinter ID for added text
     """
+    global routing_canvas
+
     # Edit rectangle in GUI to show it is in wavefront
     routing_canvas.itemconfigure(cell.id, fill='black')
     # Place text inside the rect to show its routing value
@@ -701,12 +938,12 @@ def add_text(routing_canvas: Canvas, cell: Cell) -> int:
                                       text=str(cell.routingValue), fill='white')
 
 
-def cleanup_candidates(routing_canvas):
+def cleanup_candidates():
     """
     Cleanup the canvas after wavefront propagation is complete.
-    :param routing_canvas: Tkinter canvas
     :return: void
     """
+    global routing_canvas
     global routing_array
     global text_id_list
 

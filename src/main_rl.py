@@ -16,7 +16,7 @@ import random
 
 # Constants
 FILE_PATH = "../benchmarks/oswald.infile"  # Path to the file with info about the circuit to route
-NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
+NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "white", "yellow"]
 
 # General variables
 root = None  # Tkinter root
@@ -45,6 +45,7 @@ circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
 
 # Reinforcement Learning variables
 rl_model = None  # The RL Agent
+step_count = 0
 
 
 class RouterEnv(gym.Env):
@@ -58,11 +59,18 @@ class RouterEnv(gym.Env):
                                             shape=(1, 1), dtype=np.uint8)
 
     def step(self, action):
-        print("step")
+        global step_count
+        global done_circuit
+
+
+        print(step_count)
+        step_count += 1
         rl_action_step()
         observation = np.array([[0]])
         reward = 0
-        done = False
+        done = done_circuit
+        if done:
+            print("Step is done")
         info = {}
         return observation, reward, done, info
 
@@ -254,7 +262,8 @@ def key_handler(event):
         # RL Agent
         rl_model = DQN('MlpPolicy', env, verbose=1)
         print("Beginning RL training")
-        rl_model.learn(total_timesteps=10)
+        rl_model.learn(total_timesteps=100)
+        print("Finished RL training")
     else:
         pass
 
@@ -270,14 +279,11 @@ def rl_action_step():
     global current_net_order_idx
     global active_net
 
-    print("RL action step")
-
     while not done_routing_attempt:
         # Continue routing
-        print("RL route step")
         rl_routing_step()
 
-    print("RL route attempt done")
+    print("checking congestion")
 
     # Check for congestion
     c_nets = get_congested_nets()
@@ -292,35 +298,35 @@ def rl_action_step():
         # get new congestion levels
         c_nets = get_congested_nets()
 
-        # if no congestion, we can be done
-        if all_nets_routed:
-            if len(failed_nets) > 0:
-                # At least one route was blocked
-                print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
-                done_circuit = True
-                return
-            else:
-                # Successful route
-                print("Circuit routed successfully.")
-                done_circuit = True
-                return
+    # if no congestion, we can be done
+    if all_nets_routed:
+        if len(failed_nets) > 0:
+            # At least one route was blocked
+            print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
+            done_circuit = True
+            return
         else:
-            # Try again with new congestion settings!
-            done_routing_attempt = False
+            # Successful route
+            print("Circuit routed successfully.")
+            done_circuit = True
+            return
+    else:
+        # Try again with new congestion settings!
+        done_routing_attempt = False
 
-            # Pick new net!
-            next_net_order_idx = -1
-            # Get first net in order that is unrouted (or was ripped up)
-            for next_net in range(len(net_order)):
-                net = net_dict[next_net]
-                if net.sinksRemaining > 0:
-                    next_net_order_idx = next_net
-                    break
+        # Pick new net!
+        next_net_order_idx = -1
+        # Get first net in order that is unrouted (or was ripped up)
+        for next_net in range(len(net_order)):
+            net = net_dict[next_net]
+            if net.sinksRemaining > 0:
+                next_net_order_idx = next_net
+                break
 
-            # If next index is valid
-            if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
-                current_net_order_idx = next_net_order_idx
-                active_net = net_dict[net_order[current_net_order_idx]]
+        # If next index is valid
+        if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
+            current_net_order_idx = next_net_order_idx
+            active_net = net_dict[net_order[current_net_order_idx]]
 
 
 def rl_routing_step():
@@ -367,16 +373,11 @@ def rl_routing_step():
         for cell in active_net.wireCells:
             wavefront.append((cell.x, cell.y))
 
-    root.update_idletasks()
-    print(len(wavefront))
-
     # Check if the wavefront still contains cells
     if len(wavefront) == 0:
         # No more available cells for wavefront propagation in this net
         # This net cannot be routed
         # Move on to next net
-
-        print("empty wavefront")
 
         if active_net.num not in failed_nets:
             failed_nets.append(active_net.num)  # Add this net to the list of failed nets
@@ -766,10 +767,7 @@ def a_star_step():
     global current_net_order_idx
     global num_segments_routed
 
-    print("a_star_step")
-
     if not isinstance(target_sink, Cell) or not isinstance(active_net, Net) or not isinstance(wavefront, list):
-        print("bollocks")
         return
 
     active_wavefront = wavefront.copy()  # Avoid overwrite and loss of data
@@ -778,8 +776,6 @@ def a_star_step():
     # Perform a wavefront propagation
     sink_is_found = False
     sink_cell = None
-
-    print(active_wavefront)
 
     for cell_coords in active_wavefront:
         if not sink_is_found:

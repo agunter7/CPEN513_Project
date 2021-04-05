@@ -15,8 +15,8 @@ import numpy as np
 import random
 
 # Constants
-FILE_PATH = "../benchmarks/oswald.infile"  # Path to the file with info about the circuit to route
-NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "white", "yellow"]
+FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
+NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 
 # General variables
 root = None  # Tkinter root
@@ -53,24 +53,27 @@ class RouterEnv(gym.Env):
     Maze Routing Environment
     """
     def __init__(self):
+        global net_dict
+        global array_height
+        global array_width
+
         super(RouterEnv, self).__init__()
-        self.action_space = spaces.Discrete(2)
-        self.observation_space = spaces.Box(low=0, high=255,
-                                            shape=(1, 1), dtype=np.uint8)
+        num_nets = len(net_dict)
+        if num_nets == 0:
+            exit("ERROR: invalid number of nets in gym environment")
+        self.action_space = spaces.Discrete(num_nets)
+        self.observation_space = spaces.Box(low=0, high=num_nets,
+                                            shape=(array_height, array_width), dtype=np.uint8)
 
     def step(self, action):
         global step_count
         global done_circuit
 
-
         print(step_count)
+        print(action)
         step_count += 1
-        rl_action_step()
-        observation = np.array([[0]])
-        reward = 0
+        reward, observation = rl_action_step(action)
         done = done_circuit
-        if done:
-            print("Step is done")
         info = {}
         return observation, reward, done, info
 
@@ -117,7 +120,7 @@ class RouterEnv(gym.Env):
         final_route_initiated = False
         circuit_is_hard = False
 
-        observation = np.array([[0]])
+        observation = get_rl_observation()
         return observation
 
     def render(self, mode='human'):
@@ -257,18 +260,18 @@ def key_handler(event):
     elif e_char == 'l':
         # AI Gym Environment
         env = RouterEnv()
-        #check_env(env)
+        check_env(env)
 
         # RL Agent
         rl_model = DQN('MlpPolicy', env, verbose=1)
         print("Beginning RL training")
-        rl_model.learn(total_timesteps=100)
+        rl_model.learn(total_timesteps=10)
         print("Finished RL training")
     else:
         pass
 
 
-def rl_action_step():
+def rl_action_step(action):
     """
     Execute the program up to the point of the next Reinforcement Learning agent action.
     """
@@ -279,59 +282,72 @@ def rl_action_step():
     global current_net_order_idx
     global active_net
 
-    while not done_routing_attempt:
-        # Continue routing
-        rl_routing_step()
-
-    print("checking congestion")
-
     # Check for congestion
     c_nets = get_congested_nets()
     all_nets_routed = (len(c_nets) == 0)
 
-    while len(c_nets) > 0:
+    if len(c_nets) > 0:
         # get the most congested net and rip it up
-        rip_net_id = max(c_nets, key=c_nets.get)
+        rip_net_id = action
 
         rip_up_one(rip_net_id)
 
         # get new congestion levels
         c_nets = get_congested_nets()
-
-    # if no congestion, we can be done
-    if all_nets_routed:
-        if len(failed_nets) > 0:
-            # At least one route was blocked
-            print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
-            done_circuit = True
-            return
-        else:
-            # Successful route
-            print("Circuit routed successfully.")
-            done_circuit = True
-            return
     else:
-        # Try again with new congestion settings!
-        done_routing_attempt = False
+        # This case indicates the RL agent was fed an uncongested observation
+        # The environment should "step" from one congested scenario to another
+        # The agent should never see an uncongested observation
+        print("ERROR: Useless RL action input!")
+        exit()
 
-        # Pick new net!
-        next_net_order_idx = -1
-        # Get first net in order that is unrouted (or was ripped up)
-        for next_net in range(len(net_order)):
-            net = net_dict[next_net]
-            if net.sinksRemaining > 0:
-                next_net_order_idx = next_net
-                break
+    reward = 0
 
-        # If next index is valid
-        if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
-            current_net_order_idx = next_net_order_idx
-            active_net = net_dict[net_order[current_net_order_idx]]
+    if len(c_nets) == 0:
+        # Previous rip-up resolved congestion
+        while not done_routing_attempt:
+            # Continue routing
+            rl_routing_step()
+
+        # if no congestion, we can be done
+        if all_nets_routed:
+            if len(failed_nets) > 0:
+                # At least one route was blocked
+                print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
+                done_circuit = True
+                reward += -1
+            else:
+                # Successful route
+                print("Circuit routed successfully.")
+                done_circuit = True
+                reward += 1
+        else:
+            # Try again with new congestion settings!
+            done_routing_attempt = False
+
+            # Pick new net!
+            next_net_order_idx = -1
+            # Get first net in order that is unrouted (or was ripped up)
+            for next_net in range(len(net_order)):
+                net = net_dict[next_net]
+                if net.sinksRemaining > 0:
+                    next_net_order_idx = next_net
+                    break
+
+            # If next index is valid
+            if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
+                current_net_order_idx = next_net_order_idx
+                active_net = net_dict[net_order[current_net_order_idx]]
+    else:
+        # RL agent needs to perform more rip-ups
+        pass
+
+    return reward, get_rl_observation()
 
 
 def rl_routing_step():
     """
-    Perform one iteration of A* without doing any rip-ups
+    Perform one iteration of A*, including algorithm overheads without doing any rip-ups
     :return: void
     """
     global root
@@ -408,6 +424,21 @@ def rl_routing_step():
 
     # Run A*
     a_star_step()
+
+
+def get_rl_observation():
+    global routing_array
+    global array_height
+    global array_width
+
+    observation_array = np.zeros(shape=(array_height, array_width))
+
+    for col_idx, column in enumerate(routing_array):
+        for row_idx, cell in enumerate(column):
+            observation_array[row_idx][col_idx] = cell.netCount
+
+    return observation_array
+
 
 def algorithm_to_completion():
     """
@@ -844,7 +875,6 @@ def a_star_step():
 
     if sink_is_found:
         # Connect sink to source (or other cell in net)
-        print("Connecting sink at " + str(sink_cell.x) + ", " + str(sink_cell.y))
         net_is_routed = False
         net_colour = NET_COLOURS[sink_cell.netGroups[-1]]  # Needed to colour wires
         backtrace_cell = sink_cell

@@ -45,7 +45,8 @@ circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
 
 # Reinforcement Learning variables
 rl_model = None  # The RL Agent
-step_count = 0
+is_first_step = True  # Is this the first step of the RL agent since the last environment reset?
+step_count = 0  # Number of steps taken by the RL agent during program run
 
 
 class RouterEnv(gym.Env):
@@ -69,8 +70,7 @@ class RouterEnv(gym.Env):
         global step_count
         global done_circuit
 
-        print(step_count)
-        print(action)
+        print("Step " + str(step_count))
         step_count += 1
         reward, observation = rl_action_step(action)
         done = done_circuit
@@ -93,6 +93,7 @@ class RouterEnv(gym.Env):
         global done_circuit
         global final_route_initiated
         global circuit_is_hard
+        global is_first_step
 
         print("reset")
 
@@ -119,6 +120,8 @@ class RouterEnv(gym.Env):
         done_circuit = False
         final_route_initiated = False
         circuit_is_hard = False
+
+        is_first_step = True
 
         observation = get_rl_observation()
         return observation
@@ -267,6 +270,9 @@ def key_handler(event):
         print("Beginning RL training")
         rl_model.learn(total_timesteps=10)
         print("Finished RL training")
+    elif e_char == 'r':
+        rand_action = random.randrange(len(net_dict))
+        rl_action_step(rand_action)
     else:
         pass
 
@@ -275,21 +281,21 @@ def rl_action_step(action):
     """
     Execute the program up to the point of the next Reinforcement Learning agent action.
     """
+    global root
     global done_routing_attempt
     global all_nets_routed
     global all_nets_routed
     global done_circuit
     global current_net_order_idx
     global active_net
+    global is_first_step
 
     # Check for congestion
     c_nets = get_congested_nets()
-    all_nets_routed = (len(c_nets) == 0)
 
     if len(c_nets) > 0:
-        # get the most congested net and rip it up
+        # Rip-up the net decided by the RL action
         rip_net_id = action
-
         rip_up_one(rip_net_id)
 
         # get new congestion levels
@@ -298,8 +304,11 @@ def rl_action_step(action):
         # This case indicates the RL agent was fed an uncongested observation
         # The environment should "step" from one congested scenario to another
         # The agent should never see an uncongested observation
-        print("ERROR: Useless RL action input!")
-        exit()
+        if is_first_step:
+            # Exception on new environment reset, as first step must be uncongested by default
+            is_first_step = False
+        else:
+            print("ERROR: Useless RL action input! Ignore first occurrence of this message.")
 
     reward = 0
 
@@ -307,9 +316,12 @@ def rl_action_step(action):
         # Previous rip-up resolved congestion
         while not done_routing_attempt:
             # Continue routing
+            print("routing step")
             rl_routing_step()
 
         # if no congestion, we can be done
+        c_nets = get_congested_nets()
+        all_nets_routed = (len(c_nets) == 0 and not is_first_step)
         if all_nets_routed:
             if len(failed_nets) > 0:
                 # At least one route was blocked
@@ -390,6 +402,7 @@ def rl_routing_step():
             wavefront.append((cell.x, cell.y))
 
     # Check if the wavefront still contains cells
+    print(len(wavefront))
     if len(wavefront) == 0:
         # No more available cells for wavefront propagation in this net
         # This net cannot be routed

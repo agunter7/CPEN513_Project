@@ -286,6 +286,8 @@ def rl_action_step(action):
     global is_first_step
     global debug_counter
 
+    print("rl_action_step")
+
     debug_counter += 1
 
     # Check for congestion
@@ -314,9 +316,9 @@ def rl_action_step(action):
         # Previous rip-up resolved congestion
         while not done_routing_attempt:
             # Continue routing
-            print("routing step")
             rl_routing_step()
 
+        print("Out of rl_routing_step loop")
         # if no congestion, we can be done
         c_nets = get_congested_nets()
         all_nets_routed = (len(c_nets) == 0 and not is_first_step)
@@ -334,9 +336,7 @@ def rl_action_step(action):
         else:
             # Try again with new congestion settings!
             done_routing_attempt = False
-
-            # Pick new net!
-            active_net = net_queue.get()
+            active_net = None
     else:
         # RL agent needs to perform more rip-ups
         pass
@@ -359,12 +359,13 @@ def rl_routing_step():
     global net_dict
     global wavefront
     global target_sink
-    global current_net_order_idx
     global all_nets_routed
     global failed_nets
     global done_circuit
     global final_route_initiated
     global debug_counter
+
+    print("rl_routing_step")
 
     if done_circuit:
         return
@@ -392,7 +393,6 @@ def rl_routing_step():
             wavefront.append((cell.x, cell.y))
 
     # Check if the wavefront still contains cells
-    print(len(wavefront))
     if len(wavefront) == 0:
         # No more available cells for wavefront propagation in this net
         # This net cannot be routed
@@ -771,13 +771,13 @@ def a_star_step():
     global wavefront
     global target_sink
     global done_routing_attempt
-    global current_net_order_idx
     global num_segments_routed
+
+    print("a_star_step")
 
     if not isinstance(target_sink, Cell) or not isinstance(active_net, Net) or not isinstance(wavefront, list):
         return
 
-    print("A*")
     active_wavefront = wavefront.copy()  # Avoid overwrite and loss of data
     wavefront.clear()  # Will have a new wavefront after A* step
 
@@ -810,7 +810,7 @@ def a_star_step():
                         break
 
                     cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and \
-                                     not cand_cell.isSource and not cand_cell.isSink and not cand_cell.isOwned
+                        not cand_cell.isSource and not cand_cell.isSink and not cand_cell.isOwned
 
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront
@@ -902,6 +902,7 @@ def a_star_step():
                 print("Routing attempt complete")
                 print("Failed nets: " + str(failed_nets))
                 done_routing_attempt = True
+                print("Got here")
             else:
                 # Move on to next net
                 active_net = net_queue.get()

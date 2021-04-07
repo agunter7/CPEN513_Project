@@ -21,20 +21,20 @@ NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purpl
 # General variables
 root = None  # Tkinter root
 routing_canvas = None  # Tkinter canvas GUI
+debug_counter = 0
 
 # Maze Routing variables
 net_dict = {}  # Dictionary of nets, keys are the net numbers
-net_pq = SimpleQueue()  # FIFO for nets to route
+net_queue = SimpleQueue()  # FIFO for nets to route
 active_net = None  # Reference to Net that is currently being routed
 target_sink = None  # Reference to a Cell (sink) that is currently the target for routing
 wavefront = None  # List of cells composing of the propagating wavefront
 routing_array = []  # 2D list of cells
 text_id_list = []  # A list of Tkinter IDs to on-screen text
-net_order = []  # Holds to order for the current routing attempt
 failed_nets = []  # List of nets that failed to fully route in the current attempt
+net_ord = []
 array_width = 0  # Width of routing array
 array_height = 0  # Height of routing array
-current_net_order_idx = 0  # Index for the current net in net_order to route
 best_num_segments_routed = 0  # Tracks the net ordering that yields the best (failed) circuit outcome
 num_segments_routed = 0  # Number of segments routed in the current routing attempt
 all_nets_routed = True  # Have all nets been routed? Assume true, prove false if a net fails to route
@@ -79,13 +79,11 @@ class RouterEnv(gym.Env):
 
     def reset(self):
         global net_dict
-        global net_pq
+        global net_queue
         global active_net
         global target_sink
         global wavefront
-        global net_order
         global failed_nets
-        global current_net_order_idx
         global best_num_segments_routed
         global num_segments_routed
         global all_nets_routed
@@ -103,16 +101,14 @@ class RouterEnv(gym.Env):
             rip_up_one(rip_up_id)
 
         # Reset necessary global variables
-        while not net_pq.empty():
-            net_pq.get()
-        for net_id in net_dict.keys():
-            net_pq.put(net_id)
+        while not net_queue.empty():
+            net_queue.get()
+        for net in net_dict.values():
+            net_queue.put(net)
         active_net = None
         target_sink = None
         wavefront = None
-        net_order = []
         failed_nets = []
-        current_net_order_idx = 0
         best_num_segments_routed = 0
         num_segments_routed = 0
         all_nets_routed = True
@@ -286,9 +282,11 @@ def rl_action_step(action):
     global all_nets_routed
     global all_nets_routed
     global done_circuit
-    global current_net_order_idx
     global active_net
     global is_first_step
+    global debug_counter
+
+    debug_counter += 1
 
     # Check for congestion
     c_nets = get_congested_nets()
@@ -306,7 +304,7 @@ def rl_action_step(action):
         # The agent should never see an uncongested observation
         if is_first_step:
             # Exception on new environment reset, as first step must be uncongested by default
-            is_first_step = False
+            pass
         else:
             print("ERROR: Useless RL action input! Ignore first occurrence of this message.")
 
@@ -338,21 +336,13 @@ def rl_action_step(action):
             done_routing_attempt = False
 
             # Pick new net!
-            next_net_order_idx = -1
-            # Get first net in order that is unrouted (or was ripped up)
-            for next_net in range(len(net_order)):
-                net = net_dict[next_net]
-                if net.sinksRemaining > 0:
-                    next_net_order_idx = next_net
-                    break
-
-            # If next index is valid
-            if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
-                current_net_order_idx = next_net_order_idx
-                active_net = net_dict[net_order[current_net_order_idx]]
+            active_net = net_queue.get()
     else:
         # RL agent needs to perform more rip-ups
         pass
+
+    if is_first_step:
+        is_first_step = False
 
     return reward, get_rl_observation()
 
@@ -374,6 +364,7 @@ def rl_routing_step():
     global failed_nets
     global done_circuit
     global final_route_initiated
+    global debug_counter
 
     if done_circuit:
         return
@@ -384,12 +375,11 @@ def rl_routing_step():
 
     # Set a net to route if none already set
     if active_net is None:
-        if len(net_order) == 0:
-            # Determine the order to route nets in from queue
-            while not net_pq.empty():
-                next_net_num = net_pq.get()
-                net_order.append(next_net_num)
-        active_net = net_dict[net_order[current_net_order_idx]]
+        active_net = net_queue.get()
+
+    # Set a new net to route if the current net is complete
+    if active_net.sinksRemaining == 0:
+        pass
 
     # Set wavefront if none is set
     if wavefront is None:
@@ -417,22 +407,15 @@ def rl_routing_step():
 
         cleanup_candidates()
 
-        next_net_order_idx = -1
-        # Get first net in order that is unrouted (or was ripped up)
-        for next_net in range(len(net_order)):
-            net = net_dict[next_net]
-            if net.sinksRemaining > 0:
-                next_net_order_idx = next_net
-                break
-
-        if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
-            current_net_order_idx = next_net_order_idx
-            active_net = net_dict[net_order[current_net_order_idx]]
-        else:
+        if net_queue.empty():
             # All nets are routed
             print("Routing attempt complete")
             print("Failed nets: " + str(failed_nets))
             done_routing_attempt = True
+        else:
+            # Move on to next net
+            active_net = net_queue.get()
+
         return
 
     # Run A*
@@ -513,7 +496,6 @@ def a_star_multistep(n):
     global net_dict
     global wavefront
     global target_sink
-    global current_net_order_idx
     global all_nets_routed
     global failed_nets
     global done_circuit
@@ -524,12 +506,7 @@ def a_star_multistep(n):
 
     # Set a net to route if none already set
     if active_net is None:
-        if len(net_order) == 0:
-            # Determine the order to route nets in from queue
-            while not net_pq.empty():
-                next_net_num = net_pq.get()
-                net_order.append(next_net_num)
-        active_net = net_dict[net_order[current_net_order_idx]]
+        active_net = net_queue.get()
 
     # Check if the current routing attempt is complete
     if done_routing_attempt:
@@ -554,18 +531,7 @@ def a_star_multistep(n):
             done_routing_attempt = False
 
             # Pick new net!
-            next_net_order_idx = -1
-            # Get first net in order that is unrouted (or was ripped up)
-            for next_net in range(len(net_order)):
-                net = net_dict[next_net]
-                if net.sinksRemaining > 0:
-                    next_net_order_idx = next_net
-                    break
-
-            # If next index is valid
-            if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
-                current_net_order_idx = next_net_order_idx
-                active_net = net_dict[net_order[current_net_order_idx]]
+            active_net = net_queue.get()
 
     # Set wavefront if none is set
     if wavefront is None:
@@ -592,22 +558,14 @@ def a_star_multistep(n):
 
         cleanup_candidates()
 
-        next_net_order_idx = -1
-        # Get first net in order that is unrouted (or was ripped up)
-        for next_net in range(len(net_order)):
-            net = net_dict[next_net]
-            if net.sinksRemaining > 0:
-                next_net_order_idx = next_net
-                break
-
-        if next_net_order_idx >= 0 and next_net_order_idx != current_net_order_idx:
-            current_net_order_idx = next_net_order_idx
-            active_net = net_dict[net_order[current_net_order_idx]]
-        else:
+        if net_queue.empty():
             # All nets are routed
             print("Routing attempt complete")
             print("Failed nets: " + str(failed_nets))
             done_routing_attempt = True
+        else:
+            # Move on to new net
+            active_net = net_queue.get()
         return
 
     # Run A*
@@ -697,6 +655,11 @@ def rip_up_one(net_id):
     net.initRouteComplete = False
     net.congestedCells = []
 
+    # If this rip-up resolved all congestion, then re-queue unrouted nets for future routing
+    if len(get_congested_nets()) == 0:
+        for net in net_dict.values():
+            if net.sinksRemaining > 0:
+                net_queue.put(net)
 
 def find_best_routing_pair():
     """
@@ -814,6 +777,7 @@ def a_star_step():
     if not isinstance(target_sink, Cell) or not isinstance(active_net, Net) or not isinstance(wavefront, list):
         return
 
+    print("A*")
     active_wavefront = wavefront.copy()  # Avoid overwrite and loss of data
     wavefront.clear()  # Will have a new wavefront after A* step
 
@@ -929,26 +893,18 @@ def a_star_step():
 
         # Clear/increment active variables
         wavefront = None
-        if active_net.sinksRemaining < 1:
-            if net_order[current_net_order_idx] in failed_nets:
-                failed_nets.remove(net_order[current_net_order_idx])
+        if active_net.sinksRemaining == 0:
+            if active_net.num in failed_nets:
+                failed_nets.remove(active_net.num)
 
-            next_net_order_idx = -1
-            # Get first net in order that is unrouted (or was ripped up)
-            for next_net in range(len(net_order)):
-                net = net_dict[next_net]
-                if net.sinksRemaining > 0:
-                    next_net_order_idx = next_net
-                    break
-
-            if 0 <= next_net_order_idx != current_net_order_idx:
-                current_net_order_idx = next_net_order_idx
-                active_net = net_dict[net_order[current_net_order_idx]]
-            else:
+            if net_queue.empty():
                 # All nets are routed
                 print("Routing attempt complete")
                 print("Failed nets: " + str(failed_nets))
                 done_routing_attempt = True
+            else:
+                # Move on to next net
+                active_net = net_queue.get()
         else:
             # Route the next sink
             active_net.initRouteComplete = True
@@ -1015,8 +971,7 @@ def create_routing_array(routing_file):
     :param routing_file: Path to the file with circuit info
     :return: list[list[Cell]] - Routing grid
     """
-    global net_order
-    global net_pq
+    global net_queue
 
     grid_line = routing_file.readline()
     # Create the routing grid
@@ -1066,9 +1021,8 @@ def create_routing_array(routing_file):
 
         # Add the new net to the net dictionary
         net_dict[new_net.num] = new_net
-        # Place net numbers in FIFO (determines routing order)
-        # Use net nums instead of nets themselves as an artifact of when this queue was a PQ needing tie-breaking
-        net_pq.put(new_net.num)
+        # Place nets in FIFO (determines routing order)
+        net_queue.put(new_net)
 
     return routing_grid
 

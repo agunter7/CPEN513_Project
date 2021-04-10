@@ -137,6 +137,7 @@ class RouterEnv(gym.Env):
             rl_routing_step()
 
         rl_target_cell = get_least_congested_cell()
+        print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
         # Pick two arbitrary nets for the next rip-up comparison
         ripup_candidate_a = rl_target_cell.netGroups[0]
         ripup_candidate_b = rl_target_cell.netGroups[1]
@@ -323,8 +324,6 @@ def rl_action_step(action):
     global ripup_candidate_b
     global rl_target_cell
 
-    print("rl_action_step")
-
     debug_counter += 1
 
     if rl_target_cell.netCount > 0:
@@ -341,16 +340,18 @@ def rl_action_step(action):
     if rl_target_cell.netCount == 1:
         # Previous rip-up resolved congestion for the target cell
 
+
         c_cell = get_least_congested_cell()
         if c_cell is None:
+            print("No congestion")
             done_routing_attempt = False
             # No congested cells remain
             # Perform another round of routing
             while not done_routing_attempt:
                 rl_routing_step()
 
-            c_nets = get_congested_nets()
-            all_nets_routed = len(c_nets) == 0
+            c_cell = get_least_congested_cell()
+            all_nets_routed = c_cell is None
             if all_nets_routed:
                 if len(failed_nets) > 0:
                     # At least one route was blocked
@@ -363,12 +364,16 @@ def rl_action_step(action):
                     done_circuit = True
                     reward += 1
             else:
-                # Try again with new congestion settings!
+                # Attempt route again with new congestion (blacklist) settings
+                rl_target_cell = c_cell
+                print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
                 done_routing_attempt = False
                 active_net = None
         else:
             # Move to next congested cell
+            print("Congestion remains")
             rl_target_cell = c_cell
+            print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
             # Pick two arbitrary nets for the next rip-up comparison
             ripup_candidate_a = c_cell.netGroups[0]
             ripup_candidate_b = c_cell.netGroups[1]
@@ -407,8 +412,6 @@ def rl_routing_step():
     global final_route_initiated
     global debug_counter
 
-    print("rl_routing_step")
-
     if done_circuit:
         return
 
@@ -429,8 +432,6 @@ def rl_routing_step():
         target_sink, best_start_cell = find_best_routing_pair()
         # Start from source cell by default
         wavefront = [active_net.source.get_coords()]
-        print("New wavefront")
-        print(wavefront)
 
         # Add routed cells for this net
         for cell in active_net.wireCells:
@@ -505,6 +506,8 @@ def get_least_congested_cell():
 
     for column in routing_array:
         for cell in column:
+            if len(cell.netGroups) != cell.netCount+1:
+                print("CONGESTION ERROR " + str(len(cell.netGroups)) + " " + str(cell.netCount))
             if 1 < cell.netCount < lowest_congestion:  # >1 otherwise uncongested/empty cells would be chosen
                 least_congested_cell = cell
                 lowest_congestion = cell.netCount
@@ -765,8 +768,9 @@ def rip_up_one(net_id):
     if len(get_congested_nets()) == 0:
         for net in net_dict.values():
             if net.sinksRemaining > 0:
-                print(net.num)
                 net_queue.put(net)
+
+    print("Ripped up " + str(net_id))
 
 
 def find_best_routing_pair():

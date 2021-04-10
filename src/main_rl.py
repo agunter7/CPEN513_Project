@@ -115,6 +115,11 @@ class RouterEnv(gym.Env):
                 rip_up_id = rip_up_net.num
                 rip_up_one(rip_up_id)
 
+        # Reset all blacklists
+        for column in routing_array:
+            for blacklist_cell in column:
+                blacklist_cell.blacklist = []
+
         # Reset necessary global variables
         while not net_queue.empty():
             net_queue.get()
@@ -366,14 +371,14 @@ def rl_action_step(action):
             else:
                 # Attempt route again with new congestion (blacklist) settings
                 rl_target_cell = c_cell
-                print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
+                #print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
                 done_routing_attempt = False
                 active_net = None
         else:
             # Move to next congested cell
-            print("Congestion remains")
+            #print("Congestion remains")
             rl_target_cell = c_cell
-            print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
+            #print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
             # Pick two arbitrary nets for the next rip-up comparison
             ripup_candidate_a = c_cell.netGroups[0]
             ripup_candidate_b = c_cell.netGroups[1]
@@ -712,7 +717,6 @@ def rip_up_one(net_id):
 
     for cell in net.wireCells:
         cell.netGroups.remove(net_id)
-        cell.blacklist = []
         cell.isRouted = False
         cell.netCount -= 1
         if cell.netCount == 0:
@@ -763,14 +767,14 @@ def rip_up_one(net_id):
 
     # Add this net to the target cell's blacklist
     rl_target_cell.blacklist.append(net_id)
+    print("Blacklisted " + str(net_id) + " from " + str(rl_target_cell.x) + "," + str(rl_target_cell.y))
+
 
     # If this rip-up resolved all congestion, then re-queue unrouted nets for future routing
     if len(get_congested_nets()) == 0:
         for net in net_dict.values():
             if net.sinksRemaining > 0:
                 net_queue.put(net)
-
-    print("Ripped up " + str(net_id))
 
 
 def find_best_routing_pair():
@@ -926,6 +930,12 @@ def a_star_step():
                     cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and \
                         not cand_cell.isSource and not cand_cell.isSink and \
                         active_net.num not in cand_cell.blacklist
+
+                    if cand_x == 6 and cand_y == 5:
+                        print("blacklist:")
+                        print(cand_cell.blacklist)
+                    if active_net.num in cand_cell.blacklist:
+                        pass  # print("Net " + str(active_net.num) + " blocked from " + str(cand_x) + "," + str(cand_y))
 
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront

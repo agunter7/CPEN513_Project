@@ -300,10 +300,9 @@ def key_handler(event):
         if is_first_step:
             rl_env.reset()
             is_first_step = False
-        rand_action = random.randrange(1)
-        print("rl target cell")
-        print(rl_target_cell)
-        rl_action_step(rand_action)
+        else:
+            rand_action = random.randrange(1)
+            rl_action_step(rand_action)
     else:
         pass
 
@@ -335,7 +334,7 @@ def rl_action_step(action):
         else:
             rip_up_one(ripup_candidate_b)
     else:
-        print("ERROR: Useless RL action input! Ignore first occurrence of this message.")
+        print("ERROR: Useless RL action input!")
 
     reward = 0
 
@@ -344,6 +343,7 @@ def rl_action_step(action):
 
         c_cell = get_least_congested_cell()
         if c_cell is None:
+            done_routing_attempt = False
             # No congested cells remain
             # Perform another round of routing
             while not done_routing_attempt:
@@ -429,6 +429,8 @@ def rl_routing_step():
         target_sink, best_start_cell = find_best_routing_pair()
         # Start from source cell by default
         wavefront = [active_net.source.get_coords()]
+        print("New wavefront")
+        print(wavefront)
 
         # Add routed cells for this net
         for cell in active_net.wireCells:
@@ -454,6 +456,7 @@ def rl_routing_step():
             print("Routing attempt complete")
             print("Failed nets: " + str(failed_nets))
             done_routing_attempt = True
+            active_net = None
         else:
             # Move on to next net
             active_net = net_queue.get()
@@ -697,6 +700,7 @@ def rip_up_one(net_id):
     global routing_canvas
     global num_segments_routed
     global rl_target_cell
+    global active_net
 
     net = net_dict[net_id]
 
@@ -761,7 +765,9 @@ def rip_up_one(net_id):
     if len(get_congested_nets()) == 0:
         for net in net_dict.values():
             if net.sinksRemaining > 0:
+                print(net.num)
                 net_queue.put(net)
+
 
 def find_best_routing_pair():
     """
@@ -874,8 +880,6 @@ def a_star_step():
     global target_sink
     global done_routing_attempt
     global num_segments_routed
-
-    print("a_star_step")
 
     if not isinstance(target_sink, Cell) or not isinstance(active_net, Net) or not isinstance(wavefront, list):
         return
@@ -1006,10 +1010,8 @@ def a_star_step():
 
             if net_queue.empty():
                 # All nets are routed
-                print("Routing attempt complete")
-                print("Failed nets: " + str(failed_nets))
                 done_routing_attempt = True
-                print("Got here")
+                active_net = None
             else:
                 # Move on to next net
                 active_net = net_queue.get()

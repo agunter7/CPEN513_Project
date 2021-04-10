@@ -11,8 +11,10 @@ from stable_baselines3.common.env_checker import check_env
 import os
 from tkinter import *
 from queue import SimpleQueue
+from queue import PriorityQueue
 import numpy as np
 import random
+from enum import Enum
 
 # Constants
 FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
@@ -47,7 +49,14 @@ circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
 rl_model = None  # The RL Agent
 is_first_step = True  # Is this the first step of the RL agent since the last environment reset?
 step_count = 0  # Number of steps taken by the RL agent during program run
+ripup_candidate_a = None
+ripup_candidate_b = None
+rl_target_cell = None
 
+
+class Actions(Enum):
+    RIP_A = 0
+    RIP_B = 1
 
 class RouterEnv(gym.Env):
     """
@@ -62,7 +71,7 @@ class RouterEnv(gym.Env):
         num_nets = len(net_dict)
         if num_nets == 0:
             exit("ERROR: invalid number of nets in gym environment")
-        self.action_space = spaces.Discrete(num_nets)
+        self.action_space = spaces.Discrete(2)
         self.observation_space = spaces.Box(low=0, high=num_nets,
                                             shape=(array_height, array_width), dtype=np.uint8)
 
@@ -146,7 +155,7 @@ class Cell:
         self.isObstruction = obstruction
         self.isSource = source
         self.isSink = sink
-        self.netGroups = [net_group]  # Int indicating which net the Cell belongs to
+        self.netGroups = [net_group]  # Int indicating which nets the Cell belongs to
         self.id = -1  # Tkinter ID for a corresponding rectangle
         self.isRouted = False  # Has this cell been routed in the current attempt?
         self.isWire = False  # Is this cell part of a trace?
@@ -159,7 +168,8 @@ class Cell:
         self.next_cell = []  # Can have multiple "next" cells, because wavefront propagates in 4 directions
         self.prev_cell = None  # Reference to previous cell in route, for backtrace
         self.congest_hist = 0  # number of times cell has been congested
-        self.isOwned = False
+        # self.isOwned = False
+        self.blacklist = []  # List of nets (by ID) that are not allowed to use this cell
 
     def get_coords(self): return self.x, self.y
 
@@ -267,7 +277,7 @@ def key_handler(event):
         rl_model.learn(total_timesteps=10)
         print("Finished RL training")
     elif e_char == 'r':
-        rand_action = random.randrange(len(net_dict))
+        rand_action = random.randrange(1)
         rl_action_step(rand_action)
     else:
         pass
@@ -285,25 +295,25 @@ def rl_action_step(action):
     global active_net
     global is_first_step
     global debug_counter
+    global ripup_candidate_a
+    global ripup_candidate_b
+    global rl_target_cell
 
     print("rl_action_step")
 
     debug_counter += 1
 
-    # Check for congestion
-    c_nets = get_congested_nets()
-
-    if len(c_nets) > 0:
+    if rl_target_cell.netCount > 0:
         # Rip-up the net decided by the RL action
-        rip_net_id = action
-        rip_up_one(rip_net_id)
-
-        # get new congestion levels
-        c_nets = get_congested_nets()
+        if action == Actions.RIP_A:
+            rip_up_one(ripup_candidate_a.num)
+        else:
+            rip_up_one(ripup_candidate_b.num)
     else:
         # This case indicates the RL agent was fed an uncongested observation
         # The environment should "step" from one congested scenario to another
         # The agent should never see an uncongested observation
+        # TODO: Perform an initial route on reset()
         if is_first_step:
             # Exception on new environment reset, as first step must be uncongested by default
             pass
@@ -312,34 +322,52 @@ def rl_action_step(action):
 
     reward = 0
 
-    if len(c_nets) == 0:
-        # Previous rip-up resolved congestion
-        while not done_routing_attempt:
-            # Continue routing
-            rl_routing_step()
+    if rl_target_cell.netCount == 1:
+        # Previous rip-up resolved congestion for the target cell
 
-        print("Out of rl_routing_step loop")
-        # if no congestion, we can be done
-        c_nets = get_congested_nets()
-        all_nets_routed = (len(c_nets) == 0 and not is_first_step)
-        if all_nets_routed:
-            if len(failed_nets) > 0:
-                # At least one route was blocked
-                print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
-                done_circuit = True
-                reward += -1
+        c_cell = get_least_congested_cell()
+        if c_cell.netCount < 2:
+            # No congested cells remain
+            # Perform another round of routing
+            while not done_routing_attempt:
+                rl_routing_step()
+
+            c_nets = get_congested_nets()
+            all_nets_routed = (len(c_nets) == 0 and not is_first_step)
+            if all_nets_routed:
+                if len(failed_nets) > 0:
+                    # At least one route was blocked
+                    print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
+                    done_circuit = True
+                    reward += -1
+                else:
+                    # Successful route
+                    print("Circuit routed successfully.")
+                    done_circuit = True
+                    reward += 1
             else:
-                # Successful route
-                print("Circuit routed successfully.")
-                done_circuit = True
-                reward += 1
+                # Try again with new congestion settings!
+                done_routing_attempt = False
+                active_net = None
         else:
-            # Try again with new congestion settings!
-            done_routing_attempt = False
-            active_net = None
+            # Move to next congested cell
+            rl_target_cell = c_cell
+            # Pick two arbitrary nets for the next rip-up comparison
+            ripup_candidate_a = c_cell.netGroups[0]
+            ripup_candidate_b = c_cell.netGroups[1]
+
     else:
         # RL agent needs to perform more rip-ups
-        pass
+        # Form new pair for next rip-up comparison
+        # Only need to replace the net that was ripped up by the agent's most recent decision
+        if action == Actions.RIP_A:
+            for net_group in rl_target_cell.netGroups:
+                if net_group is not ripup_candidate_b:
+                    ripup_candidate_a = net_group
+        else:
+            for net_group in rl_target_cell.netGroups:
+                if net_group is not ripup_candidate_a:
+                    ripup_candidate_b = net_group
 
     if is_first_step:
         is_first_step = False
@@ -448,10 +476,65 @@ def algorithm_to_completion():
         a_star_multistep(1)
 
 
+def get_least_congested_cell():
+    """
+    Get the cell with the least number of nets routed through it
+    :return: Cell
+    """
+    global routing_array
+
+    least_congested_cell = None
+    lowest_congestion = float("inf")
+
+    for column in routing_array:
+        for cell in column:
+            if 1 < cell.netCount < lowest_congestion:  # >1 otherwise uncongested/empty cells would be chosen
+                least_congested_cell = cell
+                lowest_congestion = cell.netCount
+
+    return least_congested_cell
+
+
+def get_most_congested_cell():
+    """
+    Get the cell with the greatest number of nets routed through it
+    :return: Cell
+    """
+    global routing_array
+
+    most_congested_cell = None
+    greatest_congestion = 0
+
+    for column in routing_array:
+        for cell in column:
+            if cell.netCount > greatest_congestion:
+                most_congested_cell = cell
+                greatest_congestion = cell.netCount
+
+    return most_congested_cell
+
+
+def get_congested_cells():
+    """
+    Get the currently congested cells
+    :return: list
+    """
+    global routing_array
+
+    congested_cells = []
+
+    for column in routing_array:
+        for cell in column:
+            if cell.isCongested:
+                congested_cells.append(cell)
+
+    return congested_cells
+
+
 def get_congested_nets():
     """
     get the currently congested nets and the number of cells in each
-    :return: void
+    :return: dict
     """
     congestion = {}
     for net_id, net in net_dict.items():
@@ -599,6 +682,7 @@ def rip_up_one(net_id):
     """
     global routing_canvas
     global num_segments_routed
+    global rl_target_cell
 
     net = net_dict[net_id]
 
@@ -654,6 +738,9 @@ def rip_up_one(net_id):
     net.sinksRemaining = len(net.sinks)
     net.initRouteComplete = False
     net.congestedCells = []
+
+    # Add this net to the target cell's blacklist
+    rl_target_cell.blacklist.append(net_id)
 
     # If this rip-up resolved all congestion, then re-queue unrouted nets for future routing
     if len(get_congested_nets()) == 0:
@@ -810,14 +897,15 @@ def a_star_step():
                         break
 
                     cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and \
-                        not cand_cell.isSource and not cand_cell.isSink and not cand_cell.isOwned
+                        not cand_cell.isSource and not cand_cell.isSink and not cand_cell.isOwned and \
+                        active_net.num not in cand_cell.blacklist
 
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront
                         cand_cell.isCandidate = True
                         cand_cell.dist_from_source = active_cell.dist_from_source + 1
                         cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + \
-                                                 cand_cell.congest_hist
+                            cand_cell.congest_hist
                         if cand_cell.isOwned:
                             cand_cell.routingValue += 50
                         cand_cell.prev_cell = active_cell

@@ -17,7 +17,7 @@ import random
 from enum import Enum
 
 # Constants
-FILE_PATH = "../benchmarks/kuma.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 NUM_OBSERVATION_PARAMS = 6 # number of RL input observation parameters
 
@@ -45,6 +45,7 @@ done_routing_attempt = False  # Has the current attempt at routing the circuit c
 done_circuit = False  # Has the circuit been routed? (Or determined unroutable?)
 final_route_initiated = False  # Is the current routing attempt definitely the last one?
 circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
+uncongested_nets = 0
 
 # Reinforcement Learning variables
 rl_model = None  # The RL Agent
@@ -113,7 +114,7 @@ class RouterEnv(gym.Env):
         global ripup_candidate_b
         global rl_target_cell
 
-        print("reset")
+        print("reset**********************************************************************************************")
 
         # Rip-up any and all nets in current environment
         rl_target_cell = None
@@ -148,11 +149,17 @@ class RouterEnv(gym.Env):
         while not done_routing_attempt:
             rl_routing_step()
 
+        uncongested_nets = num_uncongested()
+
         rl_target_cell = get_least_congested_cell()
-        print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
-        # Pick two arbitrary nets for the next rip-up comparison
-        ripup_candidate_a = rl_target_cell.netGroups[1]
-        ripup_candidate_b = rl_target_cell.netGroups[2]
+
+        if rl_target_cell:
+            print("RL target cell is " + str(rl_target_cell.x) + ", " + str(rl_target_cell.y))
+            # Pick two arbitrary nets for the next rip-up comparison
+            ripup_candidate_a = rl_target_cell.netGroups[1]
+            ripup_candidate_b = rl_target_cell.netGroups[2]
+        else:
+            print("No congested cells!")
 
         observation = get_rl_observation()
 
@@ -313,14 +320,22 @@ def key_handler(event):
     elif str.isdigit(e_char):
         a_star_multistep(int(e_char))
     elif e_char == 'l':
+        # testing these out
+        learn_rate = 0.2
+        explore_init = 1.0
+        explore_final = 0.1
+        gamma = 0.99
+        timesteps = 100
+
         # AI Gym Environment
         env = RouterEnv()
         check_env(env)
 
         # RL Agent
-        rl_model = DQN('MlpPolicy', env, verbose=1)
+        rl_model = DQN('MlpPolicy', env, verbose=1, learning_rate=learn_rate, exploration_initial_eps=explore_init,
+                        exploration_final_eps=explore_final, gamma=gamma)
         print("Beginning RL training")
-        rl_model.learn(total_timesteps=20)
+        rl_model.learn(total_timesteps=timesteps)
         print("Finished RL training")
     elif e_char == 'r':
         if is_first_step:
@@ -331,6 +346,18 @@ def key_handler(event):
             rl_action_step(rand_action)
     else:
         pass
+
+
+def num_uncongested():
+    global net_dict
+
+    uncongested = 0
+
+    for net in net_dict.values():
+        if not net.congestedCells:
+            uncongested += 1
+
+    return uncongested
 
 
 def rl_action_step(action):
@@ -348,19 +375,27 @@ def rl_action_step(action):
     global ripup_candidate_a
     global ripup_candidate_b
     global rl_target_cell
+    global uncongested_nets
 
     debug_counter += 1
+    reward = 0
 
-    if rl_target_cell.netCount > 0:
+    if not rl_target_cell:
+        print("No RL cell to act on!")
+        return reward, get_rl_observation()
+
+    if rl_target_cell.netCount > 1:
         # Rip-up the net decided by the RL action
-        if action == Actions.RIP_A:
+        if action == Actions.RIP_A.value:
+            print("Ripping up A")
             rip_up_one(ripup_candidate_a)
-        else:
+        elif action == Actions.RIP_B.value:
+            print("Ripping up B")
             rip_up_one(ripup_candidate_b)
+        else:
+            print("Invalid action!")
     else:
         print("ERROR: Useless RL action input!")
-
-    reward = 0
 
     if rl_target_cell.netCount == 1:
         # Previous rip-up resolved congestion for the target cell
@@ -374,6 +409,10 @@ def rl_action_step(action):
             while not done_routing_attempt:
                 rl_routing_step()
 
+            uncongested_new = num_uncongested()
+
+            reward += (uncongested_new - uncongested_nets)
+
             c_cell = get_least_congested_cell()
             all_nets_routed = c_cell is None
             if all_nets_routed:
@@ -381,12 +420,12 @@ def rl_action_step(action):
                     # At least one route was blocked
                     print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
                     done_circuit = True
-                    reward += -1
+                    reward += -10
                 else:
                     # Successful route
                     print("Circuit routed successfully.")
                     done_circuit = True
-                    reward += 1
+                    reward += 10
             else:
                 # Attempt route again with new congestion (blacklist) settings
                 rl_target_cell = c_cell
@@ -594,6 +633,10 @@ def get_rl_observation():
 
     observation_array = np.zeros(shape=(obs_hi.shape[0],), dtype=float)
 
+    if not (ripup_candidate_a and ripup_candidate_b):
+        print("No ripup candidates to observe")
+        return observation_array
+    print("----------------------------------------------------------------------")
     print('net a: ' + str(ripup_candidate_a) + ' net b: ' + str(ripup_candidate_b))
 
     observation_array[0], observation_array[1] = 0, 0
@@ -619,7 +662,7 @@ def get_rl_observation():
     observation_array[10] = get_freedom(ripup_candidate_a, 1)
     observation_array[11] = get_freedom(ripup_candidate_b, 1)
 
-    print(observation_array)
+    # print(observation_array)
 
     return observation_array
 
@@ -636,23 +679,49 @@ def algorithm_to_completion():
         a_star_multistep(1)
 
 
+def can_blacklist(cell):
+    global routing_array
+
+    for off_x in [-1, 0, 1]:
+        for off_y in [-1, 0, 1]:
+            in_bounds = cell.x + off_x >= 0 and cell.x + off_x < array_width and cell.y + off_y >= 0 and cell.y + off_y < array_height
+
+            if (off_x == 0 and off_y == 0) or not in_bounds:
+                continue
+
+            neighbour_cell = routing_array[cell.x + off_x][cell.y + off_y]
+
+            skip = neighbour_cell.isSink or neighbour_cell.isSource
+
+            if skip:
+                return False
+
+    return True
+
+
 def get_least_congested_cell():
     """
-    Get the cell with the least number of nets routed through it
+    Get the cell with the least number of nets routed through it. If there is a tie, pick randomly.
     :return: Cell
     """
     global routing_array
 
-    least_congested_cell = None
-    lowest_congestion = np.inf #float("inf")
+    least_congested_cells = [None]
+    lowest_congestion = np.inf
 
     for column in routing_array:
         for cell in column:
             if len(cell.netGroups) != cell.netCount+1:
                 print("CONGESTION ERROR " + str(len(cell.netGroups)) + " " + str(cell.netCount))
+
+            # if can_blacklist(cell):
             if 1 < cell.netCount < lowest_congestion:  # >1 otherwise uncongested/empty cells would be chosen
-                least_congested_cell = cell
+                least_congested_cells = [cell]
                 lowest_congestion = cell.netCount
+            elif cell.netCount == lowest_congestion:
+                least_congested_cells.append(cell)
+
+    least_congested_cell = random.choice(least_congested_cells)
 
     return least_congested_cell
 
@@ -669,7 +738,7 @@ def get_most_congested_cell():
 
     for column in routing_array:
         for cell in column:
-            if cell.netCount > greatest_congestion:
+            if cell.netCount > greatest_congestion and can_blacklist(cell):
                 most_congested_cell = cell
                 greatest_congestion = cell.netCount
 
@@ -912,6 +981,10 @@ def rip_up_one(net_id):
         for net in net_dict.values():
             if net.sinksRemaining > 0:
                 net_queue.put(net)
+
+    # It's not a failed net anymore if we rip it up, eh?
+    if net_id in failed_nets:
+        failed_nets.remove(net_id)
 
 
 def find_best_routing_pair():

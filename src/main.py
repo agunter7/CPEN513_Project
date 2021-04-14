@@ -14,25 +14,25 @@ FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about t
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "white", "yellow"]
 
 # Global variables
-net_dict = {}  # Dictionary of nets, keys are the net numbers
+_net_dict = {}  # Dictionary of nets, keys are the net numbers
 net_pq = SimpleQueue()  # FIFO for nets to route
-active_net = None  # Reference to Net that is currently being routed
-target_sink = None  # Reference to a Cell (sink) that is currently the target for routing
-wavefront = None  # List of cells composing of the propagating wavefront
-routing_array = []  # 2D list of cells
-text_id_list = []  # A list of Tkinter IDs to on-screen text
+_active_net = None  # Reference to Net that is currently being routed
+_target_sink = None  # Reference to a Cell (sink) that is currently the target for routing
+_wavefront = None  # List of cells composing of the propagating wavefront
+_routing_array = []  # 2D list of cells
+_text_id_list = []  # A list of Tkinter IDs to on-screen text
 net_order = []  # Holds to order for the current routing attempt
-failed_nets = []  # List of nets that failed to fully route in the current attempt
-array_width = 0  # Width of routing array
-array_height = 0  # Height of routing array
+_failed_nets = []  # List of nets that failed to fully route in the current attempt
+_array_width = 0  # Width of routing array
+_array_height = 0  # Height of routing array
 current_net_order_idx = 0  # Index for the current net in net_order to route
-best_num_segments_routed = 0  # Tracks the net ordering that yields the best (failed) circuit outcome
-num_segments_routed = 0  # Number of segments routed in the current routing attempt
-all_nets_routed = True  # Have all nets been routed? Assume true, prove false if a net fails to route
-done_routing_attempt = False  # Has the current attempt at routing the circuit completed?
-done_circuit = False  # Has the circuit been routed? (Or determined unroutable?)
-final_route_initiated = False  # Is the current routing attempt definitely the last one?
-circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
+_best_num_segments_routed = 0  # Tracks the net ordering that yields the best (failed) circuit outcome
+_num_segments_routed = 0  # Number of segments routed in the current routing attempt
+_all_nets_routed = True  # Have all nets been routed? Assume true, prove false if a net fails to route
+_done_routing_attempt = False  # Has the current attempt at routing the circuit completed?
+_done_circuit = False  # Has the circuit been routed? (Or determined unroutable?)
+_final_route_initiated = False  # Is the current routing attempt definitely the last one?
+_circuit_is_hard = False  # Did the circuit fail to route on the first attempt?
 
 
 class Cell:
@@ -90,9 +90,9 @@ def main():
     Top-level main function
     :return: void
     """
-    global routing_array
-    global array_width
-    global array_height
+    global _routing_array
+    global _array_width
+    global _array_height
     global FILE_PATH
 
     # Read input file
@@ -160,7 +160,7 @@ def algorithm_to_completion(routing_canvas):
     :param routing_canvas: Tkinter canvas
     :return: void
     """
-    global done_circuit
+    global _done_circuit
 
     while not done_circuit:
         a_star_multistep(routing_canvas, 1)
@@ -172,7 +172,7 @@ def get_congested_nets():
     :return: void
     """
     congestion = {}
-    for net_id, net in net_dict.items():
+    for net_id, net in _net_dict.items():
         if len(net.congestedCells) > 0:
             congestion[net_id] = len(net.congestedCells)
 
@@ -185,7 +185,7 @@ def rip_up_congested(routing_canvas):
     :param routing_canvas: Tkinter canvas
     :return: void
     """
-    global all_nets_routed
+    global _all_nets_routed
 
     c_nets = get_congested_nets()
 
@@ -211,16 +211,16 @@ def a_star_multistep(routing_canvas, n):
     :param n: Number of iterations
     :return: void
     """
-    global active_net
-    global done_routing_attempt
-    global net_dict
-    global wavefront
-    global target_sink
+    global _active_net
+    global _done_routing_attempt
+    global _net_dict
+    global _wavefront
+    global _target_sink
     global current_net_order_idx
-    global all_nets_routed
-    global failed_nets
-    global done_circuit
-    global final_route_initiated
+    global _all_nets_routed
+    global _failed_nets
+    global _done_circuit
+    global _final_route_initiated
 
     if done_circuit:
         return
@@ -246,7 +246,7 @@ def a_star_multistep(routing_canvas, n):
         if all_nets_routed:
             if len(failed_nets) > 0:
                 # At least one route was blocked
-                print("Circuit could not be fully routed. Routed " + str(num_segments_routed) + " segments.")
+                print("Circuit could not be fully routed. Routed " + str(_num_segments_routed) + " segments.")
                 done_circuit = True
                 return
             else:
@@ -325,7 +325,7 @@ def adjust_congestion():
     Correct congestion lists in each net.
     :return: void
     """
-    for net_id, net in net_dict.items():
+    for net_id, net in _net_dict.items():
         remove_cells = []
 
         # figure out which cells are no longer congested
@@ -344,7 +344,7 @@ def set_history():
     :return: void
     """
 
-    for row in routing_array:
+    for row in _routing_array:
         for cell in row:
             if cell.isCongested:
                 # add number of nets through this cell this round
@@ -359,12 +359,12 @@ def rip_up_one(routing_canvas, net_id):
     :param net_id: The net to be ripped up
     :return: void
     """
-    global num_segments_routed
+    global _num_segments_routed
 
-    net = net_dict[net_id]
+    net = _net_dict[net_id]
 
-    if net_id in failed_nets:
-        failed_nets.remove(net_id)
+    if net_id in _failed_nets:
+        _failed_nets.remove(net_id)
 
     for cell in net.wireCells:
         cell.netGroups.remove(net_id)
@@ -424,8 +424,8 @@ def find_best_routing_pair():
     Freedom refers to the number of adjacent cells that are unoccupied.
     :return: tuple of (target_sink, best_start_cell)
     """
-    global active_net
-    global circuit_is_hard
+    global _active_net
+    global _circuit_is_hard
 
     if not isinstance(active_net, Net):
         return
@@ -501,8 +501,8 @@ def get_cell_freedom(cell: Cell) -> int:
     :param cell: Cell
     :return: int - freedom of the input cell
     """
-    global array_width
-    global array_height
+    global _array_width
+    global _array_height
     cell_x = cell.x
     cell_y = cell.y
     search_coords = [(cell_x, cell_y + 1), (cell_x, cell_y - 1),
@@ -511,7 +511,7 @@ def get_cell_freedom(cell: Cell) -> int:
     freedom = 0
     for (x, y) in search_coords:
         if 0 <= x < array_width and 0 <= y < array_height:
-            neighbour = routing_array[x][y]
+            neighbour = _routing_array[x][y]
             if not (neighbour.isObstruction or neighbour.isSource or neighbour.isSink or neighbour.isCandidate):
                 freedom += 1
     return freedom
@@ -523,12 +523,12 @@ def a_star_step(routing_canvas):
     :param routing_canvas: Tkinter canvas
     :return: void
     """
-    global active_net
-    global wavefront
-    global target_sink
-    global done_routing_attempt
+    global _active_net
+    global _wavefront
+    global _target_sink
+    global _done_routing_attempt
     global current_net_order_idx
-    global num_segments_routed
+    global _num_segments_routed
 
     if not isinstance(target_sink, Cell) or not isinstance(active_net, Net) or not isinstance(wavefront, list):
         return
@@ -545,13 +545,13 @@ def a_star_step(routing_canvas):
             # Get an active cell from the active wavefront
             cell_x = cell_coords[0]
             cell_y = cell_coords[1]
-            active_cell = routing_array[cell_x][cell_y]
+            active_cell = _routing_array[cell_x][cell_y]
             # Try to propagate one unit in each cardinal direction from the active cell
             search_coords = [(cell_x, cell_y + 1), (cell_x, cell_y - 1),
                              (cell_x + 1, cell_y), (cell_x - 1, cell_y)]
             for (cand_x, cand_y) in search_coords:
-                if 0 <= cand_x < array_width and 0 <= cand_y < array_height:
-                    cand_cell = routing_array[cand_x][cand_y]  # Candidate cell for routing
+                if 0 <= cand_x < _array_width and 0 <= cand_y < _array_height:
+                    cand_cell = _routing_array[cand_x][cand_y]  # Candidate cell for routing
                     # Check if a sink has been found
                     if cand_cell.isSink and active_net.source.netGroups[0] in cand_cell.netGroups and \
                             cand_cell.isRouted is False:
@@ -579,11 +579,11 @@ def a_star_step(routing_canvas):
                         active_cell.next_cell.append(cand_cell)
                         # Add routing value to rectangle
                         text_id = add_text(routing_canvas, cand_cell)
-                        text_id_list.append(text_id)  # For later text deletion
+                        _text_id_list.append(text_id)  # For later text deletion
 
     # Build wavefront for next step
     min_route_value = float("inf")
-    for column in routing_array:
+    for column in _routing_array:
         for cell in column:
             if cell.isCandidate:
                 if not cell.hasPropagated:
@@ -597,7 +597,7 @@ def a_star_step(routing_canvas):
     for idx, cell_coords in enumerate(wavefront):
         cell_x = cell_coords[0]
         cell_y = cell_coords[1]
-        cell = routing_array[cell_x][cell_y]
+        cell = _routing_array[cell_x][cell_y]
         if cell.routingValue > min_route_value:
             wavefront_deletion_indices.append(idx)
             cell.hasPropagated = False
@@ -624,8 +624,8 @@ def a_star_step(routing_canvas):
                     active_net.congestedCells.append(backtrace_cell)
                     for net_id in backtrace_cell.netGroups:
                         if net_id != -1 and net_id != active_net.num and \
-                                backtrace_cell not in net_dict[net_id].congestedCells:
-                            net_dict[net_id].congestedCells.append(backtrace_cell)
+                                backtrace_cell not in _net_dict[net_id].congestedCells:
+                            _net_dict[net_id].congestedCells.append(backtrace_cell)
                     routing_canvas.itemconfigure(backtrace_cell.id, fill="light blue")
                 else:
                     backtrace_cell.isWire = True
@@ -650,24 +650,24 @@ def a_star_step(routing_canvas):
         # Clear/increment active variables
         wavefront = None
         if active_net.sinksRemaining < 1:
-            if net_order[current_net_order_idx] in failed_nets:
-                failed_nets.remove(net_order[current_net_order_idx])
+            if net_order[current_net_order_idx] in _failed_nets:
+                _failed_nets.remove(net_order[current_net_order_idx])
 
             next_net_order_idx = -1
             # Get first net in order that is unrouted (or was ripped up)
             for next_net in range(len(net_order)):
-                net = net_dict[next_net]
+                net = _net_dict[next_net]
                 if net.sinksRemaining > 0:
                     next_net_order_idx = next_net
                     break
 
             if 0 <= next_net_order_idx != current_net_order_idx:
                 current_net_order_idx = next_net_order_idx
-                active_net = net_dict[net_order[current_net_order_idx]]
+                active_net = _net_dict[net_order[current_net_order_idx]]
             else:
                 # All nets are routed
                 print("Routing attempt complete")
-                print("Failed nets: " + str(failed_nets))
+                print("Failed nets: " + str(_failed_nets))
                 done_routing_attempt = True
         else:
             # Route the next sink
@@ -702,8 +702,8 @@ def cleanup_candidates(routing_canvas):
     :param routing_canvas: Tkinter canvas
     :return: void
     """
-    global routing_array
-    global text_id_list
+    global _routing_array
+    global _text_id_list
 
     # Change routing candidate cells back to default colour
     for column in routing_array:
@@ -784,7 +784,7 @@ def create_routing_array(routing_file):
                 new_net.sinksRemaining += 1
 
         # Add the new net to the net dictionary
-        net_dict[new_net.num] = new_net
+        _net_dict[new_net.num] = new_net
         # Place net numbers in FIFO (determines routing order)
         # Use net nums instead of nets themselves as an artifact of when this queue was a PQ needing tie-breaking
         net_pq.put(new_net.num)

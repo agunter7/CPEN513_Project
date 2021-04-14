@@ -23,6 +23,19 @@ import datetime
 FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 NUM_OBSERVATION_PARAMS = 6  # number of RL input observation parameters
+CONG_FRAC_IDX_A = 0
+CONG_FRAC_IDX_B = 1
+FREE_ADJ_IDX_A = 2
+FREE_ADJ_IDX_B = 3
+HPWL_IDX_A = 4
+HPWL_IDX_B = 5
+MAX_CONG_IDX_A = 6
+MAX_CONG_IDX_B = 7
+Y_FREE_IDX_A = 8
+Y_FREE_IDX_B = 9
+X_FREE_IDX_A = 10
+X_FREE_IDX_B = 11
+
 
 # General variables
 _root = None  # Tkinter root
@@ -246,6 +259,18 @@ def main():
     global _rl_model
     global _root
     global _rl_env
+    global CONG_FRAC_IDX_A
+    global CONG_FRAC_IDX_B
+    global FREE_ADJ_IDX_A
+    global FREE_ADJ_IDX_B
+    global HPWL_IDX_A
+    global HPWL_IDX_B
+    global MAX_CONG_IDX_A
+    global MAX_CONG_IDX_B
+    global Y_FREE_IDX_A
+    global Y_FREE_IDX_B
+    global X_FREE_IDX_A
+    global X_FREE_IDX_B
 
     # Set RNG seed
     random.seed(0)
@@ -261,17 +286,17 @@ def main():
     _array_height = len(_routing_array[0])
 
     # set max bounding box size
-    _obs_hi[4] = _array_width + _array_height
-    _obs_hi[5] = _array_width + _array_height
+    _obs_hi[HPWL_IDX_A] = _array_width + _array_height
+    _obs_hi[HPWL_IDX_B] = _array_width + _array_height
 
-    _obs_hi[6] = len(_net_dict)
-    _obs_hi[7] = len(_net_dict)
+    _obs_hi[MAX_CONG_IDX_A] = len(_net_dict)
+    _obs_hi[MAX_CONG_IDX_B] = len(_net_dict)
 
-    _obs_hi[8] = _array_height
-    _obs_hi[9] = _array_height
+    _obs_hi[Y_FREE_IDX_A] = _array_height
+    _obs_hi[Y_FREE_IDX_B] = _array_height
 
-    _obs_hi[10] = _array_width
-    _obs_hi[11] = _array_width
+    _obs_hi[X_FREE_IDX_A] = _array_width
+    _obs_hi[X_FREE_IDX_B] = _array_width
 
     # Create routing canvas in Tkinter
     _root = Tk()
@@ -559,7 +584,7 @@ def rl_routing_step():
     a_star_step()
 
 
-def calc_bounding_box(net_id):
+def calc_bb_hpwl(net_id):
     net = _net_dict[net_id]
 
     max_x = net.source.x
@@ -659,6 +684,18 @@ def get_rl_observation():
     global _net_dict
     global _ripup_candidate_a
     global _ripup_candidate_b
+    global CONG_FRAC_IDX_A
+    global CONG_FRAC_IDX_B
+    global FREE_ADJ_IDX_A
+    global FREE_ADJ_IDX_B
+    global HPWL_IDX_A
+    global HPWL_IDX_B
+    global MAX_CONG_IDX_A
+    global MAX_CONG_IDX_B
+    global Y_FREE_IDX_A
+    global Y_FREE_IDX_B
+    global X_FREE_IDX_A
+    global X_FREE_IDX_B
 
     observation_array = np.zeros(shape=(_obs_hi.shape[0],), dtype=float)
 
@@ -668,28 +705,30 @@ def get_rl_observation():
     print("----------------------------------------------------------------------")
     print('net a: ' + str(_ripup_candidate_a) + ' net b: ' + str(_ripup_candidate_b))
 
-    observation_array[0], observation_array[1] = 0, 0
+    observation_array[CONG_FRAC_IDX_A], observation_array[CONG_FRAC_IDX_B] = 0, 0
 
     # fraction of congested cells
     if len(_net_dict[_ripup_candidate_a].wireCells):
-        observation_array[0] = len(_net_dict[_ripup_candidate_a].congestedCells) / len(_net_dict[_ripup_candidate_a].wireCells)
+        observation_array[CONG_FRAC_IDX_A] = \
+            len(_net_dict[_ripup_candidate_a].congestedCells) / len(_net_dict[_ripup_candidate_a].wireCells)
     if len(_net_dict[_ripup_candidate_b].wireCells):
-        observation_array[1] = len(_net_dict[_ripup_candidate_b].congestedCells) / len(_net_dict[_ripup_candidate_b].wireCells)
+        observation_array[CONG_FRAC_IDX_B] = \
+            len(_net_dict[_ripup_candidate_b].congestedCells) / len(_net_dict[_ripup_candidate_b].wireCells)
     # number of free immediately adjacent cells
-    observation_array[2] = free_adj(_ripup_candidate_a)
-    observation_array[3] = free_adj(_ripup_candidate_b)
+    observation_array[FREE_ADJ_IDX_A] = free_adj(_ripup_candidate_a)
+    observation_array[FREE_ADJ_IDX_B] = free_adj(_ripup_candidate_b)
     # bounding box
-    observation_array[4] = calc_bounding_box(_ripup_candidate_a)
-    observation_array[5] = calc_bounding_box(_ripup_candidate_b)
+    observation_array[HPWL_IDX_A] = calc_bb_hpwl(_ripup_candidate_a)
+    observation_array[HPWL_IDX_B] = calc_bb_hpwl(_ripup_candidate_b)
     # max degree of congestion
-    observation_array[6] = max_congest(_ripup_candidate_a)
-    observation_array[7] = max_congest(_ripup_candidate_b)
+    observation_array[MAX_CONG_IDX_A] = max_congest(_ripup_candidate_a)
+    observation_array[MAX_CONG_IDX_B] = max_congest(_ripup_candidate_b)
     # y freedom (contiguous cells up/down)
-    observation_array[8] = get_freedom(_ripup_candidate_a, 0)
-    observation_array[9] = get_freedom(_ripup_candidate_b, 0)
+    observation_array[Y_FREE_IDX_A] = get_freedom(_ripup_candidate_a, 0)
+    observation_array[Y_FREE_IDX_B] = get_freedom(_ripup_candidate_b, 0)
     # x freedom (contiguous cells l/r)
-    observation_array[10] = get_freedom(_ripup_candidate_a, 1)
-    observation_array[11] = get_freedom(_ripup_candidate_b, 1)
+    observation_array[X_FREE_IDX_A] = get_freedom(_ripup_candidate_a, 1)
+    observation_array[X_FREE_IDX_B] = get_freedom(_ripup_candidate_b, 1)
 
     # print(observation_array)
 

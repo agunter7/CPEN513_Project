@@ -20,9 +20,9 @@ import time
 import datetime
 
 # Constants
+VERBOSE_ENV = False
 FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
-NUM_OBSERVATION_PARAMS = 6  # number of RL input observation parameters
 CONG_FRAC_IDX_A = 0
 CONG_FRAC_IDX_B = 1
 FREE_ADJ_IDX_A = 2
@@ -40,7 +40,6 @@ EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
 TIME_STEPS = 100
-VERBOSE_ENV = True
 
 
 # General variables
@@ -112,9 +111,6 @@ class RouterEnv(gym.Env):
         global _root
 
         print("Step " + str(_step_count))
-        if _step_count == 74:
-            _root.update_idletasks()
-            input("STOP")
         _step_count += 1
         reward, observation = rl_action_step(action)
         done = _done_circuit
@@ -501,6 +497,8 @@ def rl_action_step(action):
             _done_routing_attempt = False
             # No congested cells remain
             # Perform another round of routing
+            if VERBOSE_ENV:
+                print("Performing a routing attempt.")
             while not _done_routing_attempt:
                 rl_routing_step()
 
@@ -767,18 +765,16 @@ def get_rl_observation() -> np.ndarray:
 
     observation_array = np.zeros(shape=(_obs_hi.shape[0],), dtype=float)
 
-    if not (_ripup_candidate_a and _ripup_candidate_b):
+    if _ripup_candidate_a is None or _ripup_candidate_b is None:
         if VERBOSE_ENV:
-            if not _ripup_candidate_a:
+            if _ripup_candidate_a is None:
                 print("No ripup candidate A")
             else:
                 print("Ripup candidate A is: ", _ripup_candidate_a)
-            if not _ripup_candidate_b:
+            if _ripup_candidate_b is None:
                 print("No ripup candidate B")
             else:
                 print("Ripup candidate B is: ", _ripup_candidate_b)
-            _root.update_idletasks()
-            input("STOP")
 
         return observation_array
     if VERBOSE_ENV:
@@ -809,8 +805,6 @@ def get_rl_observation() -> np.ndarray:
     # x freedom (contiguous cells l/r)
     observation_array[X_FREE_IDX_A] = get_freedom(_ripup_candidate_a, True)
     observation_array[X_FREE_IDX_B] = get_freedom(_ripup_candidate_b, True)
-
-    print(observation_array)
 
     return observation_array
 

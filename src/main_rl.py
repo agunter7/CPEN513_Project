@@ -368,6 +368,7 @@ def key_handler(event):
     :param event: Key event
     :return: void
     """
+    global _root
     global _routing_canvas
     global _rl_model
     global _is_first_step
@@ -411,7 +412,7 @@ def key_handler(event):
         _step_count = 0  # Reset because check_env increments via step()
 
         print("Loading trained model")
-        _rl_model = DQN.load("target_model")
+        _rl_model = DQN.load("smart_model")
 
         obs = _rl_env.reset()
         done = False
@@ -500,14 +501,17 @@ def rl_action_step(action):
                 print("Performing a routing attempt.")
             while not _done_routing_attempt:
                 rl_routing_step()
+            # Clear relevant variables since a routing attempt was just done
+            _done_routing_attempt = False
+            _active_net = None
 
+            # Calculate reward from this routing attempt
             uncongested_new = count_uncongested_nets()
-
             reward += (uncongested_new - _init_uncongested_nets)
             # TODO: Consider fraction of uncongested nets as reward, may better account for failed/unroutable nets
 
             c_cell = get_least_congested_cell()
-            _all_nets_routed = c_cell is None
+            _all_nets_routed = c_cell is None  # TODO:
             if _all_nets_routed:
                 if len(_failed_nets) > 0:
                     # At least one route was blocked
@@ -520,16 +524,19 @@ def rl_action_step(action):
                     _done_circuit = True
                     reward += 10
             else:
-                # Attempt route again with new congestion (blacklist) settings
+                # Perform ripups on newly-routed, congested circuit
                 _rl_target_cell = c_cell
                 if VERBOSE_ENV:
+                    print("Picked target cell in newly-routed circuit")
                     print("RL target cell is " + str(_rl_target_cell.x) + ", " + str(_rl_target_cell.y))
-                _done_routing_attempt = False
-                _active_net = None
+                # Pick two arbitrary nets for the next rip-up comparison
+                _ripup_candidate_a = c_cell.netGroups[1]
+                _ripup_candidate_b = c_cell.netGroups[2]
         else:
-            # Move to next congested cell
+            # Move to next congested cell in this circuit
             _rl_target_cell = c_cell
             if VERBOSE_ENV:
+                print("Changing target cell within same route attempt")
                 print("RL target cell is " + str(_rl_target_cell.x) + ", " + str(_rl_target_cell.y))
             # Pick two arbitrary nets for the next rip-up comparison
             _ripup_candidate_a = c_cell.netGroups[1]

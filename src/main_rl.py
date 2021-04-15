@@ -39,7 +39,7 @@ LEARN_RATE = 0.2
 EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
-TRAIN_TIME_STEPS = 1000
+TRAIN_TIME_STEPS = 0
 
 
 # General variables
@@ -511,7 +511,7 @@ def rl_action_step(action):
             # TODO: Consider fraction of uncongested nets as reward, may better account for failed/unroutable nets
 
             c_cell = get_least_congested_cell()
-            _all_nets_routed = c_cell is None  # TODO:
+            _all_nets_routed = c_cell is None  # TODO: _all_nets_routed seems to serve 2 purposes, should probs split it
             if _all_nets_routed:
                 if len(_failed_nets) > 0:
                     # At least one route was blocked

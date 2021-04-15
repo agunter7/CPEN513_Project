@@ -20,7 +20,7 @@ import time
 import datetime
 
 # Constants
-VERBOSE_ENV = False
+VERBOSE_ENV = True
 FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 CONG_FRAC_IDX_A = 0
@@ -39,7 +39,7 @@ LEARN_RATE = 0.2
 EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
-TIME_STEPS = 100
+TRAIN_TIME_STEPS = 1000
 
 
 # General variables
@@ -354,7 +354,6 @@ def main():
                 _routing_canvas.create_text(text_x, text_y, font=("arial", text_size),
                                             text=str(route_cell.netGroups[-1]), fill='white')
 
-
     _rl_env = RouterEnv()
 
     # Event bindings and Tkinter start
@@ -379,7 +378,7 @@ def key_handler(event):
     global EXPLORE_INIT
     global EXPLORE_FINAL
     global GAMMA
-    global TIME_STEPS
+    global TRAIN_TIME_STEPS
 
     e_char = event.char
 
@@ -400,7 +399,7 @@ def key_handler(event):
         _rl_model = DQN('MlpPolicy', _rl_env, verbose=1, learning_rate=LEARN_RATE, exploration_initial_eps=EXPLORE_INIT,
                         exploration_final_eps=EXPLORE_FINAL, gamma=GAMMA)
         print("Beginning RL training")
-        _rl_model.learn(total_timesteps=TIME_STEPS)
+        _rl_model.learn(total_timesteps=TRAIN_TIME_STEPS)
         print("Finished RL training")
         print("Saving trained model")
         _rl_model.save("agent_" + time.strftime("%d-%m-%YT%H-%M-%S"))
@@ -663,15 +662,24 @@ def free_adj(net_id: int) -> int:
     """
     global _rl_target_cell
     global _routing_array
+    global _array_width
+    global _array_height
 
     num_free = 0
 
     for off_x in [-1, 0, 1]:
         for off_y in [-1, 0, 1]:
             if off_x == 0 and off_y == 0:
+                # Skip the target cell
                 continue
 
-            check_cell = _routing_array[_rl_target_cell.x + off_x][_rl_target_cell.y + off_y]
+            # Skip "cells" that are out of the grid bounds
+            x_coord = _rl_target_cell.x + off_x
+            y_coord = _rl_target_cell.y + off_y
+            if x_coord >= _array_width or x_coord < 0 or y_coord >= _array_height or y_coord < 0:
+                continue
+
+            check_cell = _routing_array[x_coord][y_coord]
 
             skip = net_id in check_cell.blacklist or check_cell.isSink or check_cell.isSource or \
                 check_cell.isObstruction

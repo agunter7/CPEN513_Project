@@ -132,3 +132,4 @@ dmypy.json
 .idea/
 src/example.py
 example.py
+*_test.py

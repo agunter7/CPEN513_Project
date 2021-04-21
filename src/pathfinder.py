@@ -7,13 +7,13 @@ Uses Tkinter for GUI.
 
 import os
 from tkinter import *
-from enum import Enum
 from queue import PriorityQueue
 import random
+import time
 
 
 # Constants
-FILE_PATH = "../benchmarks_no_obst/kuma.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
@@ -65,7 +65,7 @@ class Cell:
         self.next_cell = []  # Can have multiple "next" cells, because wavefront propagates in 4 directions
         self.prev_cell = None  # Reference to previous cell in route, for backtrace
         self.congest = 1        # congestion in previous round (initialize to 1)
-        self.congest_hist = 0   # product of previous congestion numbers
+        self.congest_hist = 1   # product of previous congestion numbers
         self.isOwned = False
 
     def get_coords(self): return self.x, self.y
@@ -157,6 +157,9 @@ def key_handler(routing_canvas, event):
         algorithm_to_completion(routing_canvas)
     elif str.isdigit(e_char):
         algorithm_multistep(routing_canvas, int(e_char))
+    elif e_char == 'q':
+        for _ in range(1000):
+            algorithm_multistep(routing_canvas, 1)
     else:
         pass
 
@@ -169,8 +172,11 @@ def algorithm_to_completion(routing_canvas):
     """
     global done_circuit
 
+    start = time.time()
     while not done_circuit:
         algorithm_multistep(routing_canvas, 1)
+    end = time.time()
+    print("Took " + str(end-start) + "s")
 
 
 def get_congested_nets(routing_canvas):
@@ -490,7 +496,7 @@ def find_best_routing_pair():
                     best_sink = unrouted_sink
             # Check wire cells
             for wire_cell in active_net.wireCells:
-                dist = (manhattan(unrouted_sink, wire_cell) + wire_cell.congest_hist)*wire_cell.congest
+                dist = manhattan(unrouted_sink, wire_cell)
                 if dist < shortest_dist:
                     shortest_dist = dist
                     best_start_cell = wire_cell
@@ -590,7 +596,7 @@ def a_star_step(routing_canvas):
                         cand_cell.dist_from_source = active_cell.dist_from_source+1
                         # cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + cand_cell.congest + cand_cell.congest_hist
                         # PathFinder does c = (b + h)*p where c is cost, b is base cost, h is history, and p is current usage
-                        cand_cell.routingValue = (cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + cand_cell.congest_hist)*cand_cell.congest
+                        cand_cell.routingValue = (cand_cell.dist_from_source + manhattan(cand_cell, target_sink)) * cand_cell.congest_hist * cand_cell.congest
                        # if cand_cell.isOwned:
                         #     cand_cell.routingValue += 50
                         cand_cell.prev_cell = active_cell

@@ -13,7 +13,7 @@ import time
 
 
 # Constants
-FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/custom/simple_cell.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0

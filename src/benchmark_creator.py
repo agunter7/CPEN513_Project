@@ -3,10 +3,10 @@ from math import floor
 import os
 import time
 
-BENCHMARK_NAME = "Testmark"
+BENCHMARK_NAME = "../benchmarks/custom/Testmark"
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "deep sky blue", "chocolate3"]
-ARRAY_WIDTH = 12
-ARRAY_HEIGHT = 9
+ARRAY_WIDTH = 25
+ARRAY_HEIGHT = 25
 CELL_LENGTH = 15
 
 # Global variables

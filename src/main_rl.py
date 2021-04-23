@@ -22,7 +22,7 @@ import datetime
 # Constants
 VERBOSE_ENV = True
 LOAD_MODEL_NAME = "smart_model"
-FILE_PATH = "../benchmarks/custom/pairs.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/kuma.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 CONG_FRAC_IDX_A = 0
 CONG_FRAC_IDX_B = 1
@@ -40,13 +40,14 @@ LEARN_RATE = 0.2
 EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
-TRAIN_TIME_STEPS = 1000
+TRAIN_TIME_STEPS = 30
 
 
 # General variables
 _root = None  # Tkinter root
 _routing_canvas = None  # Tkinter canvas GUI
 _debug_counter = 0
+_debug_trigger = False
 
 # Maze Routing variables
 _net_dict = {}  # Dictionary of nets, keys are the net numbers
@@ -111,7 +112,7 @@ class RouterEnv(gym.Env):
         global _done_circuit
         global _root
 
-        print("Step " + str(_step_count))
+        # print("Step " + str(_step_count))
         _step_count += 1
         reward, observation = rl_action_step(action)
         done = _done_circuit
@@ -385,13 +386,7 @@ def key_handler(event):
 
     e_char = event.char
 
-    if e_char == '0':
-        # Plain A* to completion
-        algorithm_to_completion()
-    elif str.isdigit(e_char):
-        # Plain A*
-        a_star_multistep(int(e_char))
-    elif e_char == 'l':
+    if e_char == 'l':
         # RL Agent Learning pass
 
         # AI Gym Environment check
@@ -414,13 +409,13 @@ def key_handler(event):
         _step_count = 0  # Reset because check_env increments via step()
 
         print("Loading trained model")
-        _rl_model = DQN.load(LOAD_MODEL_NAME)
+        if _rl_model is None:
+            _rl_model = DQN.load(LOAD_MODEL_NAME)
 
         obs = _rl_env.reset()
         done = False
         while not done:
             rl_action, states = _rl_model.predict(obs, deterministic=True)
-            print("Action ", rl_action)
             obs, rewards, done, info = _rl_env.step(rl_action)
     elif e_char == 'r':
         # RL flow debugging (no agent involved, emulate actions randomly)
@@ -531,6 +526,7 @@ def rl_action_step(action):
                 if VERBOSE_ENV:
                     print("Picked target cell in newly-routed circuit")
                     print("RL target cell is " + str(_rl_target_cell.x) + ", " + str(_rl_target_cell.y))
+
                 # Pick two arbitrary nets for the next rip-up comparison
                 _ripup_candidate_a = c_cell.netGroups[1]
                 _ripup_candidate_b = c_cell.netGroups[2]
@@ -548,7 +544,7 @@ def rl_action_step(action):
         # RL agent needs to perform more rip-ups
         # Form new pair for next rip-up comparison
         # Only need to replace the net that was ripped up by the agent's most recent decision
-        if action == Actions.RIP_A:
+        if action == Actions.RIP_A.value:
             for net_group in _rl_target_cell.netGroups:
                 if net_group is not _ripup_candidate_b:
                     _ripup_candidate_a = net_group
@@ -614,7 +610,8 @@ def rl_routing_step():
         if _active_net.num not in _failed_nets:
             _failed_nets.append(_active_net.num)  # Add this net to the list of failed nets
 
-        print("Failed to route net " + str(_active_net.num) + " with colour " + NET_COLOURS[_active_net.num])
+        if VERBOSE_ENV:
+            print("Failed to route net " + str(_active_net.num) + " with colour " + NET_COLOURS[_active_net.num])
         _all_nets_routed = False
         _wavefront = None  # New wavefront will be created for next net
 
@@ -622,8 +619,9 @@ def rl_routing_step():
 
         if _net_queue.empty():
             # All nets are routed
-            print("Routing attempt complete")
-            print("Failed nets: " + str(_failed_nets))
+            if VERBOSE_ENV:
+                print("Routing attempt complete")
+                print("Failed nets: " + str(_failed_nets))
             _done_routing_attempt = True
             _active_net = None
         else:
@@ -826,18 +824,6 @@ def get_rl_observation() -> np.ndarray:
     return observation_array
 
 
-def algorithm_to_completion():
-    """
-    Execute the currently selected algorithm until completion.
-    :return: void
-    """
-    global _routing_canvas
-    global _done_circuit
-
-    while not _done_circuit:
-        a_star_multistep(1)
-
-
 def can_blacklist(cell):
     global _routing_array
 
@@ -956,95 +942,6 @@ def rip_up_congested():
     return
 
 
-def a_star_multistep(n):
-    """
-    Perform multiple iterations of A*
-    :param n: Number of iterations
-    :return: void
-    """
-    global _routing_canvas
-    global _active_net
-    global _done_routing_attempt
-    global _net_dict
-    global _wavefront
-    global _target_sink
-    global _all_nets_routed
-    global _failed_nets
-    global _done_circuit
-    global _final_route_initiated
-
-    if _done_circuit:
-        return
-
-    # Set a net to route if none already set
-    if _active_net is None:
-        _active_net = _net_queue.get()
-
-    # Check if the current routing attempt is complete
-    if _done_routing_attempt:
-
-        # rip up routes until we have 0 congestion
-        rip_up_congested()
-
-        # if no congestion, we can be done
-        if _all_nets_routed:
-            if len(_failed_nets) > 0:
-                # At least one route was blocked
-                print("Circuit could not be fully routed. Routed " + str(_num_segments_routed) + " segments.")
-                _done_circuit = True
-                return
-            else:
-                # Successful route
-                print("Circuit routed successfully.")
-                _done_circuit = True
-                return
-        else:
-            # Try again with new congestion settings!
-            _done_routing_attempt = False
-
-            # Pick new net!
-            _active_net = _net_queue.get()
-
-    # Set wavefront if none is set
-    if _wavefront is None:
-        _target_sink, best_start_cell = find_best_routing_pair()
-        # Start from source cell by default
-        _wavefront = [_active_net.source.get_coords()]
-
-        # Add routed cells for this net
-        for cell in _active_net.wireCells:
-            _wavefront.append((cell.x, cell.y))
-
-    # Check if the wavefront still contains cells
-    if len(_wavefront) == 0:
-        # No more available cells for wavefront propagation in this net
-        # This net cannot be routed
-        # Move on to next net
-
-        if _active_net.num not in _failed_nets:
-            _failed_nets.append(_active_net.num)  # Add this net to the list of failed nets
-
-        print("Failed to route net " + str(_active_net.num) + " with colour " + NET_COLOURS[_active_net.num])
-        _all_nets_routed = False
-        _wavefront = None  # New wavefront will be created for next net
-
-        cleanup_candidates()
-
-        if _net_queue.empty():
-            # All nets are routed
-            print("Routing attempt complete")
-            print("Failed nets: " + str(_failed_nets))
-            _done_routing_attempt = True
-        else:
-            # Move on to new net
-            _active_net = _net_queue.get()
-        return
-
-    # Run A*
-    for _ in range(n):
-        a_star_step()
-
-
 def adjust_congestion():
     """
     Correct congestion lists in each net.
@@ -1075,9 +972,6 @@ def rip_up_one(net_id):
     global _active_net
 
     net = _net_dict[net_id]
-
-    if net_id in _failed_nets:
-        _failed_nets.remove(net_id)
 
     for cell in net.wireCells:
         cell.netGroups.remove(net_id)
@@ -1299,12 +1193,6 @@ def a_star_step():
                     cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and \
                                      not cand_cell.isSource and not cand_cell.isSink and \
                                      _active_net.num not in cand_cell.blacklist
-
-                    # if cand_x == 6 and cand_y == 5:
-                    #     print("blacklist:")
-                    #     print(cand_cell.blacklist)
-                    if _active_net.num in cand_cell.blacklist:
-                        pass  # print("Net " + str(active_net.num) + " blocked from " + str(cand_x) + "," + str(cand_y))
 
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront

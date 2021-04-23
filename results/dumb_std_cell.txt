@@ -1,0 +1,6410 @@
+C:\Users\Andrew\Documents\UNIVERSITY\UBC\W21\CAD\Project\CPEN513_Project\venv\Scripts\python.exe "C:\Program Files\JetBrains\PyCharm 2020.3.2\plugins\python\helpers\pydev\pydevconsole.py" --mode=client --port=52001
+import sys; print('Python %s on %s' % (sys.version, sys.platform))
+sys.path.extend(['C:\\Users\\Andrew\\Documents\\UNIVERSITY\\UBC\\W21\\CAD\\Project\\CPEN513_Project', 'C:/Users/Andrew/Documents/UNIVERSITY/UBC/W21/CAD/Project/CPEN513_Project'])
+PyDev console: starting.
+Python 3.8.8 (tags/v3.8.8:024d805, Feb 19 2021, 13:18:16) [MSC v.1928 64 bit (AMD64)] on win32
+>>> runfile('C:/Users/Andrew/Documents/UNIVERSITY/UBC/W21/CAD/Project/CPEN513_Project/src/main_rl.py', wdir='C:/Users/Andrew/Documents/UNIVERSITY/UBC/W21/CAD/Project/CPEN513_Project/src')
+Box(0.0, 120.0, (12,), float64)
+Loading trained model
+RESET**********************************************************************************************
+RL target cell is 28, 22
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 0
+Ripping up A
+Blacklisted 3 from 28,22
+Changing target cell within same route attempt
+RL target cell is 71, 28
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 1
+Ripping up A
+Blacklisted 1 from 71,28
+Changing target cell within same route attempt
+RL target cell is 56, 10
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 2
+Ripping up A
+Blacklisted 0 from 56,10
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 24, 32
+----------------------------------------------------------------------
+net a: 5 net b: 3
+Action  0
+Step 3
+Ripping up A
+Blacklisted 5 from 24,32
+Changing target cell within same route attempt
+RL target cell is 61, 9
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 4
+Ripping up A
+Blacklisted 4 from 61,9
+Changing target cell within same route attempt
+RL target cell is 72, 28
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 5
+Ripping up A
+Blacklisted 2 from 72,28
+Changing target cell within same route attempt
+RL target cell is 11, 25
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 6
+Ripping up A
+Blacklisted 7 from 11,25
+Changing target cell within same route attempt
+RL target cell is 17, 6
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 7
+Ripping up A
+Blacklisted 6 from 17,6
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 17, 5
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 8
+Ripping up A
+Blacklisted 3 from 17,5
+Changing target cell within same route attempt
+RL target cell is 72, 29
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 9
+Ripping up A
+Blacklisted 1 from 72,29
+Changing target cell within same route attempt
+RL target cell is 61, 10
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 10
+Ripping up A
+Blacklisted 0 from 61,10
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 11, 27
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 11
+Ripping up A
+Blacklisted 7 from 11,27
+Changing target cell within same route attempt
+RL target cell is 24, 33
+----------------------------------------------------------------------
+net a: 5 net b: 3
+Action  0
+Step 12
+Ripping up A
+Blacklisted 5 from 24,33
+Changing target cell within same route attempt
+RL target cell is 18, 6
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 13
+Ripping up A
+Blacklisted 6 from 18,6
+Changing target cell within same route attempt
+RL target cell is 70, 29
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 14
+Ripping up A
+Blacklisted 2 from 70,29
+Changing target cell within same route attempt
+RL target cell is 62, 10
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 15
+Ripping up A
+Blacklisted 4 from 62,10
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 18, 5
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 16
+Ripping up A
+Blacklisted 3 from 18,5
+Changing target cell within same route attempt
+RL target cell is 62, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 17
+Ripping up A
+Blacklisted 0 from 62,11
+Changing target cell within same route attempt
+RL target cell is 71, 29
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 18
+Ripping up A
+Blacklisted 1 from 71,29
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 29, 22
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 19
+Ripping up A
+Blacklisted 4 from 29,22
+Changing target cell within same route attempt
+RL target cell is 73, 28
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 20
+Ripping up A
+Blacklisted 2 from 73,28
+Changing target cell within same route attempt
+RL target cell is 9, 24
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 21
+Ripping up A
+Blacklisted 7 from 9,24
+Changing target cell within same route attempt
+RL target cell is 19, 6
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 22
+Ripping up A
+Blacklisted 6 from 19,6
+Changing target cell within same route attempt
+RL target cell is 24, 34
+----------------------------------------------------------------------
+net a: 5 net b: 3
+Action  0
+Step 23
+Ripping up A
+Blacklisted 5 from 24,34
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 73, 29
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 24
+Ripping up A
+Blacklisted 1 from 73,29
+Changing target cell within same route attempt
+RL target cell is 25, 18
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 25
+Ripping up A
+Blacklisted 3 from 25,18
+Changing target cell within same route attempt
+RL target cell is 67, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 26
+Ripping up A
+Blacklisted 0 from 67,6
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 70, 30
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 27
+Ripping up A
+Blacklisted 2 from 70,30
+Changing target cell within same route attempt
+RL target cell is 68, 6
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 28
+Ripping up A
+Blacklisted 4 from 68,6
+Changing target cell within same route attempt
+RL target cell is 19, 5
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 29
+Ripping up A
+Blacklisted 6 from 19,5
+Changing target cell within same route attempt
+RL target cell is 11, 24
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 30
+Ripping up A
+Blacklisted 7 from 11,24
+Changing target cell within same route attempt
+RL target cell is 24, 35
+----------------------------------------------------------------------
+net a: 5 net b: 3
+Action  0
+Step 31
+Ripping up A
+Blacklisted 5 from 24,35
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 17, 4
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  1
+Step 32
+Ripping up B
+Blacklisted 6 from 17,4
+Changing target cell within same route attempt
+RL target cell is 68, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 33
+Ripping up A
+Blacklisted 0 from 68,7
+Changing target cell within same route attempt
+RL target cell is 30, 14
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 34
+Ripping up A
+Blacklisted 3 from 30,14
+Changing target cell within same route attempt
+RL target cell is 70, 28
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 35
+Ripping up A
+Blacklisted 1 from 70,28
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 27, 15
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 36
+Ripping up A
+Blacklisted 4 from 27,15
+Changing target cell within same route attempt
+RL target cell is 11, 28
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 37
+Ripping up A
+Blacklisted 7 from 11,28
+Changing target cell within same route attempt
+RL target cell is 24, 36
+----------------------------------------------------------------------
+net a: 5 net b: 3
+Action  0
+Step 38
+Ripping up A
+Blacklisted 5 from 24,36
+Changing target cell within same route attempt
+RL target cell is 69, 28
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 39
+Ripping up A
+Blacklisted 2 from 69,28
+Changing target cell within same route attempt
+RL target cell is 18, 4
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  1
+Step 40
+Ripping up B
+Blacklisted 6 from 18,4
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 69, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 41
+Ripping up A
+Blacklisted 0 from 69,6
+Changing target cell within same route attempt
+RL target cell is 19, 7
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 42
+Ripping up A
+Blacklisted 3 from 19,7
+Changing target cell within same route attempt
+RL target cell is 69, 27
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 43
+Ripping up A
+Blacklisted 1 from 69,27
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 74, 28
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 44
+Ripping up A
+Blacklisted 2 from 74,28
+Changing target cell within same route attempt
+RL target cell is 63, 10
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 45
+Ripping up A
+Blacklisted 4 from 63,10
+Changing target cell within same route attempt
+RL target cell is 20, 6
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 46
+Ripping up A
+Blacklisted 6 from 20,6
+Changing target cell within same route attempt
+RL target cell is 9, 23
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 47
+Ripping up A
+Blacklisted 7 from 9,23
+Changing target cell within same route attempt
+RL target cell is 24, 37
+----------------------------------------------------------------------
+net a: 5 net b: 3
+Action  0
+Step 48
+Ripping up A
+Blacklisted 5 from 24,37
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 63, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 49
+Ripping up A
+Blacklisted 0 from 63,11
+Changing target cell within same route attempt
+RL target cell is 31, 14
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 50
+Ripping up A
+Blacklisted 3 from 31,14
+Changing target cell within same route attempt
+RL target cell is 74, 29
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 51
+Ripping up A
+Blacklisted 1 from 74,29
+Performing a routing attempt.
+Picked target cell in newly-routed circuit
+RL target cell is 64, 10
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 52
+Ripping up A
+Blacklisted 4 from 64,10
+Changing target cell within same route attempt
+RL target cell is 24, 38
+----------------------------------------------------------------------
+net a: 5 net b: 3
+Action  0
+Step 53
+Ripping up A
+Blacklisted 5 from 24,38
+Changing target cell within same route attempt
+RL target cell is 75, 29
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 54
+Ripping up A
+Blacklisted 2 from 75,29
+Changing target cell within same route attempt
+RL target cell is 9, 22
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 55
+Ripping up A
+Blacklisted 7 from 9,22
+Changing target cell within same route attempt
+RL target cell is 20, 7
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 56
+Ripping up A
+Blacklisted 6 from 20,7
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 70, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 57
+Ripping up A
+Blacklisted 0 from 70,6
+Changing target cell within same route attempt
+RL target cell is 28, 15
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 58
+Ripping up A
+Blacklisted 3 from 28,15
+Changing target cell within same route attempt
+RL target cell is 75, 30
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 59
+Ripping up A
+Blacklisted 1 from 75,30
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 69, 7
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 60
+Ripping up A
+Blacklisted 4 from 69,7
+Changing target cell within same route attempt
+RL target cell is 20, 8
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 61
+Ripping up A
+Blacklisted 6 from 20,8
+Changing target cell within same route attempt
+RL target cell is 12, 29
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 62
+Ripping up A
+Blacklisted 7 from 12,29
+Changing target cell within same route attempt
+RL target cell is 76, 29
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 63
+Ripping up A
+Blacklisted 2 from 76,29
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 20, 9
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 64
+Ripping up A
+Blacklisted 3 from 20,9
+Changing target cell within same route attempt
+RL target cell is 68, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 65
+Ripping up A
+Blacklisted 0 from 68,8
+Changing target cell within same route attempt
+RL target cell is 76, 30
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 66
+Ripping up A
+Blacklisted 1 from 76,30
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 69, 8
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 67
+Ripping up A
+Blacklisted 4 from 69,8
+Changing target cell within same route attempt
+RL target cell is 77, 30
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 68
+Ripping up A
+Blacklisted 2 from 77,30
+Changing target cell within same route attempt
+RL target cell is 21, 8
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 69
+Ripping up A
+Blacklisted 6 from 21,8
+Changing target cell within same route attempt
+RL target cell is 13, 29
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 70
+Ripping up A
+Blacklisted 7 from 13,29
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 14, 29
+----------------------------------------------------------------------
+net a: 3 net b: 7
+Action  0
+Step 71
+Ripping up A
+Blacklisted 3 from 14,29
+Changing target cell within same route attempt
+RL target cell is 67, 9
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 72
+Ripping up A
+Blacklisted 0 from 67,9
+Changing target cell within same route attempt
+RL target cell is 76, 31
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 73
+Ripping up A
+Blacklisted 1 from 76,31
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 13, 28
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 74
+Ripping up A
+Blacklisted 7 from 13,28
+Changing target cell within same route attempt
+RL target cell is 77, 31
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 75
+Ripping up A
+Blacklisted 2 from 77,31
+Changing target cell within same route attempt
+RL target cell is 70, 7
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 76
+Ripping up A
+Blacklisted 4 from 70,7
+Changing target cell within same route attempt
+RL target cell is 21, 9
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 77
+Ripping up A
+Blacklisted 6 from 21,9
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 65, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 78
+Ripping up A
+Blacklisted 0 from 65,11
+Changing target cell within same route attempt
+RL target cell is 28, 14
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 79
+Ripping up A
+Blacklisted 3 from 28,14
+Changing target cell within same route attempt
+RL target cell is 63, 30
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 80
+Ripping up A
+Blacklisted 1 from 63,30
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 69, 9
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 81
+Ripping up A
+Blacklisted 4 from 69,9
+Changing target cell within same route attempt
+RL target cell is 21, 10
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 82
+Ripping up A
+Blacklisted 6 from 21,10
+Changing target cell within same route attempt
+RL target cell is 76, 32
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 83
+Ripping up A
+Blacklisted 2 from 76,32
+Changing target cell within same route attempt
+RL target cell is 14, 28
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 84
+Ripping up A
+Blacklisted 7 from 14,28
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 27, 16
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 85
+Ripping up A
+Blacklisted 3 from 27,16
+Changing target cell within same route attempt
+RL target cell is 58, 34
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 86
+Ripping up A
+Blacklisted 1 from 58,34
+Changing target cell within same route attempt
+RL target cell is 71, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 87
+Ripping up A
+Blacklisted 0 from 71,6
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 67, 10
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 88
+Ripping up A
+Blacklisted 4 from 67,10
+Changing target cell within same route attempt
+RL target cell is 77, 32
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 89
+Ripping up A
+Blacklisted 2 from 77,32
+Changing target cell within same route attempt
+RL target cell is 15, 29
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 90
+Ripping up A
+Blacklisted 7 from 15,29
+Changing target cell within same route attempt
+RL target cell is 21, 11
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 91
+Ripping up A
+Blacklisted 6 from 21,11
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 15, 28
+----------------------------------------------------------------------
+net a: 3 net b: 7
+Action  0
+Step 92
+Ripping up A
+Blacklisted 3 from 15,28
+Changing target cell within same route attempt
+RL target cell is 55, 34
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 93
+Ripping up A
+Blacklisted 1 from 55,34
+Changing target cell within same route attempt
+RL target cell is 65, 10
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 94
+Ripping up A
+Blacklisted 0 from 65,10
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 34
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 95
+Ripping up A
+Blacklisted 2 from 51,34
+Changing target cell within same route attempt
+RL target cell is 16, 28
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 96
+Ripping up A
+Blacklisted 7 from 16,28
+Changing target cell within same route attempt
+RL target cell is 68, 9
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 97
+Ripping up A
+Blacklisted 4 from 68,9
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 14, 27
+----------------------------------------------------------------------
+net a: 3 net b: 7
+Action  0
+Step 98
+Ripping up A
+Blacklisted 3 from 14,27
+Changing target cell within same route attempt
+RL target cell is 41, 34
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 99
+Ripping up A
+Blacklisted 1 from 41,34
+Changing target cell within same route attempt
+RL target cell is 65, 9
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 100
+Ripping up A
+Blacklisted 0 from 65,9
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 12, 26
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 101
+Ripping up A
+Blacklisted 7 from 12,26
+Changing target cell within same route attempt
+RL target cell is 76, 33
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 102
+Ripping up A
+Blacklisted 2 from 76,33
+Changing target cell within same route attempt
+RL target cell is 72, 6
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 103
+Ripping up A
+Blacklisted 4 from 72,6
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 9, 21
+----------------------------------------------------------------------
+net a: 3 net b: 7
+Action  0
+Step 104
+Ripping up A
+Blacklisted 3 from 9,21
+Changing target cell within same route attempt
+RL target cell is 65, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 105
+Ripping up A
+Blacklisted 0 from 65,8
+Changing target cell within same route attempt
+RL target cell is 73, 34
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 106
+Ripping up A
+Blacklisted 1 from 73,34
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 76, 34
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 107
+Ripping up A
+Blacklisted 2 from 76,34
+Changing target cell within same route attempt
+RL target cell is 72, 7
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 108
+Ripping up A
+Blacklisted 4 from 72,7
+Changing target cell within same route attempt
+RL target cell is 10, 22
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 109
+Ripping up A
+Blacklisted 7 from 10,22
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 17, 29
+----------------------------------------------------------------------
+net a: 3 net b: 7
+Action  0
+Step 110
+Ripping up A
+Blacklisted 3 from 17,29
+Changing target cell within same route attempt
+RL target cell is 61, 35
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 111
+Ripping up A
+Blacklisted 1 from 61,35
+Changing target cell within same route attempt
+RL target cell is 65, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 112
+Ripping up A
+Blacklisted 0 from 65,7
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 66, 35
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 113
+Ripping up A
+Blacklisted 2 from 66,35
+Changing target cell within same route attempt
+RL target cell is 10, 21
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 114
+Ripping up A
+Blacklisted 7 from 10,21
+Changing target cell within same route attempt
+RL target cell is 28, 16
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 115
+Ripping up A
+Blacklisted 4 from 28,16
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 66, 34
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 116
+Ripping up A
+Blacklisted 1 from 66,34
+Changing target cell within same route attempt
+RL target cell is 10, 20
+----------------------------------------------------------------------
+net a: 3 net b: 7
+Action  0
+Step 117
+Ripping up A
+Blacklisted 3 from 10,20
+Changing target cell within same route attempt
+RL target cell is 72, 5
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 118
+Ripping up A
+Blacklisted 0 from 72,5
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 65, 34
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 119
+Ripping up A
+Blacklisted 2 from 65,34
+Changing target cell within same route attempt
+RL target cell is 11, 21
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 120
+Ripping up A
+Blacklisted 7 from 11,21
+Changing target cell within same route attempt
+RL target cell is 27, 17
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 121
+Ripping up A
+Blacklisted 4 from 27,17
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 29, 15
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 122
+Ripping up A
+Blacklisted 3 from 29,15
+Changing target cell within same route attempt
+RL target cell is 58, 35
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 123
+Ripping up A
+Blacklisted 1 from 58,35
+Changing target cell within same route attempt
+RL target cell is 65, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 124
+Ripping up A
+Blacklisted 0 from 65,6
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 15, 27
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 125
+Ripping up A
+Blacklisted 7 from 15,27
+Changing target cell within same route attempt
+RL target cell is 72, 35
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 126
+Ripping up A
+Blacklisted 2 from 72,35
+Changing target cell within same route attempt
+RL target cell is 32, 14
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 127
+Ripping up A
+Blacklisted 4 from 32,14
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 52, 35
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 128
+Ripping up A
+Blacklisted 1 from 52,35
+Changing target cell within same route attempt
+RL target cell is 21, 24
+----------------------------------------------------------------------
+net a: 3 net b: 7
+Action  0
+Step 129
+Ripping up A
+Blacklisted 3 from 21,24
+Changing target cell within same route attempt
+RL target cell is 65, 5
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 130
+Ripping up A
+Blacklisted 0 from 65,5
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 12, 30
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 131
+Ripping up A
+Blacklisted 7 from 12,30
+Changing target cell within same route attempt
+RL target cell is 66, 5
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 132
+Ripping up A
+Blacklisted 4 from 66,5
+Changing target cell within same route attempt
+RL target cell is 45, 34
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 133
+Ripping up A
+Blacklisted 2 from 45,34
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Picked target cell in newly-routed circuit
+RL target cell is 16, 30
+----------------------------------------------------------------------
+net a: 3 net b: 7
+Action  0
+Step 134
+Ripping up A
+Blacklisted 3 from 16,30
+Changing target cell within same route attempt
+RL target cell is 55, 35
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 135
+Ripping up A
+Blacklisted 1 from 55,35
+Changing target cell within same route attempt
+RL target cell is 73, 5
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 136
+Ripping up A
+Blacklisted 0 from 73,5
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Routing attempt complete
+Failed nets: [5]
+Picked target cell in newly-routed circuit
+RL target cell is 74, 35
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 137
+Ripping up A
+Blacklisted 2 from 74,35
+Changing target cell within same route attempt
+RL target cell is 74, 6
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 138
+Ripping up A
+Blacklisted 4 from 74,6
+Changing target cell within same route attempt
+RL target cell is 11, 31
+----------------------------------------------------------------------
+net a: 7 net b: 3
+Action  0
+Step 139
+Ripping up A
+Blacklisted 7 from 11,31
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 71, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 140
+Ripping up A
+Blacklisted 0 from 71,7
+Changing target cell within same route attempt
+RL target cell is 28, 17
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 141
+Ripping up A
+Blacklisted 3 from 28,17
+Changing target cell within same route attempt
+RL target cell is 66, 36
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 142
+Ripping up A
+Blacklisted 1 from 66,36
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 30, 15
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 143
+Ripping up A
+Blacklisted 4 from 30,15
+Changing target cell within same route attempt
+RL target cell is 44, 34
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 144
+Ripping up A
+Blacklisted 2 from 44,34
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 29, 16
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 145
+Ripping up A
+Blacklisted 3 from 29,16
+Changing target cell within same route attempt
+RL target cell is 72, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 146
+Ripping up A
+Blacklisted 0 from 72,8
+Changing target cell within same route attempt
+RL target cell is 43, 34
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 147
+Ripping up A
+Blacklisted 1 from 43,34
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 43, 35
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 148
+Ripping up A
+Blacklisted 2 from 43,35
+Changing target cell within same route attempt
+RL target cell is 32, 15
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 149
+Ripping up A
+Blacklisted 4 from 32,15
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 73, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 150
+Ripping up A
+Blacklisted 0 from 73,7
+Changing target cell within same route attempt
+RL target cell is 59, 36
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 151
+Ripping up A
+Blacklisted 1 from 59,36
+Changing target cell within same route attempt
+RL target cell is 29, 17
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 152
+Ripping up A
+Blacklisted 3 from 29,17
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 28, 18
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 153
+Ripping up A
+Blacklisted 4 from 28,18
+Changing target cell within same route attempt
+RL target cell is 57, 36
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 154
+Ripping up A
+Blacklisted 2 from 57,36
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 67, 36
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 155
+Ripping up A
+Blacklisted 1 from 67,36
+Changing target cell within same route attempt
+RL target cell is 74, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 156
+Ripping up A
+Blacklisted 0 from 74,7
+Changing target cell within same route attempt
+RL target cell is 27, 23
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 157
+Ripping up A
+Blacklisted 3 from 27,23
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 28, 23
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 158
+Ripping up A
+Blacklisted 4 from 28,23
+Changing target cell within same route attempt
+RL target cell is 54, 35
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 159
+Ripping up A
+Blacklisted 2 from 54,35
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 35
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 160
+Ripping up A
+Blacklisted 1 from 42,35
+Changing target cell within same route attempt
+RL target cell is 75, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 161
+Ripping up A
+Blacklisted 0 from 75,7
+Changing target cell within same route attempt
+RL target cell is 28, 24
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 162
+Ripping up A
+Blacklisted 3 from 28,24
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 36
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 163
+Ripping up A
+Blacklisted 2 from 53,36
+Changing target cell within same route attempt
+RL target cell is 40, 31
+----------------------------------------------------------------------
+net a: 1 net b: 3
+Action  0
+Step 164
+Ripping up A
+Blacklisted 1 from 40,31
+Changing target cell within same route attempt
+RL target cell is 76, 8
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 165
+Ripping up A
+Blacklisted 4 from 76,8
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 58, 37
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 166
+Ripping up A
+Blacklisted 1 from 58,37
+Changing target cell within same route attempt
+RL target cell is 75, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 167
+Ripping up A
+Blacklisted 0 from 75,6
+Changing target cell within same route attempt
+RL target cell is 29, 23
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 168
+Ripping up A
+Blacklisted 3 from 29,23
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 47, 36
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 169
+Ripping up A
+Blacklisted 2 from 47,36
+Changing target cell within same route attempt
+RL target cell is 73, 8
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 170
+Ripping up A
+Blacklisted 4 from 73,8
+Changing target cell within same route attempt
+RL target cell is 40, 34
+----------------------------------------------------------------------
+net a: 1 net b: 3
+Action  0
+Step 171
+Ripping up A
+Blacklisted 1 from 40,34
+Performing a routing attempt.
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7]
+Picked target cell in newly-routed circuit
+RL target cell is 30, 22
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 172
+Ripping up A
+Blacklisted 3 from 30,22
+Changing target cell within same route attempt
+RL target cell is 65, 35
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 173
+Ripping up A
+Blacklisted 1 from 65,35
+Changing target cell within same route attempt
+RL target cell is 76, 5
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 174
+Ripping up A
+Blacklisted 0 from 76,5
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 35, 34
+----------------------------------------------------------------------
+net a: 1 net b: 3
+Action  0
+Step 175
+Ripping up A
+Blacklisted 1 from 35,34
+Changing target cell within same route attempt
+RL target cell is 30, 21
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 176
+Ripping up A
+Blacklisted 4 from 30,21
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 66, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 177
+Ripping up A
+Blacklisted 0 from 66,6
+Changing target cell within same route attempt
+RL target cell is 44, 36
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 178
+Ripping up A
+Blacklisted 2 from 44,36
+Changing target cell within same route attempt
+RL target cell is 40, 29
+----------------------------------------------------------------------
+net a: 3 net b: 1
+Action  0
+Step 179
+Ripping up A
+Blacklisted 3 from 40,29
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 61, 14
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 180
+Ripping up A
+Blacklisted 4 from 61,14
+Changing target cell within same route attempt
+RL target cell is 68, 36
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 181
+Ripping up A
+Blacklisted 1 from 68,36
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 75, 14
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 182
+Ripping up A
+Blacklisted 0 from 75,14
+Changing target cell within same route attempt
+RL target cell is 31, 21
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 183
+Ripping up A
+Blacklisted 3 from 31,21
+Changing target cell within same route attempt
+RL target cell is 43, 36
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 184
+Ripping up A
+Blacklisted 2 from 43,36
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 57, 37
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 185
+Ripping up A
+Blacklisted 1 from 57,37
+Changing target cell within same route attempt
+RL target cell is 66, 14
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 186
+Ripping up A
+Blacklisted 4 from 66,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 75, 13
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 187
+Ripping up A
+Blacklisted 0 from 75,13
+Changing target cell within same route attempt
+RL target cell is 69, 36
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 188
+Ripping up A
+Blacklisted 2 from 69,36
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 69, 37
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 189
+Ripping up A
+Blacklisted 1 from 69,37
+Changing target cell within same route attempt
+RL target cell is 67, 14
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 190
+Ripping up A
+Blacklisted 4 from 67,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 68, 37
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 191
+Ripping up A
+Blacklisted 2 from 68,37
+Changing target cell within same route attempt
+RL target cell is 75, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 192
+Ripping up A
+Blacklisted 0 from 75,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 75, 34
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 193
+Ripping up A
+Blacklisted 1 from 75,34
+Changing target cell within same route attempt
+RL target cell is 68, 15
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 194
+Ripping up A
+Blacklisted 4 from 68,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 75, 10
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 195
+Ripping up A
+Blacklisted 0 from 75,10
+Changing target cell within same route attempt
+RL target cell is 56, 37
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 196
+Ripping up A
+Blacklisted 2 from 56,37
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 36
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 197
+Ripping up A
+Blacklisted 1 from 55,36
+Changing target cell within same route attempt
+RL target cell is 69, 15
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 198
+Ripping up A
+Blacklisted 4 from 69,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 76, 9
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 199
+Ripping up A
+Blacklisted 0 from 76,9
+Changing target cell within same route attempt
+RL target cell is 54, 37
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 200
+Ripping up A
+Blacklisted 2 from 54,37
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 65, 37
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 201
+Ripping up A
+Blacklisted 1 from 65,37
+Changing target cell within same route attempt
+RL target cell is 70, 15
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 202
+Ripping up A
+Blacklisted 4 from 70,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 77, 9
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 203
+Ripping up A
+Blacklisted 0 from 77,9
+Changing target cell within same route attempt
+RL target cell is 57, 38
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 204
+Ripping up A
+Blacklisted 2 from 57,38
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 1, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 45, 36
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 205
+Ripping up A
+Blacklisted 1 from 45,36
+Changing target cell within same route attempt
+RL target cell is 71, 15
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 206
+Ripping up A
+Blacklisted 4 from 71,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 48, 35
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 207
+Ripping up A
+Blacklisted 2 from 48,35
+Changing target cell within same route attempt
+RL target cell is 77, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 208
+Ripping up A
+Blacklisted 0 from 77,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 1, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 36
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 209
+Ripping up A
+Blacklisted 1 from 42,36
+Changing target cell within same route attempt
+RL target cell is 77, 7
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 210
+Ripping up A
+Blacklisted 4 from 77,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 43, 37
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 211
+Ripping up A
+Blacklisted 2 from 43,37
+Changing target cell within same route attempt
+RL target cell is 72, 15
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 212
+Ripping up A
+Blacklisted 0 from 72,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 1, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 73, 14
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 213
+Ripping up A
+Blacklisted 4 from 73,14
+Changing target cell within same route attempt
+RL target cell is 42, 37
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 214
+Ripping up A
+Blacklisted 1 from 42,37
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 46, 38
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 215
+Ripping up A
+Blacklisted 2 from 46,38
+Changing target cell within same route attempt
+RL target cell is 78, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 216
+Ripping up A
+Blacklisted 0 from 78,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 1, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 44, 38
+----------------------------------------------------------------------
+net a: 1 net b: 2
+Action  0
+Step 217
+Ripping up A
+Blacklisted 1 from 44,38
+Changing target cell within same route attempt
+RL target cell is 77, 6
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 218
+Ripping up A
+Blacklisted 4 from 77,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 38
+----------------------------------------------------------------------
+net a: 2 net b: 1
+Action  0
+Step 219
+Ripping up A
+Blacklisted 2 from 42,38
+Changing target cell within same route attempt
+RL target cell is 73, 15
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 220
+Ripping up A
+Blacklisted 0 from 73,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 1, 0, 2]
+Picked target cell in newly-routed circuit
+RL target cell is 78, 6
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 221
+Ripping up A
+Blacklisted 4 from 78,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 1, 0, 2]
+Picked target cell in newly-routed circuit
+RL target cell is 78, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 222
+Ripping up A
+Blacklisted 0 from 78,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 1, 2, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 79, 7
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 223
+Ripping up A
+Blacklisted 4 from 79,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 3, 1, 2, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 46, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 224
+Ripping up A
+Blacklisted 0 from 46,8
+Changing target cell within same route attempt
+RL target cell is 31, 12
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 225
+Ripping up A
+Blacklisted 3 from 31,12
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 48, 8
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 226
+Ripping up A
+Blacklisted 4 from 48,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 26, 18
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 227
+Ripping up A
+Blacklisted 3 from 26,18
+Changing target cell within same route attempt
+RL target cell is 48, 9
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 228
+Ripping up A
+Blacklisted 0 from 48,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 26, 17
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 229
+Ripping up A
+Blacklisted 4 from 26,17
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 31, 11
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 230
+Ripping up A
+Blacklisted 3 from 31,11
+Changing target cell within same route attempt
+RL target cell is 49, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 231
+Ripping up A
+Blacklisted 0 from 49,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 45, 9
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 232
+Ripping up A
+Blacklisted 4 from 45,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 25, 17
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 233
+Ripping up A
+Blacklisted 3 from 25,17
+Changing target cell within same route attempt
+RL target cell is 50, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 234
+Ripping up A
+Blacklisted 0 from 50,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 25, 16
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 235
+Ripping up A
+Blacklisted 4 from 25,16
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 236
+Ripping up A
+Blacklisted 0 from 51,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 52, 8
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 237
+Ripping up A
+Blacklisted 4 from 52,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 52, 9
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 238
+Ripping up A
+Blacklisted 0 from 52,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 9
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 239
+Ripping up A
+Blacklisted 4 from 53,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 10
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 240
+Ripping up A
+Blacklisted 0 from 53,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 9
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 241
+Ripping up A
+Blacklisted 4 from 54,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 10
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 242
+Ripping up A
+Blacklisted 0 from 54,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 10
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 243
+Ripping up A
+Blacklisted 4 from 55,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 56, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 244
+Ripping up A
+Blacklisted 0 from 56,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 11
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 245
+Ripping up A
+Blacklisted 4 from 55,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 12
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 246
+Ripping up A
+Blacklisted 0 from 55,12
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 12
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 247
+Ripping up A
+Blacklisted 4 from 54,12
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 13
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 248
+Ripping up A
+Blacklisted 0 from 55,13
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 13
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 249
+Ripping up A
+Blacklisted 4 from 54,13
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 14
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 250
+Ripping up A
+Blacklisted 0 from 55,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 14
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 251
+Ripping up A
+Blacklisted 4 from 54,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 15
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 252
+Ripping up A
+Blacklisted 0 from 55,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 15
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 253
+Ripping up A
+Blacklisted 4 from 54,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 16
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 254
+Ripping up A
+Blacklisted 0 from 54,16
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 16
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 255
+Ripping up A
+Blacklisted 4 from 53,16
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 16
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 256
+Ripping up A
+Blacklisted 0 from 55,16
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 17
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 257
+Ripping up A
+Blacklisted 4 from 53,17
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 17
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 258
+Ripping up A
+Blacklisted 0 from 54,17
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 18
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 259
+Ripping up A
+Blacklisted 4 from 54,18
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 18
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 260
+Ripping up A
+Blacklisted 0 from 55,18
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 19
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 261
+Ripping up A
+Blacklisted 4 from 54,19
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 19
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 262
+Ripping up A
+Blacklisted 0 from 55,19
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 20
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 263
+Ripping up A
+Blacklisted 4 from 54,20
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 20
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 264
+Ripping up A
+Blacklisted 0 from 55,20
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 21
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 265
+Ripping up A
+Blacklisted 4 from 54,21
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 21
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 266
+Ripping up A
+Blacklisted 0 from 55,21
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 22
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 267
+Ripping up A
+Blacklisted 4 from 54,22
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 50, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 268
+Ripping up A
+Blacklisted 0 from 50,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 50, 10
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 269
+Ripping up A
+Blacklisted 4 from 50,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 270
+Ripping up A
+Blacklisted 0 from 51,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 10
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 271
+Ripping up A
+Blacklisted 4 from 51,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 22
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 272
+Ripping up A
+Blacklisted 0 from 55,22
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 23
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 273
+Ripping up A
+Blacklisted 4 from 54,23
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 55, 23
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 274
+Ripping up A
+Blacklisted 0 from 55,23
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 54, 24
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 275
+Ripping up A
+Blacklisted 4 from 54,24
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 48, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 276
+Ripping up A
+Blacklisted 0 from 48,7
+Changing target cell within same route attempt
+RL target cell is 31, 10
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 277
+Ripping up A
+Blacklisted 3 from 31,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 7
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 278
+Ripping up A
+Blacklisted 4 from 51,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 279
+Ripping up A
+Blacklisted 0 from 53,8
+Changing target cell within same route attempt
+RL target cell is 31, 9
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 280
+Ripping up A
+Blacklisted 3 from 31,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 7
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 281
+Ripping up A
+Blacklisted 4 from 53,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 47, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 282
+Ripping up A
+Blacklisted 0 from 47,6
+Changing target cell within same route attempt
+RL target cell is 24, 16
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 283
+Ripping up A
+Blacklisted 3 from 24,16
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 49, 6
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 284
+Ripping up A
+Blacklisted 4 from 49,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 24, 15
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 285
+Ripping up A
+Blacklisted 3 from 24,15
+Changing target cell within same route attempt
+RL target cell is 54, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 286
+Ripping up A
+Blacklisted 0 from 54,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 50, 6
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 287
+Ripping up A
+Blacklisted 4 from 50,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 52, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 288
+Ripping up A
+Blacklisted 0 from 52,6
+Changing target cell within same route attempt
+RL target cell is 31, 8
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 289
+Ripping up A
+Blacklisted 3 from 31,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 31, 7
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 290
+Ripping up A
+Blacklisted 4 from 31,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 5
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 291
+Ripping up A
+Blacklisted 0 from 51,5
+Changing target cell within same route attempt
+RL target cell is 25, 15
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 292
+Ripping up A
+Blacklisted 3 from 25,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 26, 15
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 293
+Ripping up A
+Blacklisted 4 from 26,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 25, 14
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 294
+Ripping up A
+Blacklisted 3 from 25,14
+Changing target cell within same route attempt
+RL target cell is 46, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 295
+Ripping up A
+Blacklisted 0 from 46,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 1, 2, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 56, 24
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 296
+Ripping up A
+Blacklisted 0 from 56,24
+Changing target cell within same route attempt
+RL target cell is 35, 35
+----------------------------------------------------------------------
+net a: 1 net b: 3
+Action  0
+Step 297
+Ripping up A
+Blacklisted 1 from 35,35
+Changing target cell within same route attempt
+RL target cell is 32, 7
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 298
+Ripping up A
+Blacklisted 4 from 32,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 60, 27
+----------------------------------------------------------------------
+net a: 3 net b: 0
+Action  0
+Step 299
+Ripping up A
+Blacklisted 3 from 60,27
+Changing target cell within same route attempt
+RL target cell is 31, 12
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 300
+Ripping up A
+Blacklisted 0 from 31,12
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 65, 27
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 301
+Ripping up A
+Blacklisted 0 from 65,27
+Changing target cell within same route attempt
+RL target cell is 39, 29
+----------------------------------------------------------------------
+net a: 1 net b: 3
+Action  0
+Step 302
+Ripping up A
+Blacklisted 1 from 39,29
+Changing target cell within same route attempt
+RL target cell is 32, 8
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 303
+Ripping up A
+Blacklisted 4 from 32,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 66, 27
+----------------------------------------------------------------------
+net a: 3 net b: 0
+Action  0
+Step 304
+Ripping up A
+Blacklisted 3 from 66,27
+Changing target cell within same route attempt
+RL target cell is 45, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 305
+Ripping up A
+Blacklisted 0 from 45,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 66, 28
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 306
+Ripping up A
+Blacklisted 0 from 66,28
+Changing target cell within same route attempt
+RL target cell is 35, 36
+----------------------------------------------------------------------
+net a: 1 net b: 3
+Action  0
+Step 307
+Ripping up A
+Blacklisted 1 from 35,36
+Changing target cell within same route attempt
+RL target cell is 32, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 308
+Ripping up A
+Blacklisted 4 from 32,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 28
+----------------------------------------------------------------------
+net a: 3 net b: 0
+Action  0
+Step 309
+Ripping up A
+Blacklisted 3 from 53,28
+Changing target cell within same route attempt
+RL target cell is 65, 29
+----------------------------------------------------------------------
+net a: 0 net b: 1
+Action  0
+Step 310
+Ripping up A
+Blacklisted 0 from 65,29
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 69, 25
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 311
+Ripping up A
+Blacklisted 0 from 69,25
+Changing target cell within same route attempt
+RL target cell is 53, 29
+----------------------------------------------------------------------
+net a: 1 net b: 3
+Action  0
+Step 312
+Ripping up A
+Blacklisted 1 from 53,29
+Changing target cell within same route attempt
+RL target cell is 32, 10
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 313
+Ripping up A
+Blacklisted 4 from 32,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 3, 0, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 32, 11
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 314
+Ripping up A
+Blacklisted 3 from 32,11
+Changing target cell within same route attempt
+RL target cell is 44, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 315
+Ripping up A
+Blacklisted 0 from 44,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 35, 37
+----------------------------------------------------------------------
+net a: 1 net b: 3
+Action  0
+Step 316
+Ripping up A
+Blacklisted 1 from 35,37
+Changing target cell within same route attempt
+RL target cell is 43, 6
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 317
+Ripping up A
+Blacklisted 4 from 43,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 0, 3, 1]
+Picked target cell in newly-routed circuit
+RL target cell is 33, 11
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 318
+Ripping up A
+Blacklisted 3 from 33,11
+Changing target cell within same route attempt
+RL target cell is 43, 7
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 319
+Ripping up A
+Blacklisted 0 from 43,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 7
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 320
+Ripping up A
+Blacklisted 4 from 42,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 321
+Ripping up A
+Blacklisted 0 from 42,8
+Changing target cell within same route attempt
+RL target cell is 33, 10
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 322
+Ripping up A
+Blacklisted 3 from 33,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 33, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 323
+Ripping up A
+Blacklisted 4 from 33,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 41, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 324
+Ripping up A
+Blacklisted 0 from 41,8
+Changing target cell within same route attempt
+RL target cell is 34, 9
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 325
+Ripping up A
+Blacklisted 3 from 34,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 35, 8
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 326
+Ripping up A
+Blacklisted 4 from 35,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 35, 9
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 327
+Ripping up A
+Blacklisted 3 from 35,9
+Changing target cell within same route attempt
+RL target cell is 40, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 328
+Ripping up A
+Blacklisted 0 from 40,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 36, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 329
+Ripping up A
+Blacklisted 4 from 36,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 39, 8
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 330
+Ripping up A
+Blacklisted 0 from 39,8
+Changing target cell within same route attempt
+RL target cell is 36, 10
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 331
+Ripping up A
+Blacklisted 3 from 36,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 40, 8
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 332
+Ripping up A
+Blacklisted 4 from 40,8
+Changing target cell within same route attempt
+RL target cell is 40, 4
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 333
+Ripping up A
+Blacklisted 6 from 40,4
+Changing target cell within same route attempt
+RL target cell is 40, 7
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 334
+Ripping up A
+Blacklisted 0 from 40,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 40, 9
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 335
+Ripping up A
+Blacklisted 3 from 40,9
+Changing target cell within same route attempt
+RL target cell is 38, 9
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 336
+Ripping up A
+Blacklisted 0 from 38,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 37, 11
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 337
+Ripping up A
+Blacklisted 0 from 37,11
+Changing target cell within same route attempt
+RL target cell is 37, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 338
+Ripping up A
+Blacklisted 4 from 37,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 37, 9
+----------------------------------------------------------------------
+net a: 3 net b: 0
+Action  0
+Step 339
+Ripping up A
+Blacklisted 3 from 37,9
+Changing target cell within same route attempt
+RL target cell is 37, 10
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 340
+Ripping up A
+Blacklisted 0 from 37,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 46, 10
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 341
+Ripping up A
+Blacklisted 0 from 46,10
+Changing target cell within same route attempt
+RL target cell is 38, 10
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 342
+Ripping up A
+Blacklisted 4 from 38,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 53, 6
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 343
+Ripping up A
+Blacklisted 0 from 53,6
+Changing target cell within same route attempt
+RL target cell is 39, 10
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 344
+Ripping up A
+Blacklisted 3 from 39,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 50, 12
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 345
+Ripping up A
+Blacklisted 0 from 50,12
+Changing target cell within same route attempt
+RL target cell is 41, 8
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 346
+Ripping up A
+Blacklisted 4 from 41,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 50, 14
+----------------------------------------------------------------------
+net a: 3 net b: 0
+Action  0
+Step 347
+Ripping up A
+Blacklisted 3 from 50,14
+Changing target cell within same route attempt
+RL target cell is 36, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 348
+Ripping up A
+Blacklisted 0 from 36,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 47, 10
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 349
+Ripping up A
+Blacklisted 0 from 47,10
+Changing target cell within same route attempt
+RL target cell is 41, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 350
+Ripping up A
+Blacklisted 4 from 41,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 10
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 351
+Ripping up A
+Blacklisted 3 from 42,10
+Changing target cell within same route attempt
+RL target cell is 35, 11
+----------------------------------------------------------------------
+net a: 0 net b: 4
+Action  0
+Step 352
+Ripping up A
+Blacklisted 0 from 35,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 34, 11
+----------------------------------------------------------------------
+net a: 4 net b: 0
+Action  0
+Step 353
+Ripping up A
+Blacklisted 4 from 34,11
+Changing target cell within same route attempt
+RL target cell is 48, 11
+----------------------------------------------------------------------
+net a: 0 net b: 3
+Action  0
+Step 354
+Ripping up A
+Blacklisted 0 from 48,11
+Changing target cell within same route attempt
+RL target cell is 40, 5
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 355
+Ripping up A
+Blacklisted 6 from 40,5
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 3, 0]
+Picked target cell in newly-routed circuit
+RL target cell is 40, 6
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 356
+Ripping up A
+Blacklisted 3 from 40,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 37, 11
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 357
+Ripping up A
+Blacklisted 4 from 37,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 34, 6
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 358
+Ripping up A
+Blacklisted 6 from 34,6
+Changing target cell within same route attempt
+RL target cell is 34, 8
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 359
+Ripping up A
+Blacklisted 3 from 34,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 35, 5
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 360
+Ripping up A
+Blacklisted 4 from 35,5
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 35, 6
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 361
+Ripping up A
+Blacklisted 6 from 35,6
+Changing target cell within same route attempt
+RL target cell is 34, 7
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 362
+Ripping up A
+Blacklisted 3 from 34,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 41, 5
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 363
+Ripping up A
+Blacklisted 4 from 41,5
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 38, 6
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 364
+Ripping up A
+Blacklisted 6 from 38,6
+Changing target cell within same route attempt
+RL target cell is 34, 6
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 365
+Ripping up A
+Blacklisted 3 from 34,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 40, 6
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 366
+Ripping up A
+Blacklisted 4 from 40,6
+Changing target cell within same route attempt
+RL target cell is 39, 6
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 367
+Ripping up A
+Blacklisted 3 from 39,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 41, 5
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 368
+Ripping up A
+Blacklisted 6 from 41,5
+Changing target cell within same route attempt
+RL target cell is 41, 7
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 369
+Ripping up A
+Blacklisted 3 from 41,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 5
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 370
+Ripping up A
+Blacklisted 4 from 42,5
+Changing target cell within same route attempt
+RL target cell is 42, 6
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 371
+Ripping up A
+Blacklisted 3 from 42,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 36, 5
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 372
+Ripping up A
+Blacklisted 6 from 36,5
+Changing target cell within same route attempt
+RL target cell is 40, 5
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 373
+Ripping up A
+Blacklisted 3 from 40,5
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 41, 4
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 374
+Ripping up A
+Blacklisted 4 from 41,4
+Changing target cell within same route attempt
+RL target cell is 42, 5
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  1
+Step 375
+Ripping up B
+Blacklisted 6 from 42,5
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 49, 11
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 376
+Ripping up A
+Blacklisted 3 from 49,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 43, 5
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 377
+Ripping up A
+Blacklisted 6 from 43,5
+Changing target cell within same route attempt
+RL target cell is 50, 12
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 378
+Ripping up A
+Blacklisted 4 from 50,12
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 23, 2
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 379
+Ripping up A
+Blacklisted 3 from 23,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 20, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 380
+Ripping up A
+Blacklisted 6 from 20,2
+Changing target cell within same route attempt
+RL target cell is 43, 8
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 381
+Ripping up A
+Blacklisted 4 from 43,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 22, 2
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 382
+Ripping up A
+Blacklisted 3 from 22,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 25, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 383
+Ripping up A
+Blacklisted 6 from 25,2
+Changing target cell within same route attempt
+RL target cell is 43, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 384
+Ripping up A
+Blacklisted 4 from 43,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 37, 2
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 385
+Ripping up A
+Blacklisted 3 from 37,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 19, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 386
+Ripping up A
+Blacklisted 6 from 19,2
+Changing target cell within same route attempt
+RL target cell is 43, 10
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 387
+Ripping up A
+Blacklisted 4 from 43,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 18, 2
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 388
+Ripping up A
+Blacklisted 3 from 18,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 24, 1
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 389
+Ripping up A
+Blacklisted 6 from 24,1
+Changing target cell within same route attempt
+RL target cell is 40, 4
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 390
+Ripping up A
+Blacklisted 4 from 40,4
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 22, 1
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 391
+Ripping up A
+Blacklisted 3 from 22,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 20, 1
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 392
+Ripping up A
+Blacklisted 6 from 20,1
+Changing target cell within same route attempt
+RL target cell is 51, 13
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 393
+Ripping up A
+Blacklisted 4 from 51,13
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 23, 0
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 394
+Ripping up A
+Blacklisted 3 from 23,0
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 35, 7
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 395
+Ripping up A
+Blacklisted 4 from 35,7
+Changing target cell within same route attempt
+RL target cell is 16, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 396
+Ripping up A
+Blacklisted 6 from 16,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 43, 18
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 397
+Ripping up A
+Blacklisted 3 from 43,18
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 43, 17
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 398
+Ripping up A
+Blacklisted 4 from 43,17
+Changing target cell within same route attempt
+RL target cell is 19, 4
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 399
+Ripping up A
+Blacklisted 6 from 19,4
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 44, 18
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 400
+Ripping up A
+Blacklisted 3 from 44,18
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 44, 17
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 401
+Ripping up A
+Blacklisted 4 from 44,17
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 45, 17
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 402
+Ripping up A
+Blacklisted 3 from 45,17
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 45, 16
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 403
+Ripping up A
+Blacklisted 4 from 45,16
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 46, 16
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 404
+Ripping up A
+Blacklisted 3 from 46,16
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 46, 15
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 405
+Ripping up A
+Blacklisted 4 from 46,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 47, 15
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 406
+Ripping up A
+Blacklisted 3 from 47,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 47, 14
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 407
+Ripping up A
+Blacklisted 4 from 47,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 48, 15
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 408
+Ripping up A
+Blacklisted 3 from 48,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 48, 14
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 409
+Ripping up A
+Blacklisted 4 from 48,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 49, 14
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 410
+Ripping up A
+Blacklisted 3 from 49,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 47, 10
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 411
+Ripping up A
+Blacklisted 4 from 47,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 48, 10
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 412
+Ripping up A
+Blacklisted 3 from 48,10
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 50, 11
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 413
+Ripping up A
+Blacklisted 4 from 50,11
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 48, 9
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 414
+Ripping up A
+Blacklisted 3 from 48,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 49, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 415
+Ripping up A
+Blacklisted 4 from 49,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 49, 8
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 416
+Ripping up A
+Blacklisted 3 from 49,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 50, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 417
+Ripping up A
+Blacklisted 4 from 50,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 48, 7
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 418
+Ripping up A
+Blacklisted 3 from 48,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 14
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 419
+Ripping up A
+Blacklisted 4 from 51,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 15
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 420
+Ripping up A
+Blacklisted 3 from 51,15
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 52, 14
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 421
+Ripping up A
+Blacklisted 4 from 52,14
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 50, 8
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 422
+Ripping up A
+Blacklisted 3 from 50,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 51, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 423
+Ripping up A
+Blacklisted 4 from 51,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 37, 8
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 424
+Ripping up A
+Blacklisted 3 from 37,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 38, 8
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 425
+Ripping up A
+Blacklisted 4 from 38,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 47, 6
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 426
+Ripping up A
+Blacklisted 3 from 47,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 62, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 427
+Ripping up A
+Blacklisted 6 from 62,2
+Changing target cell within same route attempt
+RL target cell is 56, 8
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 428
+Ripping up A
+Blacklisted 4 from 56,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 56, 9
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 429
+Ripping up A
+Blacklisted 3 from 56,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 61, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 430
+Ripping up A
+Blacklisted 6 from 61,2
+Changing target cell within same route attempt
+RL target cell is 38, 7
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 431
+Ripping up A
+Blacklisted 4 from 38,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 43, 2
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 432
+Ripping up A
+Blacklisted 3 from 43,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 59, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 433
+Ripping up A
+Blacklisted 6 from 59,2
+Changing target cell within same route attempt
+RL target cell is 57, 8
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 434
+Ripping up A
+Blacklisted 4 from 57,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 2
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 435
+Ripping up A
+Blacklisted 3 from 42,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 58, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 436
+Ripping up A
+Blacklisted 6 from 58,2
+Changing target cell within same route attempt
+RL target cell is 57, 9
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 437
+Ripping up A
+Blacklisted 4 from 57,9
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 57, 1
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 438
+Ripping up A
+Blacklisted 3 from 57,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 41, 2
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 439
+Ripping up A
+Blacklisted 6 from 41,2
+Changing target cell within same route attempt
+RL target cell is 35, 6
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 440
+Ripping up A
+Blacklisted 4 from 35,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 40, 3
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 441
+Ripping up A
+Blacklisted 4 from 40,3
+Changing target cell within same route attempt
+RL target cell is 58, 1
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 442
+Ripping up A
+Blacklisted 3 from 58,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 28, 2
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 443
+Ripping up A
+Blacklisted 6 from 28,2
+Changing target cell within same route attempt
+RL target cell is 41, 3
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 444
+Ripping up A
+Blacklisted 3 from 41,3
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 59, 1
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 445
+Ripping up A
+Blacklisted 3 from 59,1
+Changing target cell within same route attempt
+RL target cell is 35, 2
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 446
+Ripping up A
+Blacklisted 4 from 35,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 42, 3
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 447
+Ripping up A
+Blacklisted 6 from 42,3
+Changing target cell within same route attempt
+RL target cell is 57, 7
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 448
+Ripping up A
+Blacklisted 3 from 57,7
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 40, 2
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 449
+Ripping up A
+Blacklisted 4 from 40,2
+Changing target cell within same route attempt
+RL target cell is 40, 1
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 450
+Ripping up A
+Blacklisted 3 from 40,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 31, 1
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 451
+Ripping up A
+Blacklisted 6 from 31,1
+Changing target cell within same route attempt
+RL target cell is 58, 8
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 452
+Ripping up A
+Blacklisted 3 from 58,8
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 20, 6
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 453
+Ripping up A
+Blacklisted 4 from 20,6
+Changing target cell within same route attempt
+RL target cell is 60, 1
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 454
+Ripping up A
+Blacklisted 3 from 60,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 20, 3
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 455
+Ripping up A
+Blacklisted 6 from 20,3
+Changing target cell within same route attempt
+RL target cell is 41, 2
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 456
+Ripping up A
+Blacklisted 3 from 41,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 62, 4
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 457
+Ripping up A
+Blacklisted 3 from 62,4
+Changing target cell within same route attempt
+RL target cell is 48, 5
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 458
+Ripping up A
+Blacklisted 4 from 48,5
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 40, 1
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 459
+Ripping up A
+Blacklisted 6 from 40,1
+Changing target cell within same route attempt
+RL target cell is 21, 6
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 460
+Ripping up A
+Blacklisted 3 from 21,6
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 43, 6
+----------------------------------------------------------------------
+net a: 3 net b: 6
+Action  0
+Step 461
+Ripping up A
+Blacklisted 3 from 43,6
+Changing target cell within same route attempt
+RL target cell is 57, 1
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 462
+Ripping up A
+Blacklisted 4 from 57,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 61, 1
+----------------------------------------------------------------------
+net a: 6 net b: 3
+Action  0
+Step 463
+Ripping up A
+Blacklisted 6 from 61,1
+Changing target cell within same route attempt
+RL target cell is 39, 0
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 464
+Ripping up A
+Blacklisted 3 from 39,0
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 29, 0
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 465
+Ripping up A
+Blacklisted 4 from 29,0
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 39, 0
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 466
+Ripping up A
+Blacklisted 6 from 39,0
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 27, 1
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 467
+Ripping up A
+Blacklisted 4 from 27,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 29, 1
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 468
+Ripping up A
+Blacklisted 6 from 29,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 62, 3
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 469
+Ripping up A
+Blacklisted 4 from 62,3
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 58, 1
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 470
+Ripping up A
+Blacklisted 6 from 58,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 63, 2
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 471
+Ripping up A
+Blacklisted 4 from 63,2
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 62, 1
+----------------------------------------------------------------------
+net a: 6 net b: 4
+Action  0
+Step 472
+Ripping up A
+Blacklisted 6 from 62,1
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 58, 0
+----------------------------------------------------------------------
+net a: 4 net b: 6
+Action  0
+Step 473
+Ripping up A
+Blacklisted 4 from 58,0
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 23, 27
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 474
+Ripping up A
+Blacklisted 3 from 23,27
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 24, 28
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 475
+Ripping up A
+Blacklisted 4 from 24,28
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 22, 27
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 476
+Ripping up A
+Blacklisted 3 from 22,27
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 21, 27
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 477
+Ripping up A
+Blacklisted 4 from 21,27
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 21, 28
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 478
+Ripping up A
+Blacklisted 3 from 21,28
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 23, 28
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 479
+Ripping up A
+Blacklisted 4 from 23,28
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 18, 27
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 480
+Ripping up A
+Blacklisted 3 from 18,27
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 22, 28
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 481
+Ripping up A
+Blacklisted 4 from 22,28
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 22, 29
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 482
+Ripping up A
+Blacklisted 3 from 22,29
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 15, 24
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 483
+Ripping up A
+Blacklisted 4 from 15,24
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 20, 28
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 484
+Ripping up A
+Blacklisted 3 from 20,28
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 21, 29
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 485
+Ripping up A
+Blacklisted 4 from 21,29
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 20, 29
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 486
+Ripping up A
+Blacklisted 3 from 20,29
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 15, 25
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 487
+Ripping up A
+Blacklisted 4 from 15,25
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 14, 21
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 488
+Ripping up A
+Blacklisted 3 from 14,21
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 14, 22
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 489
+Ripping up A
+Blacklisted 4 from 14,22
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 21, 30
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 490
+Ripping up A
+Blacklisted 3 from 21,30
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 15, 22
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 491
+Ripping up A
+Blacklisted 4 from 15,22
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 15, 26
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 492
+Ripping up A
+Blacklisted 3 from 15,26
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 22, 30
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 493
+Ripping up A
+Blacklisted 4 from 22,30
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 21, 31
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 494
+Ripping up A
+Blacklisted 3 from 21,31
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 24, 29
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 495
+Ripping up A
+Blacklisted 4 from 24,29
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 24, 30
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 496
+Ripping up A
+Blacklisted 3 from 24,30
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 25, 29
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 497
+Ripping up A
+Blacklisted 4 from 25,29
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 25, 30
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 498
+Ripping up A
+Blacklisted 3 from 25,30
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 26, 30
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 499
+Ripping up A
+Blacklisted 4 from 26,30
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 26, 31
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 500
+Ripping up A
+Blacklisted 3 from 26,31
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 27, 30
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 501
+Ripping up A
+Blacklisted 4 from 27,30
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 27, 31
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 502
+Ripping up A
+Blacklisted 3 from 27,31
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 28, 30
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 503
+Ripping up A
+Blacklisted 4 from 28,30
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 28, 31
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 504
+Ripping up A
+Blacklisted 3 from 28,31
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 29, 30
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 505
+Ripping up A
+Blacklisted 4 from 29,30
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 29, 31
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 506
+Ripping up A
+Blacklisted 3 from 29,31
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 30, 31
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 507
+Ripping up A
+Blacklisted 4 from 30,31
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 30, 32
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 508
+Ripping up A
+Blacklisted 3 from 30,32
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 31, 32
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 509
+Ripping up A
+Blacklisted 4 from 31,32
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 31, 33
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 510
+Ripping up A
+Blacklisted 3 from 31,33
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 32, 32
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 511
+Ripping up A
+Blacklisted 4 from 32,32
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 32, 34
+----------------------------------------------------------------------
+net a: 3 net b: 4
+Action  0
+Step 512
+Ripping up A
+Blacklisted 3 from 32,34
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3]
+Picked target cell in newly-routed circuit
+RL target cell is 23, 31
+----------------------------------------------------------------------
+net a: 4 net b: 3
+Action  0
+Step 513
+Ripping up A
+Blacklisted 4 from 23,31
+Performing a routing attempt.
+Failed to route net 0 with colour red
+Failed to route net 1 with colour grey
+Failed to route net 2 with colour orange
+Failed to route net 3 with colour purple
+Failed to route net 4 with colour pink
+Failed to route net 5 with colour green
+Failed to route net 7 with colour yellow
+Routing attempt complete
+Failed nets: [5, 7, 2, 1, 0, 3, 4]
+Circuit could not be fully routed. Routed 6 segments.
+----------------------------------------------------------------------
+net a: 4 net b: 3

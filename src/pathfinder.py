@@ -13,8 +13,8 @@ import time
 
 
 # Constants
-FILE_PATH = "../benchmarks/custom/simple_cell.infile"  # Path to the file with info about the circuit to route
-NET_COLOURS = ["red", "yellow", "grey", "orange", "purple", "pink", "green", "medium purple", "white"]
+FILE_PATH = "../benchmarks/custom/pairs.infile"  # Path to the file with info about the circuit to route
+NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0
 
@@ -101,6 +101,9 @@ def main():
     global array_width
     global array_height
     global FILE_PATH
+
+    # Set RNG seed
+    random.seed(0)
 
     # Read input file
     script_path = os.path.dirname(__file__)

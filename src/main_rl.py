@@ -21,7 +21,8 @@ import datetime
 
 # Constants
 VERBOSE_ENV = True
-FILE_PATH = "../benchmarks/stdcell.infile"  # Path to the file with info about the circuit to route
+LOAD_MODEL_NAME = "smart_model"
+FILE_PATH = "../benchmarks/custom/pairs.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 CONG_FRAC_IDX_A = 0
 CONG_FRAC_IDX_B = 1
@@ -39,7 +40,7 @@ LEARN_RATE = 0.2
 EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
-TRAIN_TIME_STEPS = 0
+TRAIN_TIME_STEPS = 1000
 
 
 # General variables
@@ -380,6 +381,7 @@ def key_handler(event):
     global EXPLORE_FINAL
     global GAMMA
     global TRAIN_TIME_STEPS
+    global LOAD_MODEL_NAME
 
     e_char = event.char
 
@@ -412,7 +414,7 @@ def key_handler(event):
         _step_count = 0  # Reset because check_env increments via step()
 
         print("Loading trained model")
-        _rl_model = DQN.load("smart_model")
+        _rl_model = DQN.load(LOAD_MODEL_NAME)
 
         obs = _rl_env.reset()
         done = False

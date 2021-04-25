@@ -22,7 +22,7 @@ import datetime
 # Constants
 VERBOSE_ENV = True
 LOAD_MODEL_NAME = "smart_model"
-FILE_PATH = "../benchmarks/kuma.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 CONG_FRAC_IDX_A = 0
 CONG_FRAC_IDX_B = 1
@@ -40,7 +40,7 @@ LEARN_RATE = 0.2
 EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
-TRAIN_TIME_STEPS = 30
+TRAIN_TIME_STEPS = 60
 
 
 # General variables
@@ -112,7 +112,7 @@ class RouterEnv(gym.Env):
         global _done_circuit
         global _root
 
-        # print("Step " + str(_step_count))
+        print("Step " + str(_step_count))
         _step_count += 1
         reward, observation = rl_action_step(action)
         done = _done_circuit
@@ -416,6 +416,7 @@ def key_handler(event):
         done = False
         while not done:
             rl_action, states = _rl_model.predict(obs, deterministic=True)
+            print("Action " + str(rl_action))
             obs, rewards, done, info = _rl_env.step(rl_action)
     elif e_char == 'r':
         # RL flow debugging (no agent involved, emulate actions randomly)

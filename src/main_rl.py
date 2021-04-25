@@ -42,7 +42,6 @@ EXPLORE_FINAL = 0.1
 GAMMA = 0.9
 TRAIN_TIME_STEPS = 0
 
-
 # General variables
 _root = None  # Tkinter root
 _routing_canvas = None  # Tkinter canvas GUI
@@ -549,10 +548,12 @@ def rl_action_step(action):
             for net_group in _rl_target_cell.netGroups:
                 if net_group is not _ripup_candidate_b:
                     _ripup_candidate_a = net_group
+                    break
         else:
             for net_group in _rl_target_cell.netGroups:
                 if net_group is not _ripup_candidate_a:
                     _ripup_candidate_b = net_group
+                    break
 
     observation = get_rl_observation()
 

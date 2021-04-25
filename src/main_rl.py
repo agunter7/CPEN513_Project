@@ -21,8 +21,8 @@ import datetime
 
 # Constants
 VERBOSE_ENV = True
-LOAD_MODEL_NAME = "smart_model"
-FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
+LOAD_MODEL_NAME = "dumb"
+FILE_PATH = "../benchmarks/custom/cluster.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 CONG_FRAC_IDX_A = 0
 CONG_FRAC_IDX_B = 1
@@ -40,7 +40,7 @@ LEARN_RATE = 0.2
 EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
-TRAIN_TIME_STEPS = 60
+TRAIN_TIME_STEPS = 0
 
 
 # General variables

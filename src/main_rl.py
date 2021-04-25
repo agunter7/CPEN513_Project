@@ -22,7 +22,7 @@ import datetime
 # Constants
 VERBOSE_ENV = True
 LOAD_MODEL_NAME = "smart_model"
-FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/custom/crowd_unsolvable.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 CONG_FRAC_IDX_A = 0
 CONG_FRAC_IDX_B = 1
@@ -41,7 +41,6 @@ EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
 TRAIN_TIME_STEPS = 60
-
 
 # General variables
 _root = None  # Tkinter root
@@ -507,6 +506,7 @@ def rl_action_step(action):
             uncongested_new = count_uncongested_nets()
             reward += (uncongested_new - _init_uncongested_nets)
             # TODO: Consider fraction of uncongested nets as reward, may better account for failed/unroutable nets
+            _init_uncongested_nets = uncongested_new
 
             c_cell = get_least_congested_cell()
             _all_nets_routed = c_cell is None  # TODO: _all_nets_routed seems to serve 2 purposes, should probs split it
@@ -549,10 +549,12 @@ def rl_action_step(action):
             for net_group in _rl_target_cell.netGroups:
                 if net_group is not _ripup_candidate_b:
                     _ripup_candidate_a = net_group
+                    break
         else:
             for net_group in _rl_target_cell.netGroups:
                 if net_group is not _ripup_candidate_a:
                     _ripup_candidate_b = net_group
+                    break
 
     observation = get_rl_observation()
 

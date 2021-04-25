@@ -22,7 +22,7 @@ import datetime
 # Constants
 VERBOSE_ENV = True
 LOAD_MODEL_NAME = "smart_model"
-FILE_PATH = "../benchmarks/custom/crowd_unsolvable.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/custom/levels.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 CONG_FRAC_IDX_A = 0
 CONG_FRAC_IDX_B = 1
@@ -40,7 +40,7 @@ LEARN_RATE = 0.2
 EXPLORE_INIT = 1.0
 EXPLORE_FINAL = 0.1
 GAMMA = 0.9
-TRAIN_TIME_STEPS = 60
+TRAIN_TIME_STEPS = 250
 
 # General variables
 _root = None  # Tkinter root
@@ -241,8 +241,6 @@ class Cell:
         self.routingValue = 0  # Value used in wavefront for A*
         self.nextCell = []  # Can have multiple "next" cells, because wavefront propagates in 4 directions
         self.prevCell = None  # Reference to previous cell in route, for backtrace
-        # self.congest_hist = 0  # number of times cell has been congested
-        # self.isOwned = False
         self.blacklist = []  # List of nets (by ID) that are not allowed to use this cell
 
     def get_coords(self): return self.x, self.y
@@ -307,7 +305,7 @@ def main():
     _array_width = len(_routing_array)
     _array_height = len(_routing_array[0])
 
-    # set max bounding box size
+    # set upper bounds on observation space
     _obs_hi[HPWL_IDX_A] = _array_width + _array_height
     _obs_hi[HPWL_IDX_B] = _array_width + _array_height
 
@@ -388,8 +386,8 @@ def key_handler(event):
     if e_char == 'l':
         # RL Agent Learning pass
 
-        # AI Gym Environment check
-        #check_env(_rl_env)
+        # AI Gym Environment check - only do this when testing a new environment (resets RNG seed)
+        # check_env(_rl_env)
         _step_count = 0  # Reset because check_env increments via step()
 
         # RL Agent
@@ -403,8 +401,8 @@ def key_handler(event):
     elif e_char == 't':
         # RL Agent Testing pass
 
-        # AI Gym Environment check
-        #check_env(_rl_env)
+        # AI Gym Environment check - only do this when testing a new environment (resets RNG seed)
+        # check_env(_rl_env)
         _step_count = 0  # Reset because check_env increments via step()
 
         print("Loading trained model")
@@ -504,8 +502,10 @@ def rl_action_step(action):
 
             # Calculate reward from this routing attempt
             uncongested_new = count_uncongested_nets()
+
+            # Add change in uncongested nets as reward, to better account for failed/unroutable nets
             reward += (uncongested_new - _init_uncongested_nets)
-            # TODO: Consider fraction of uncongested nets as reward, may better account for failed/unroutable nets
+            
             _init_uncongested_nets = uncongested_new
 
             c_cell = get_least_congested_cell()
@@ -704,6 +704,7 @@ def max_congest(net_id: int) -> int:
     """
     Find max degree of congestion in the net (i.e. the MOST congested cell involved that isn't this one)
     :param net_id: The int ID of the target net
+    :return: int - degree of most congested cell in the net (other than RL target)
     """
     global _net_dict
 
@@ -719,6 +720,12 @@ def max_congest(net_id: int) -> int:
 
 
 def get_freedom(net_id: int, x_dir: bool) -> int:
+    """
+    Find number of contiguous usable (not blocked) cells in either x or y direction for a specified net
+    :param net_id: The int ID of the target net
+    :param x_dir: The direction to look in (true = x, false = y)
+    :return: int - number of contiguous cells in the given direction (positive and negative)
+    """
     global _rl_target_cell
     global _routing_array
 
@@ -827,26 +834,6 @@ def get_rl_observation() -> np.ndarray:
     return observation_array
 
 
-def can_blacklist(cell):
-    global _routing_array
-
-    for off_x in [-1, 0, 1]:
-        for off_y in [-1, 0, 1]:
-            in_bounds = cell.x + off_x >= 0 and cell.x + off_x < _array_width and cell.y + off_y >= 0 and cell.y + off_y < _array_height
-
-            if (off_x == 0 and off_y == 0) or not in_bounds:
-                continue
-
-            neighbour_cell = _routing_array[cell.x + off_x][cell.y + off_y]
-
-            skip = neighbour_cell.isSink or neighbour_cell.isSource
-
-            if skip:
-                return False
-
-    return True
-
-
 def get_least_congested_cell():
     """
     Get the cell with the least number of nets routed through it. If there is a tie, pick randomly.
@@ -885,33 +872,16 @@ def get_most_congested_cell():
 
     for column in _routing_array:
         for cell in column:
-            if cell.netCount > greatest_congestion and can_blacklist(cell):
+            if cell.netCount > greatest_congestion:
                 most_congested_cell = cell
                 greatest_congestion = cell.netCount
 
     return most_congested_cell
 
 
-def get_congested_cells():
-    """
-    Get the currently congested cells
-    :return: list
-    """
-    global _routing_array
-
-    congested_cells = []
-
-    for column in _routing_array:
-        for cell in column:
-            if cell.isCongested:
-                congested_cells.append(cell)
-
-    return congested_cells
-
-
 def get_congested_nets():
     """
-    get the currently congested nets and the number of cells in each
+    Get the currently congested nets and the number of cells in each
     :return: dict
     """
     congestion = {}
@@ -920,29 +890,6 @@ def get_congested_nets():
             congestion[net_id] = len(net.congestedCells)
 
     return congestion
-
-
-def rip_up_congested():
-    """
-    rip up nets until we reach 0 congestion
-    :return: void
-    """
-    global _all_nets_routed
-
-    c_nets = get_congested_nets()
-
-    # if no congested nets, we are done
-    _all_nets_routed = (len(c_nets) == 0)
-
-    while len(c_nets) > 0:
-        # get the most congested net and rip it up
-        rip_net_id = max(c_nets, key=c_nets.get)
-        rip_up_one(rip_net_id)
-
-        # get new congestion levels
-        c_nets = get_congested_nets()
-
-    return
 
 
 def adjust_congestion():
@@ -963,7 +910,7 @@ def adjust_congestion():
             net.congestedCells.remove(r)
 
 
-def rip_up_one(net_id):
+def rip_up_one(net_id: int):
     """
     Rip-up a specific net.
     :param net_id: The net to be ripped up

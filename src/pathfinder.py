@@ -1,7 +1,7 @@
 """
-Solution to UBC CPEN 513 Assignment 1.
-Implements Dijkstra's algorithm and A* for multi-pin nets.
-Utilizes a simple rip-up and re-route scheme.
+Implements a version of PathFinder for maze routing.
+Utilizes a greedy rip-up and re-route scheme, where the most congested net is always ripped up first.
+Nets are ripped up until no congestion remains.
 Uses Tkinter for GUI.
 """
 
@@ -66,7 +66,6 @@ class Cell:
         self.prev_cell = None  # Reference to previous cell in route, for backtrace
         self.congest = 1        # congestion in previous round (initialize to 1)
         self.congest_hist = 1   # product of previous congestion numbers
-        self.isOwned = False
 
     def get_coords(self): return self.x, self.y
 
@@ -86,7 +85,6 @@ class Net:
         self.num = num  # The net number for this net (effectively the net's identifier)
         self.sinksRemaining = len(self.sinks)  # Number of sinks left to be routed in this net
         self.initRouteComplete = False  # Has the net's source been routed to at least one sink?
-        # self.failed_attempts = 0  # number of times we've tried to route this net unsuccessfully
 
         if self.num == -1:
             print("ERROR: assign a net number to the newly-created net!")
@@ -213,7 +211,6 @@ def rip_up_congested(routing_canvas):
     while num_nets > 0:
         # get the most congested net and rip it up
         # in case of tie, pick randomly
-        # THIS IS WHERE THE RL AGENT WILL GO
         max_val = max(c_nets.values())
         max_nets = [k for k, v in c_nets.items() if v == max_val]
 
@@ -417,14 +414,11 @@ def rip_up_one(routing_canvas, net_id):
         cell.netCount -= 1
         if cell.netCount == 0:
             # if netCount is 0, cell is now free
-            if cell.isOwned:
-                cell.isOwned = False
             cell.isWire = False
             fill = 'white'
         elif cell.netCount == 1:
             # if netCount is 1, cell is now uncongested and owned by remaining net
             cell.isCongested = False
-            cell.isOwned = True
             fill = NET_COLOURS[cell.netGroups[-1]]
         else:
             # else, cell is still congested
@@ -591,17 +585,15 @@ def a_star_step(routing_canvas):
                         break
 
                     cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and not cand_cell.isSource and \
-                        not cand_cell.isSink #and not cand_cell.isOwned # and not cand_cell.isWire 
+                        not cand_cell.isSink
 
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront
                         cand_cell.isCandidate = True
                         cand_cell.dist_from_source = active_cell.dist_from_source+1
-                        # cand_cell.routingValue = cand_cell.dist_from_source + manhattan(cand_cell, target_sink) + cand_cell.congest + cand_cell.congest_hist
                         # PathFinder does c = (b + h)*p where c is cost, b is base cost, h is history, and p is current usage
+                        # However, using b*h*p allows the algorithm to converge faster
                         cand_cell.routingValue = (cand_cell.dist_from_source + manhattan(cand_cell, target_sink)) * cand_cell.congest_hist * cand_cell.congest
-                       # if cand_cell.isOwned:
-                        #     cand_cell.routingValue += 50
                         cand_cell.prev_cell = active_cell
                         active_cell.next_cell.append(cand_cell)
                         # Add routing value to rectangle
@@ -808,15 +800,6 @@ def create_routing_array(routing_file):
                 # Add sink cell to a net
                 new_net.sinks.append(sink_cell)
                 new_net.sinksRemaining += 1
-
-        # for i in range(len(new_net.sinks)):
-        #     mindex = i
-        #     for j in range(i, len(new_net.sinks)):
-        #         if manhattan(new_net.sinks[j], new_net.source) > manhattan(new_net.sinks[mindex], new_net.source):
-        #             mindex = j
-        #     if i != mindex:
-        #         new_net.sinks[i], new_net.sinks[mindex] = new_net.sinks[mindex], new_net.sinks[i]
-
 
         # Add the new net to the net dictionary
         net_dict[new_net.num] = new_net

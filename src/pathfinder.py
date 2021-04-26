@@ -13,7 +13,7 @@ import time
 
 
 # Constants
-FILE_PATH = "../benchmarks/impossible.infile"  # Path to the file with info about the circuit to route
+FILE_PATH = "../benchmarks/custom/levels.infile"  # Path to the file with info about the circuit to route
 NET_COLOURS = ["red", "grey", "orange", "purple", "pink", "green", "medium purple", "yellow", "white"]
 MAX_NET_PRIORITY = 2
 MIN_NET_PRIORITY = 0

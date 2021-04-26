@@ -548,12 +548,10 @@ def rl_action_step(action):
             for net_group in _rl_target_cell.netGroups:
                 if net_group is not _ripup_candidate_b:
                     _ripup_candidate_a = net_group
-                    break
         else:
             for net_group in _rl_target_cell.netGroups:
                 if net_group is not _ripup_candidate_a:
                     _ripup_candidate_b = net_group
-                    break
 
     observation = get_rl_observation()
 

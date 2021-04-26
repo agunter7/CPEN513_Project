@@ -12,12 +12,10 @@ from stable_baselines3.common.evaluation import evaluate_policy
 import os
 from tkinter import *
 from queue import SimpleQueue
-from queue import PriorityQueue
 import numpy as np
 import random
 from enum import Enum
 import time
-import datetime
 
 # Constants
 VERBOSE_ENV = True
@@ -106,7 +104,10 @@ class RouterEnv(gym.Env):
 
         print(self.observation_space)
 
-    def step(self, action):
+    def step(self, action: int) -> tuple:
+        """
+        Progress the environment forward by one time step
+        """
         global _step_count
         global _done_circuit
         global _root
@@ -118,7 +119,10 @@ class RouterEnv(gym.Env):
         info = {}
         return observation, reward, done, info
 
-    def reset(self):
+    def reset(self) -> np.ndarray:
+        """
+        Reset the environment
+        """
         global _net_dict
         global _net_queue
         global _active_net
@@ -206,12 +210,18 @@ class RouterEnv(gym.Env):
         return observation
 
     def render(self, mode='human'):
+        """
+        Render the environment. Only included for interface purposes. Never used in practice.
+        """
         global _root
         print("render")
         if _root is not None:
             _root.update_idletasks()  # Update the Tkinter GUI
 
     def close(self):
+        """
+        Interface function.
+        """
         print("close")
         pass
 
@@ -220,7 +230,6 @@ class Cell:
     """
     A single cell in the routing grid/array
     """
-
     def __init__(self, x=-1, y=-1, obstruction=False, source=False, sink=False, net_group=-1):
         if obstruction and (source or sink):
             print("Error: Bad cell created!")
@@ -250,7 +259,6 @@ class Net:
     """
     A collection of cells
     """
-
     def __init__(self, source: Cell = None, sinks: Cell = None, num=-1):
         if sinks is None:
             sinks = []
@@ -507,7 +515,7 @@ def rl_action_step(action):
             reward += (uncongested_new - _init_uncongested_nets)
 
             c_cell = get_least_congested_cell()
-            _all_nets_routed = c_cell is None  # TODO: _all_nets_routed seems to serve 2 purposes, should probs split it
+            _all_nets_routed = c_cell is None
             if _all_nets_routed:
                 if len(_failed_nets) > 0:
                     # At least one route was blocked
@@ -830,7 +838,7 @@ def get_rl_observation() -> np.ndarray:
     return observation_array
 
 
-def get_least_congested_cell():
+def get_least_congested_cell() -> Cell:
     """
     Get the cell with the least number of nets routed through it. If there is a tie, pick randomly.
     :return: Cell
@@ -856,7 +864,7 @@ def get_least_congested_cell():
     return least_congested_cell
 
 
-def get_most_congested_cell():
+def get_most_congested_cell() -> Cell:
     """
     Get the cell with the greatest number of nets routed through it
     :return: Cell
@@ -875,7 +883,7 @@ def get_most_congested_cell():
     return most_congested_cell
 
 
-def get_congested_nets():
+def get_congested_nets() -> dict:
     """
     Get the currently congested nets and the number of cells in each
     :return: dict
@@ -925,14 +933,10 @@ def rip_up_one(net_id: int):
         cell.netCount -= 1
         if cell.netCount == 0:
             # if netCount is 0, cell is now free
-            #if cell.isOwned:
-            #    cell.isOwned = False
             cell.isWire = False
             fill = 'white'
         elif cell.netCount == 1:
-            # if netCount is 1, cell is now decongested and owned by remaining net
             cell.isCongested = False
-            #cell.isOwned = True
             fill = NET_COLOURS[cell.netGroups[-1]]
         else:
             # else, cell is still congested
@@ -986,7 +990,7 @@ def rip_up_one(net_id: int):
         _failed_nets.remove(net_id)
 
 
-def find_best_routing_pair():
+def find_best_routing_pair() -> tuple:
     """
     Returns a sink to be routed and the best cell to start propagating from for that sink.
     "Best" starting cell is determined by the manhattan distance to the sink and the cell's "Freedom".
@@ -997,7 +1001,7 @@ def find_best_routing_pair():
     global _circuit_is_hard
 
     if not isinstance(_active_net, Net):
-        return
+        return ()
 
     # Start wavefront from the routed point that is closest to the next net
     shortest_dist = float("inf")
@@ -1137,8 +1141,8 @@ def a_star_step():
                     #                 active_net.num not in cand_cell.blacklist
 
                     cell_is_viable = not cand_cell.isObstruction and not cand_cell.isCandidate and \
-                                     not cand_cell.isSource and not cand_cell.isSink and \
-                                     _active_net.num not in cand_cell.blacklist
+                        not cand_cell.isSource and not cand_cell.isSink and \
+                        _active_net.num not in cand_cell.blacklist
 
                     if cell_is_viable:
                         # Note cell as a candidate for the routing path and add it to the wavefront
@@ -1182,7 +1186,7 @@ def a_star_step():
         backtrace_cell = sink_cell
         while not net_is_routed:
             # Backtrace
-            if ((_active_net.initRouteComplete and backtrace_cell in _active_net.wireCells) or backtrace_cell.isSource) \
+            if ((_active_net.initRouteComplete and backtrace_cell in _active_net.wireCells) or backtrace_cell.isSource)\
                     and _active_net.num in backtrace_cell.netGroups:
                 # Done
                 net_is_routed = True
